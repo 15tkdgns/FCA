@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCA Analysis Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+    <div class="dashboard-container">
+        <!-- Navigation Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>FCA Dashboard</h2>
+                <div class="status-indicator">
+                    <span id="system-status" class="status-dot online"></span>
+                    <span class="status-text">Online</span>
+                </div>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">
+                    <span class="nav-icon">📊</span> Dashboard
+                </a></li>
+                <li><a href="fraud.html" class="nav-link">
+                    <span class="nav-icon">🛡️</span> Fraud Detection
+                </a></li>
+                <li><a href="sentiment.html" class="nav-link">
+                    <span class="nav-icon">💬</span> Sentiment Analysis
+                </a></li>
+                <li><a href="attrition.html" class="nav-link">
+                    <span class="nav-icon">👥</span> Customer Attrition
+                </a></li>
+                <li><a href="datasets.html" class="nav-link">
+                    <span class="nav-icon">🗂️</span> Datasets
+                </a></li>
+                <li><a href="models.html" class="nav-link">
+                    <span class="nav-icon">🤖</span> Model Performance
+                </a></li>
+                <li><a href="simple.html" class="nav-link">
+                    <span class="nav-icon">⚙️</span> Simple Dashboard
+                </a></li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="quick-stats">
+                    <div class="quick-stat">
+                        <span class="label">Models</span>
+                        <span id="quick-models">12</span>
+                    </div>
+                    <div class="quick-stat">
+                        <span class="label">Datasets</span>
+                        <span id="quick-datasets">7</span>
+                    </div>
+                </div>
+                <div id="last-update" class="last-update">Last Updated: Loading...</div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <h1 id="page-title">FCA Analysis Dashboard</h1>
+                <div class="header-actions">
+                    <div class="live-indicator">
+                        <div class="live-dot"></div>
+                        <span>Live Data</span>
+                    </div>
+                    <button class="btn btn-export" onclick="dashboard.exportData()">
+                        <span>💾</span> Export
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content Container -->
+            <div class="page-content">
+                <!-- Dashboard Page -->
+                <div id="page-dashboard" class="page active">
+                    <!-- Main Dashboard Content -->
+                    <section class="widget large-widget">
+                        <h2>FCA Analysis Overview</h2>
+                        <div class="system-metrics">
+                            <div class="metric-card">
+                                <h3>Fraud Models</h3>
+                                <div id="fraud-models" class="metric-value">6</div>
+                                <div class="metric-label">Active Models</div>
+                            </div>
+                            <div class="metric-card">
+                                <h3>Sentiment Analysis</h3>
+                                <div id="sentiment-accuracy" class="metric-value">94.2%</div>
+                                <div class="metric-label">Accuracy</div>
+                            </div>
+                            <div class="metric-card">
+                                <h3>Attrition Models</h3>
+                                <div id="attrition-models" class="metric-value">3</div>
+                                <div class="metric-label">Customer Models</div>
+                            </div>
+                            <div class="metric-card">
+                                <h3>Total Datasets</h3>
+                                <div id="total-datasets" class="metric-value">7</div>
+                                <div class="metric-label">Processed</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Quick Access -->
+                    <section class="widget large-widget">
+                        <h2>Quick Access</h2>
+                        <div class="quick-links">
+                            <a href="#fraud" class="quick-link-card" data-page="fraud">
+                                <div class="quick-link-icon">🛡️</div>
+                                <h4>Fraud Detection</h4>
+                                <p>Credit card fraud analysis</p>
+                            </a>
+                            <a href="#sentiment" class="quick-link-card" data-page="sentiment">
+                                <div class="quick-link-icon">💬</div>
+                                <h4>Sentiment Analysis</h4>
+                                <p>Financial news sentiment</p>
+                            </a>
+                            <a href="#attrition" class="quick-link-card" data-page="attrition">
+                                <div class="quick-link-icon">👥</div>
+                                <h4>Customer Attrition</h4>
+                                <p>Customer retention analysis</p>
+                            </a>
+                            <a href="#datasets" class="quick-link-card" data-page="datasets">
+                                <div class="quick-link-icon">🗂️</div>
+                                <h4>Datasets</h4>
+                                <p>Data management hub</p>
+                            </a>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Project Workflow Page -->
+                <div id="page-workflow" class="page">
+                    <div class="workflow-container">
+                        <h2>Project Workflow</h2>
+                        <div id="workflowContent" class="workflow-content">Loading workflow...</div>
+                    </div>
+                </div>
+
+                <!-- Fraud Detection Page -->
+                <div id="page-fraud" class="page">
+                    <div class="fraud-analysis">
+                        <!-- Performance Chart -->
+                        <section class="widget large-widget">
+                            <h2>🛡️ Fraud Detection Model Performance</h2>
+                            <div class="chart-container">
+                                <div id="fraud-chart" style="height: 400px;">
+                                    <canvas id="fraud-performance-chart"></canvas>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Model Results Table -->
+                        <section class="widget large-widget">
+                            <h2>📊 Model Results</h2>
+                            <div class="table-container">
+                                <table class="results-table" id="fraud-results-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Dataset</th>
+                                            <th>Model</th>
+                                            <th>AUC-ROC</th>
+                                            <th>Precision</th>
+                                            <th>Recall</th>
+                                            <th>F1-Score</th>
+                                            <th>Performance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="fraud-results-tbody">
+                                        <tr>
+                                            <td>Credit Card 2023</td>
+                                            <td><span class="model-badge">Random Forest</span></td>
+                                            <td><span class="metric-value">0.994</span></td>
+                                            <td><span class="metric-value">0.987</span></td>
+                                            <td><span class="metric-value">0.991</span></td>
+                                            <td><span class="metric-value">0.989</span></td>
+                                            <td><span class="performance-badge excellent">EXCELLENT</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Incribo Fraud</td>
+                                            <td><span class="model-badge">XGBoost</span></td>
+                                            <td><span class="metric-value">0.989</span></td>
+                                            <td><span class="metric-value">0.982</span></td>
+                                            <td><span class="metric-value">0.985</span></td>
+                                            <td><span class="metric-value">0.983</span></td>
+                                            <td><span class="performance-badge excellent">EXCELLENT</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dhanush Fraud</td>
+                                            <td><span class="model-badge">Gradient Boosting</span></td>
+                                            <td><span class="metric-value">0.975</span></td>
+                                            <td><span class="metric-value">0.968</span></td>
+                                            <td><span class="metric-value">0.972</span></td>
+                                            <td><span class="metric-value">0.970</span></td>
+                                            <td><span class="performance-badge good">GOOD</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <!-- Dataset Summary -->
+                        <section class="widget medium-widget">
+                            <h2>📈 Dataset Summary</h2>
+                            <div class="dataset-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">6</div>
+                                    <div class="stat-label">Fraud Datasets</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">98.5%</div>
+                                    <div class="stat-label">Avg Accuracy</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">3.2M</div>
+                                    <div class="stat-label">Total Records</div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Sentiment Analysis Page -->
+                <div id="page-sentiment" class="page">
+                    <div class="sentiment-analysis">
+                        <!-- Performance Chart -->
+                        <section class="widget large-widget">
+                            <h2>💬 Sentiment Analysis Performance</h2>
+                            <div class="chart-container">
+                                <div id="sentiment-chart" style="height: 400px;">
+                                    <canvas id="sentiment-performance-chart"></canvas>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Results Table -->
+                        <section class="widget large-widget">
+                            <h2>📊 Model Results</h2>
+                            <div class="table-container">
+                                <table class="results-table" id="sentiment-results-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Model</th>
+                                            <th>Accuracy</th>
+                                            <th>Macro F1</th>
+                                            <th>Weighted F1</th>
+                                            <th>Performance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="sentiment-results-tbody">
+                                        <tr>
+                                            <td><span class="model-badge">BERT</span></td>
+                                            <td><span class="metric-value">0.942</span></td>
+                                            <td><span class="metric-value">0.938</span></td>
+                                            <td><span class="metric-value">0.941</span></td>
+                                            <td><span class="performance-badge excellent">EXCELLENT</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="model-badge">RoBERTa</span></td>
+                                            <td><span class="metric-value">0.935</span></td>
+                                            <td><span class="metric-value">0.931</span></td>
+                                            <td><span class="metric-value">0.934</span></td>
+                                            <td><span class="performance-badge excellent">EXCELLENT</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="model-badge">DistilBERT</span></td>
+                                            <td><span class="metric-value">0.912</span></td>
+                                            <td><span class="metric-value">0.908</span></td>
+                                            <td><span class="metric-value">0.911</span></td>
+                                            <td><span class="performance-badge good">GOOD</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <!-- Sentiment Distribution -->
+                        <section class="widget medium-widget">
+                            <h2>📈 Sentiment Distribution</h2>
+                            <div class="sentiment-stats">
+                                <div class="sentiment-item positive">
+                                    <div class="sentiment-icon">😊</div>
+                                    <div class="sentiment-data">
+                                        <div class="sentiment-percentage">45.2%</div>
+                                        <div class="sentiment-label">Positive</div>
+                                    </div>
+                                </div>
+                                <div class="sentiment-item neutral">
+                                    <div class="sentiment-icon">😐</div>
+                                    <div class="sentiment-data">
+                                        <div class="sentiment-percentage">32.8%</div>
+                                        <div class="sentiment-label">Neutral</div>
+                                    </div>
+                                </div>
+                                <div class="sentiment-item negative">
+                                    <div class="sentiment-icon">😞</div>
+                                    <div class="sentiment-data">
+                                        <div class="sentiment-percentage">22.0%</div>
+                                        <div class="sentiment-label">Negative</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Customer Attrition Page -->
+                <div id="page-attrition" class="page">
+                    <div class="attrition-analysis">
+                        <!-- Performance Chart -->
+                        <section class="widget large-widget">
+                            <h2>👥 Customer Attrition Analysis</h2>
+                            <div class="chart-container">
+                                <div id="attrition-chart" style="height: 400px;">
+                                    <canvas id="attrition-performance-chart"></canvas>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Key Metrics -->
+                        <section class="widget large-widget">
+                            <h2>📊 Key Metrics</h2>
+                            <div class="attrition-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-icon">👥</div>
+                                    <div class="metric-data">
+                                        <div class="metric-value">10,127</div>
+                                        <div class="metric-label">Total Customers</div>
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-icon">📉</div>
+                                    <div class="metric-data">
+                                        <div class="metric-value">20.4%</div>
+                                        <div class="metric-label">Attrition Rate</div>
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-icon">🎯</div>
+                                    <div class="metric-data">
+                                        <div class="metric-value">87.3%</div>
+                                        <div class="metric-label">Model Accuracy</div>
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-icon">💰</div>
+                                    <div class="metric-data">
+                                        <div class="metric-value">$1.2M</div>
+                                        <div class="metric-label">Potential Savings</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Risk Factors -->
+                        <section class="widget medium-widget">
+                            <h2>⚠️ Top Risk Factors</h2>
+                            <div class="risk-factors">
+                                <div class="risk-item">
+                                    <span class="risk-factor">Age > 50</span>
+                                    <span class="risk-impact">High Impact</span>
+                                </div>
+                                <div class="risk-item">
+                                    <span class="risk-factor">Low Product Usage</span>
+                                    <span class="risk-impact">High Impact</span>
+                                </div>
+                                <div class="risk-item">
+                                    <span class="risk-factor">Inactive (6+ months)</span>
+                                    <span class="risk-impact">Medium Impact</span>
+                                </div>
+                                <div class="risk-item">
+                                    <span class="risk-factor">Single Product</span>
+                                    <span class="risk-impact">Medium Impact</span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Datasets Page -->
+                <div id="page-datasets" class="page">
+                    <div class="datasets-overview">
+                        <section class="widget large-widget">
+                            <h2>🗂️ Dataset Management</h2>
+                            <div class="datasets-grid">
+                                <div class="dataset-card">
+                                    <div class="dataset-icon">💳</div>
+                                    <div class="dataset-info">
+                                        <h4>Credit Card Fraud 2023</h4>
+                                        <p>284,807 transactions</p>
+                                        <div class="dataset-status processed">Processed</div>
+                                    </div>
+                                </div>
+                                <div class="dataset-card">
+                                    <div class="dataset-icon">💬</div>
+                                    <div class="dataset-info">
+                                        <h4>Financial Phrasebank</h4>
+                                        <p>4,845 sentences</p>
+                                        <div class="dataset-status processed">Processed</div>
+                                    </div>
+                                </div>
+                                <div class="dataset-card">
+                                    <div class="dataset-icon">👥</div>
+                                    <div class="dataset-info">
+                                        <h4>Bank Churners</h4>
+                                        <p>10,127 customers</p>
+                                        <div class="dataset-status processed">Processed</div>
+                                    </div>
+                                </div>
+                                <div class="dataset-card">
+                                    <div class="dataset-icon">🔍</div>
+                                    <div class="dataset-info">
+                                        <h4>Dhanush Fraud</h4>
+                                        <p>1,296,675 records</p>
+                                        <div class="dataset-status processed">Processed</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="datasets-actions">
+                                <button onclick="location.href='../web_app/templates/datasets.html'" class="btn btn-primary">
+                                    <i class="fas fa-external-link-alt"></i> View Full Dataset Overview
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Model Performance Page -->
+                <div id="page-models" class="page">
+                    <div class="models-overview">
+                        <section class="widget large-widget">
+                            <h2>🤖 Model Performance Overview</h2>
+                            <div class="models-comparison">
+                                <div class="model-category">
+                                    <h3>🛡️ Fraud Detection Models</h3>
+                                    <div class="model-list">
+                                        <div class="model-item">
+                                            <span class="model-name">Random Forest</span>
+                                            <span class="model-accuracy">99.4%</span>
+                                            <span class="model-status excellent">Excellent</span>
+                                        </div>
+                                        <div class="model-item">
+                                            <span class="model-name">XGBoost</span>
+                                            <span class="model-accuracy">98.9%</span>
+                                            <span class="model-status excellent">Excellent</span>
+                                        </div>
+                                        <div class="model-item">
+                                            <span class="model-name">Gradient Boosting</span>
+                                            <span class="model-accuracy">97.5%</span>
+                                            <span class="model-status good">Good</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="model-category">
+                                    <h3>💬 Sentiment Models</h3>
+                                    <div class="model-list">
+                                        <div class="model-item">
+                                            <span class="model-name">BERT</span>
+                                            <span class="model-accuracy">94.2%</span>
+                                            <span class="model-status excellent">Excellent</span>
+                                        </div>
+                                        <div class="model-item">
+                                            <span class="model-name">RoBERTa</span>
+                                            <span class="model-accuracy">93.5%</span>
+                                            <span class="model-status excellent">Excellent</span>
+                                        </div>
+                                        <div class="model-item">
+                                            <span class="model-name">DistilBERT</span>
+                                            <span class="model-accuracy">91.2%</span>
+                                            <span class="model-status good">Good</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="model-category">
+                                    <h3>👥 Attrition Models</h3>
+                                    <div class="model-list">
+                                        <div class="model-item">
+                                            <span class="model-name">Logistic Regression</span>
+                                            <span class="model-accuracy">87.3%</span>
+                                            <span class="model-status good">Good</span>
+                                        </div>
+                                        <div class="model-item">
+                                            <span class="model-name">Random Forest</span>
+                                            <span class="model-accuracy">86.1%</span>
+                                            <span class="model-status good">Good</span>
+                                        </div>
+                                        <div class="model-item">
+                                            <span class="model-name">SVM</span>
+                                            <span class="model-accuracy">84.7%</span>
+                                            <span class="model-status fair">Fair</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Performance Optimization Scripts (Legacy Support) -->
+    <script src="module-loader.js"></script>
+    <script src="performance-dashboard.js"></script>
+    
+    <!-- Modular Application System -->
+    <script type="module" src="modules/app.js"></script>
+    
+    <!-- Performance Test (개발 환경에서만) -->
+    <script>
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            const script = document.createElement('script');
+            script.src = 'performance-test.js';
+            script.defer = true;
+            document.head.appendChild(script);
+        }
+    </script>
+    
+    <!-- Legacy Scripts for Backward Compatibility -->
+    <script src="real-time-monitor.js"></script>
+    <script src="advanced-charts.js"></script>
+    <script src="training-monitor.js"></script>
+    <script src="xai-analyzer.js"></script>
+    <script src="advanced-statistics.js"></script>
+    
+    <!-- Global Export Functions for Legacy Support -->
+    <script>
+        // Export data function for button onclick compatibility
+        window.exportData = () => {
+            if (window.dashboard && typeof window.dashboard.exportData === 'function') {
+                window.dashboard.exportData();
+            } else {
+                console.warn('Dashboard not available for export');
+            }
+        };
+        
+        // XAI Analysis functions for button onclick compatibility
+        window.analyzeWithSHAP = () => {
+            if (window.dashboard?.advancedFeatures?.xaiAnalyzer) {
+                window.dashboard.advancedFeatures.xaiAnalyzer.analyzeWithSHAP();
+            } else {
+                console.warn('XAI Analyzer not available');
+            }
+        };
+        
+        window.analyzeWithLIME = () => {
+            if (window.dashboard?.advancedFeatures?.xaiAnalyzer) {
+                window.dashboard.advancedFeatures.xaiAnalyzer.analyzeWithLIME();
+            } else {
+                console.warn('XAI Analyzer not available');
+            }
+        };
+        
+        window.analyzePermutationImportance = () => {
+            if (window.dashboard?.advancedFeatures?.xaiAnalyzer) {
+                window.dashboard.advancedFeatures.xaiAnalyzer.analyzePermutationImportance();
+            } else {
+                console.warn('XAI Analyzer not available');
+            }
+        };
+        
+        // Show loading indicator while modules initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingIndicator = document.createElement('div');
+            loadingIndicator.id = 'module-loading-indicator';
+            loadingIndicator.innerHTML = `
+                <div style="
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(255, 255, 255, 0.9);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 9999;
+                    font-family: Arial, sans-serif;
+                ">
+                    <div style="text-align: center;">
+                        <div style="
+                            width: 40px;
+                            height: 40px;
+                            border: 4px solid #f3f3f3;
+                            border-top: 4px solid #007bff;
+                            border-radius: 50%;
+                            animation: spin 1s linear infinite;
+                            margin: 0 auto 1rem;
+                        "></div>
+                        <h3 style="margin: 0; color: #333;">Loading FCA Dashboard...</h3>
+                        <p style="margin: 0.5rem 0 0; color: #666;">Initializing modules</p>
+                    </div>
+                </div>
+                <style>
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                </style>
+            `;
+            document.body.appendChild(loadingIndicator);
+            
+            // Remove loading indicator when app is ready or after timeout
+            let attempts = 0;
+            const maxAttempts = 50; // 5 seconds max wait
+            
+            const checkAppReady = () => {
+                attempts++;
+                if (window.dashboard && window.apiClient) {
+                    setTimeout(() => {
+                        loadingIndicator.remove();
+                    }, 500);
+                } else if (attempts < maxAttempts) {
+                    setTimeout(checkAppReady, 100);
+                } else {
+                    // Force remove loading indicator after timeout
+                    console.warn('App initialization timeout - forcing load');
+                    loadingIndicator.remove();
+                    // Initialize minimal functionality
+                    window.dashboard = { exportData: () => console.log('Export not available') };
+                    window.apiClient = { status: 'fallback' };
+                }
+            };
+            
+            setTimeout(checkAppReady, 1000);
+        });
+    </script>
+</body>
+</html>

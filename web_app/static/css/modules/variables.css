@@ -1,0 +1,50 @@
+/* CSS Variables & Theme Configuration */
+
+:root {
+    /* Minimalist Color Palette - inspired by clean dashboard design */
+    --primary-color: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #dbeafe;
+    --secondary-color: #6b7280;
+    --accent-color: #111827;
+    --surface-color: #ffffff;
+    --background-color: #f9fafb;
+    --background-gradient: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+    --border-color: #e5e7eb;
+    --border-light: #f3f4f6;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --success-color: #059669;
+    --success-light: #d1fae5;
+    --error-color: #dc2626;
+    --warning-color: #d97706;
+    --info-color: #0891b2;
+    
+    /* Subtle shadows for depth */
+    --card-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --card-shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --card-shadow-elevated: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    
+    /* Clean gradients */
+    --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    --gradient-success: linear-gradient(135deg, #059669 0%, #047857 100%);
+    --gradient-warning: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    --gradient-info: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+    --gradient-surface: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+    
+    /* Transitions and animations */
+    --transition-fast: all 0.15s ease-out;
+    --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Layout */
+    --container-max-width: 1200px;
+    --border-radius: 8px;
+    --border-radius-lg: 12px;
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+}

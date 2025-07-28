@@ -1,0 +1,28 @@
+<!-- Chart Card Component - Reusable -->
+<div class="col-lg-{{ col_size|default('6') }} mb-4">
+    <div class="card h-100">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    {{ emoji|default('📊') }} {{ title }}
+                </h5>
+                {% if show_controls|default(false) %}
+                <div class="btn-group btn-group-sm" role="group">
+                    <button type="button" class="btn btn-outline-secondary" onclick="refreshChart('{{ chart_id }}')">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="downloadChart('{{ chart_id }}')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+            {% if description %}
+            <small class="text-muted">{{ description }}</small>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <div id="{{ chart_id }}" style="height: {{ height|default('400px') }};"></div>
+        </div>
+    </div>
+</div>

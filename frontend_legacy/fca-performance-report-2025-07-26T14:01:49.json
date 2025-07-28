@@ -1,0 +1,318 @@
+{
+  "timestamp": "2025-07-26T14:01:49.705Z",
+  "testDuration": 8639,
+  "config": {
+    "moduleLoadIterations": 50,
+    "apiRequestIterations": 30,
+    "chartCreationIterations": 10,
+    "concurrentRequestCount": 10
+  },
+  "results": {
+    "moduleSystem": {
+      "results": {
+        "moduleLoadTimes": [
+          24,
+          6,
+          21,
+          13,
+          6,
+          33,
+          24,
+          17,
+          10,
+          30,
+          10,
+          19,
+          24,
+          11,
+          34,
+          6,
+          8,
+          32,
+          26,
+          27,
+          22,
+          21,
+          14,
+          27,
+          9,
+          25,
+          7,
+          10,
+          32,
+          30,
+          14,
+          7,
+          9,
+          5,
+          33,
+          21,
+          14,
+          11,
+          34,
+          15,
+          31,
+          35,
+          15,
+          11,
+          33,
+          9,
+          25,
+          22,
+          19,
+          26
+        ],
+        "dependencyResolutionTimes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "initializationTimes": [
+          52,
+          22,
+          28,
+          23,
+          30,
+          40,
+          41,
+          47,
+          55,
+          24,
+          27,
+          55,
+          29,
+          44,
+          36,
+          19,
+          17,
+          34,
+          27,
+          24
+        ]
+      },
+      "stats": {
+        "avgModuleLoadTime": 19.34,
+        "p95ModuleLoadTime": 34,
+        "maxModuleLoadTime": 35,
+        "avgDependencyResolutionTime": 0,
+        "avgInitializationTime": 33.7
+      }
+    },
+    "apiPerformance": {
+      "results": {
+        "requestTimes": [
+          50,
+          112,
+          64,
+          69,
+          89,
+          66,
+          58,
+          43,
+          91,
+          38,
+          66,
+          114,
+          118,
+          103,
+          42,
+          127,
+          59,
+          68,
+          147,
+          38,
+          131,
+          44,
+          144,
+          50,
+          141,
+          137,
+          93
+        ],
+        "concurrentTimes": [
+          169
+        ],
+        "cachePerformance": {
+          "cacheMissTime": 123,
+          "cacheHitTime": 4,
+          "speedup": 30.75
+        },
+        "errorRates": []
+      },
+      "stats": {
+        "avgRequestTime": 85.25925925925925,
+        "p95RequestTime": 144,
+        "concurrentRequestTime": 169,
+        "errorRate": 10,
+        "cacheSpeedup": 30.75
+      }
+    },
+    "memoryEfficiency": {
+      "results": {
+        "memorySnapshots": [
+          {
+            "time": 0,
+            "memory": 35.12494669394019
+          },
+          {
+            "time": 1000,
+            "memory": 30.202748868790344
+          },
+          {
+            "time": 2000,
+            "memory": 45.747996770394806
+          },
+          {
+            "time": 3000,
+            "memory": 31.393297077283666
+          },
+          {
+            "time": 4000,
+            "memory": 34.71092353269494
+          },
+          {
+            "time": 5000,
+            "memory": 41.232276458698
+          },
+          {
+            "time": 6000,
+            "memory": 38.885366613798865
+          },
+          {
+            "time": 7000,
+            "memory": 34.38317416132932
+          },
+          {
+            "time": 8000,
+            "memory": 45.08832243201233
+          },
+          {
+            "time": 9000,
+            "memory": 32.48572749282553
+          },
+          {
+            "time": 10000,
+            "memory": 34.50029355855171
+          }
+        ],
+        "garbageCollectionEffectiveness": [
+          {
+            "before": 31.393297077283666,
+            "after": 49.74879996642314,
+            "freed": -18.355502889139476
+          },
+          {
+            "before": 38.885366613798865,
+            "after": 43.27322532804328,
+            "freed": -4.387858714244416
+          },
+          {
+            "before": 32.48572749282553,
+            "after": 43.300904185625456,
+            "freed": -10.815176692799923
+          }
+        ],
+        "memoryLeakDetection": false
+      },
+      "stats": {
+        "baselineMemory": 35.12494669394019,
+        "finalMemory": 34.50029355855171,
+        "memoryGrowth": -0.6246531353884777,
+        "maxMemory": 45.747996770394806,
+        "avgGCEffectiveness": -11.186179432061271,
+        "memoryLeakSuspected": false
+      }
+    },
+    "errorHandling": {
+      "results": {
+        "errorHandlingTimes": [
+          38,
+          47,
+          49,
+          45,
+          34,
+          47,
+          46,
+          46,
+          40,
+          55,
+          35,
+          48,
+          25,
+          33,
+          32,
+          45,
+          40,
+          36,
+          38,
+          27,
+          32,
+          33,
+          19,
+          34,
+          43,
+          27,
+          38,
+          19,
+          33,
+          18,
+          24,
+          37,
+          49,
+          27,
+          32,
+          41,
+          41,
+          36,
+          40,
+          23
+        ],
+        "recoveryTimes": [
+          318,
+          346,
+          136,
+          366,
+          393
+        ],
+        "errorTypePerformance": {
+          "MODULE_ERROR": {
+            "avgTime": 44.7,
+            "maxTime": 55
+          },
+          "API_ERROR": {
+            "avgTime": 35.9,
+            "maxTime": 48
+          },
+          "VALIDATION_ERROR": {
+            "avgTime": 29.6,
+            "maxTime": 43
+          },
+          "CHART_ERROR": {
+            "avgTime": 35,
+            "maxTime": 49
+          }
+        }
+      },
+      "stats": {
+        "avgErrorHandlingTime": 36.3,
+        "p95ErrorHandlingTime": 49,
+        "avgRecoveryTime": 311.8,
+        "fastestErrorType": "VALIDATION_ERROR",
+        "slowestErrorType": "MODULE_ERROR"
+      }
+    }
+  },
+  "score": 93,
+  "environment": {
+    "nodeVersion": "v18.19.1",
+    "platform": "linux",
+    "arch": "x64"
+  }
+}

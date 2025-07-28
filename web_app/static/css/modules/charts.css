@@ -1,0 +1,126 @@
+/* Chart and Data Visualization Styles */
+
+/* Charts */
+.plotly-graph-div {
+    border-radius: 8px;
+}
+
+/* Chart Containers */
+.chart-container {
+    position: relative;
+    margin: 1rem 0;
+}
+
+.chart-title {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Chart Containers Enhancement */
+.chart-wrapper {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+}
+
+/* Model Performance Indicators */
+.model-score {
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+}
+
+.model-score.excellent {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%);
+    color: var(--success-color);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.model-score.good {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%);
+    color: var(--primary-color);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.model-score.fair {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.05) 100%);
+    color: var(--warning-color);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.model-score.poor {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.05) 100%);
+    color: var(--error-color);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Metric Values */
+.metric-value {
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Performance Indicators */
+.performance-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background: var(--background-color);
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+.performance-indicator .label {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.performance-indicator .value {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+/* Data Tables */
+.data-table-container {
+    background: var(--surface-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    margin: 1rem 0;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table thead th {
+    background: var(--background-color);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.data-table tbody td {
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+}
+
+.data-table tbody tr:hover {
+    background: var(--background-color);
+}

@@ -1,0 +1,66 @@
+/* Base Styles & Typography */
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    background: var(--background-color);
+    color: var(--text-primary);
+    padding-top: 70px;
+    line-height: 1.5;
+    min-height: 100vh;
+    letter-spacing: -0.01em;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* Main Content */
+.main-content {
+    min-height: calc(100vh - 140px);
+    padding: 2rem 0;
+}
+
+/* Typography Enhancement */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-size: 1.25rem;
+}
+
+p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.text-primary { color: var(--text-primary) !important; }
+.text-secondary { color: var(--text-secondary) !important; }
+.text-muted { color: var(--text-muted) !important; }
+
+/* Layout Spacing */
+.section-spacing {
+    margin: 2rem 0;
+}
+
+.content-spacing {
+    padding: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .content-spacing {
+        padding: 1rem;
+    }
+}

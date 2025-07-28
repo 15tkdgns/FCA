@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+
+{% block title %}Datasets Overview{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="display-5">
+                <i class="fas fa-database text-primary me-3"></i>
+                Datasets Overview
+            </h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Datasets</li>
+                </ol>
+            </nav>
+        </div>
+        <hr class="mt-3 mb-4">
+    </div>
+</div>
+
+<!-- Dataset Overview Chart -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    Dataset Size and Memory Usage
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="dataset-chart" style="height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Available Images -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-images me-2"></i>
+                    Analysis Visualizations
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row" id="images-gallery">
+                    <!-- Images will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dataset Details -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Dataset Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="dataset-info">
+                    <!-- Dataset information will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Visualization</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modal-image" src="" class="img-fluid" alt="Analysis Visualization">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        Utils.showLoading();
+        
+        // Load dataset chart
+        const chartResponse = await APIClient.getChart('datasets');
+        if (chartResponse.status === 'success') {
+            await ChartUtils.renderChart('dataset-chart', chartResponse.chart);
+        }
+        
+        // Load available images
+        const imagesResponse = await APIClient.getImages();
+        if (imagesResponse.status === 'success') {
+            displayImagesGallery(imagesResponse.images);
+        }
+        
+        // Load dataset information
+        displayDatasetInfo();
+        
+    } catch (error) {
+        console.error('Error loading datasets overview:', error);
+        Utils.showError('Failed to load datasets data');
+    } finally {
+        Utils.hideLoading();
+    }
+});
+
+function displayImagesGallery(images) {
+    const gallery = document.getElementById('images-gallery');
+    if (!gallery || !images) return;
+    
+    const imageDescriptions = {
+        'dashboard': 'Model Performance Dashboard',
+        'fraud_distributions': 'Fraud Class Distributions',
+        'correlation_matrix': 'Feature Correlation Matrix',
+        'sentiment_analysis': 'Sentiment Analysis Results',
+        'sentiment_distribution': 'Sentiment Distribution',
+        'customer_attrition': 'Customer Attrition Results'
+    };
+    
+    const imageIcons = {
+        'dashboard': 'fa-chart-line',
+        'fraud_distributions': 'fa-shield-alt',
+        'correlation_matrix': 'fa-project-diagram',
+        'sentiment_analysis': 'fa-comment-alt',
+        'sentiment_distribution': 'fa-chart-pie',
+        'customer_attrition': 'fa-users'
+    };
+    
+    gallery.innerHTML = Object.entries(images).map(([key, filename]) => {
+        const description = imageDescriptions[key] || filename;
+        const icon = imageIcons[key] || 'fa-image';
+        
+        return `
+            <div class="col-lg-4 col-md-6 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas ${icon} fa-2x text-primary mb-3"></i>
+                        <h6 class="card-title">${description}</h6>
+                        <button class="btn btn-outline-primary" onclick="showImage('/api/images/${filename}', '${description}')">
+                            <i class="fas fa-eye me-2"></i>View
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function displayDatasetInfo() {
+    const infoContainer = document.getElementById('dataset-info');
+    if (!infoContainer) return;
+    
+    const datasetInfo = [
+        {
+            name: 'Credit Card Fraud 2023',
+            size: '568,629 records',
+            description: 'Balanced fraud detection dataset with PCA features',
+            type: 'Fraud Detection',
+            balance: 'Balanced (50/50)',
+            status: 'Processed'
+        },
+        {
+            name: 'HuggingFace Credit Card Fraud',
+            size: '1,048,575 records',
+            description: 'Real-world credit card transaction data',
+            type: 'Fraud Detection',
+            balance: 'Highly Imbalanced (0.6% fraud)',
+            status: 'Processed'
+        },
+        {
+            name: 'Financial Phrasebank',
+            size: '14,780 sentences',
+            description: 'Financial news sentiment classification',
+            type: 'Sentiment Analysis',
+            balance: 'Multi-class (3 categories)',
+            status: 'Processed'
+        },
+        {
+            name: 'Dhanush Fraud',
+            size: '1,000,000 records',
+            description: 'Behavioral pattern fraud detection',
+            type: 'Fraud Detection',
+            balance: 'Moderately Imbalanced (8.7% fraud)',
+            status: 'Processed'
+        },
+        {
+            name: 'WAMC Fraud',
+            size: '283,726 records',
+            description: 'Extremely imbalanced fraud dataset',
+            type: 'Fraud Detection',
+            balance: 'Extremely Imbalanced (0.17% fraud)',
+            status: 'Processed'
+        },
+        {
+            name: 'Customer Attrition',
+            size: '10,127 customers',
+            description: 'Customer churn prediction dataset',
+            type: 'Customer Analytics',
+            balance: 'Imbalanced (16.1% churn)',
+            status: 'Processed'
+        },
+        {
+            name: 'Incribo Fraud',
+            size: '8,000 records',
+            description: 'Detailed transaction fraud analysis',
+            type: 'Fraud Detection',
+            balance: 'Balanced (49.9% fraud)',
+            status: 'Processed'
+        },
+        {
+            name: 'IBM AML',
+            size: 'N/A',
+            description: 'Anti-Money Laundering dataset',
+            type: 'Fraud Detection',
+            balance: 'Unknown',
+            status: 'Failed (Timeout)'
+        }
+    ];
+    
+    const statusColors = {
+        'Processed': 'success',
+        'Failed (Timeout)': 'danger'
+    };
+    
+    const typeColors = {
+        'Fraud Detection': 'primary',
+        'Sentiment Analysis': 'info',
+        'Customer Analytics': 'success'
+    };
+    
+    infoContainer.innerHTML = `
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Dataset Name</th>
+                        <th>Size</th>
+                        <th>Type</th>
+                        <th>Balance</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${datasetInfo.map(dataset => `
+                        <tr>
+                            <td><strong>${dataset.name}</strong></td>
+                            <td>${dataset.size}</td>
+                            <td><span class="badge bg-${typeColors[dataset.type]}">${dataset.type}</span></td>
+                            <td><small>${dataset.balance}</small></td>
+                            <td><span class="badge bg-${statusColors[dataset.status]}">${dataset.status}</span></td>
+                            <td><small>${dataset.description}</small></td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+    `;
+}
+
+function showImage(imageSrc, title) {
+    const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+    document.getElementById('imageModalLabel').textContent = title;
+    document.getElementById('modal-image').src = imageSrc;
+    modal.show();
+}
+</script>
+{% endblock %}

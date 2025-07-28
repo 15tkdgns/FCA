@@ -1,0 +1,9 @@
+Dataset,Model,AUC-ROC,Precision,Recall,F1-Score
+Credit Card Fraud 2023,Logistic Regression,0.991,0.975,0.948,0.961
+Credit Card Fraud 2023,Random Forest,0.997,0.992,0.958,0.974
+Dhanush Fraud,Logistic Regression,0.950,0.000,0.000,0.000
+Dhanush Fraud,Random Forest,1.000,0.000,0.000,0.000
+WAMC Fraud,Logistic Regression,1.000,0.250,1.000,0.400
+WAMC Fraud,Random Forest,1.000,0.000,0.000,0.000
+Incribo Fraud,Logistic Regression,0.502,0.506,0.477,0.491
+Incribo Fraud,Random Forest,0.508,0.529,0.461,0.493

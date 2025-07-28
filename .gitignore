@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Large Data Files (over 100MB)
+data/credit_card_fraud_2023/creditcard_2023.csv
+data/credit_card_fraud_2023/creditcard_2023_processed.csv
+data/wamc_fraud/creditcard.csv
+data/wamc_fraud/wamc_fraud_processed.csv
+data/hf_creditcard_fraud/hf_creditcard_fraud.csv
+data/hf_creditcard_fraud/hf_creditcard_processed.csv
+
+# Large Data Files (over 50MB)
+data/dhanush_fraud/card_transdata.csv
+data/dhanush_fraud/dhanush_fraud_processed.csv
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Performance reports
+performance_report.json

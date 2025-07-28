@@ -1,0 +1,245 @@
+/* Animations & Transitions */
+
+/* Smooth page transitions */
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.slide-in {
+    animation: slideIn 0.5s ease-out;
+}
+
+.scale-in {
+    animation: scaleIn 0.4s ease-out;
+}
+
+/* Loading states */
+.loading-shimmer {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.loading-pulse {
+    animation: pulse 2s infinite;
+}
+
+.loading-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Interactive animations */
+.hover-lift {
+    transition: var(--transition-normal);
+}
+
+.hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-elevated);
+}
+
+.hover-scale {
+    transition: var(--transition-fast);
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* Button animations */
+.btn-animated {
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-normal);
+}
+
+.btn-animated::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: var(--transition-normal);
+}
+
+.btn-animated:hover::before {
+    left: 100%;
+}
+
+/* Chart container animations */
+.chart-container {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: chartSlideIn 0.8s ease-out forwards;
+}
+
+.chart-container.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Data table animations */
+.data-table tbody tr {
+    opacity: 0;
+    animation: tableRowIn 0.3s ease-out forwards;
+}
+
+.data-table tbody tr:nth-child(odd) {
+    animation-delay: 0.1s;
+}
+
+.data-table tbody tr:nth-child(even) {
+    animation-delay: 0.2s;
+}
+
+/* Progress bars */
+.progress-animated .progress-bar {
+    animation: progressFill 1.5s ease-out;
+}
+
+/* Status indicators */
+.status-online {
+    animation: pulseGreen 2s infinite;
+}
+
+.status-warning {
+    animation: pulseYellow 2s infinite;
+}
+
+.status-error {
+    animation: pulseRed 2s infinite;
+}
+
+/* Keyframe definitions */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes chartSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes tableRowIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes progressFill {
+    from {
+        width: 0;
+    }
+    to {
+        width: var(--progress-width, 100%);
+    }
+}
+
+@keyframes pulseGreen {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
+    }
+}
+
+@keyframes pulseYellow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(245, 158, 11, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(245, 158, 11, 0.8);
+    }
+}
+
+@keyframes pulseRed {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.8);
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

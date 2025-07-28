@@ -1,0 +1,140 @@
+/* Responsive Design & Animations */
+
+/* Responsive Design - Mobile First */
+@media (max-width: 768px) {
+    body {
+        font-size: 13px;
+        padding-top: 65px;
+    }
+    
+    .summary-card h2 {
+        font-size: 1.75rem;
+    }
+    
+    .quick-link-btn {
+        min-height: 110px;
+    }
+    
+    .quick-link-btn i {
+        font-size: 1.25rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .card-header {
+        padding: 1rem;
+    }
+    
+    .navbar {
+        padding: 0.5rem 0;
+    }
+    
+    .main-content {
+        padding: 1rem 0;
+    }
+    
+    .chart-container {
+        margin: 0.5rem 0;
+    }
+    
+    .performance-indicator {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .row {
+        margin: 0 -0.5rem;
+    }
+    
+    .col, .col-md-6, .col-lg-4, .col-lg-3 {
+        padding: 0 0.5rem;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.scale-in {
+    animation: scaleIn 0.2s ease-out;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Animation for page load */
+.page-enter {
+    animation: pageEnter 0.6s ease-out;
+}
+
+@keyframes pageEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Grid Layout Enhancement */
+.grid-container {
+    display: grid;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.grid-2 {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.grid-4 {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+@media (max-width: 768px) {
+    .grid-container {
+        gap: 1rem;
+        margin: 1rem 0;
+    }
+    
+    .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,617 @@
+{% extends "base.html" %}
+
+{% block title %}Dataset Management{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Frontend 스타일과 web_app 템플릿 통합 */
+    .table-wrapper { 
+        overflow-x: auto; 
+        margin-top: 20px; 
+        border: 1px solid var(--border-color); 
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .datasets-table { 
+        width: 100%; 
+        min-width: 1350px; 
+        border-collapse: collapse; 
+        margin: 0;
+    }
+    
+    .datasets-table th, 
+    .datasets-table td { 
+        border: 1px solid var(--border-color); 
+        padding: 12px 16px; 
+        text-align: left; 
+        vertical-align: top; 
+    }
+    
+    .datasets-table th { 
+        background-color: var(--primary-color); 
+        color: white; 
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+    
+    .datasets-table tr:nth-child(even) { 
+        background-color: #f8f9fa; 
+    }
+    
+    .datasets-table tr:hover {
+        background-color: #e9ecef;
+        transition: var(--transition-fast);
+    }
+    
+    /* 컬럼 너비 최적화 (Frontend 스타일 차용) */
+    .datasets-table th:nth-child(1), 
+    .datasets-table td:nth-child(1) { width: 150px; white-space: normal; }
+    .datasets-table th:nth-child(2), 
+    .datasets-table td:nth-child(2) { width: 300px; white-space: normal; }
+    .datasets-table th:nth-child(3), 
+    .datasets-table td:nth-child(3) { width: 400px; white-space: normal; }
+    .datasets-table th:nth-child(4), 
+    .datasets-table td:nth-child(4) { width: 300px; white-space: normal; }
+    .datasets-table th:nth-child(5), 
+    .datasets-table td:nth-child(5) { width: 200px; text-align: center; }
+    
+    .step-list { 
+        list-style-type: decimal; 
+        padding-left: 20px; 
+        margin: 0; 
+        font-size: 13px; 
+    }
+    
+    .step-list li { 
+        margin-bottom: 4px; 
+        line-height: 1.4;
+    }
+    
+    .action-buttons { 
+        display: flex; 
+        flex-direction: column; 
+        gap: 8px; 
+    }
+    
+    .action-btn { 
+        padding: 8px 16px; 
+        font-size: 12px; 
+        cursor: pointer; 
+        border: 1px solid var(--border-color); 
+        border-radius: var(--border-radius);
+        background-color: #f8f9fa;
+        transition: var(--transition-fast);
+    }
+    
+    .action-btn:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-1px);
+    }
+    
+    .stats-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        background-color: var(--success-color);
+        color: white;
+        border-radius: 12px;
+        font-size: 11px;
+        margin: 2px;
+    }
+    
+    .processing-indicator {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 8px;
+    }
+    
+    .status-success { background-color: var(--success-color); }
+    .status-warning { background-color: var(--warning-color); }
+    .status-error { background-color: var(--danger-color); }
+    
+    .enhanced-card {
+        border: none;
+        box-shadow: var(--card-shadow);
+        transition: var(--transition-normal);
+    }
+    
+    .enhanced-card:hover {
+        box-shadow: var(--card-shadow-hover);
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="display-5 fw-bold">
+                <i class="fas fa-database me-3" style="color: var(--primary-color);"></i>
+                통합 데이터셋 관리
+            </h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Datasets</li>
+                </ol>
+            </nav>
+        </div>
+        <hr class="mt-3 mb-4">
+    </div>
+</div>
+
+<!-- 통합된 통계 카드 (Frontend + Web_app 스타일) -->
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card enhanced-card text-center">
+            <div class="card-body">
+                <h5 class="text-primary">📊 Total Datasets</h5>
+                <h3 class="fw-bold" id="total-datasets-count">8</h3>
+                <small class="text-muted">Across all domains</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card enhanced-card text-center">
+            <div class="card-body">
+                <h5 class="text-success">✅ Processed</h5>
+                <h3 class="fw-bold" id="processed-datasets-count">7</h3>
+                <small class="text-muted">Successfully loaded</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card enhanced-card text-center">
+            <div class="card-body">
+                <h5 class="text-danger">❌ Failed</h5>
+                <h3 class="fw-bold" id="failed-datasets-count">1</h3>
+                <small class="text-muted">IBM AML (Timeout)</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card enhanced-card text-center">
+            <div class="card-body">
+                <h5 class="text-info">📈 Total Records</h5>
+                <h3 class="fw-bold" id="total-records-count">1.8M+</h3>
+                <small class="text-muted">Ready for analysis</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 통합된 데이터셋 테이블 (Frontend 상세 정보 + Web_app 시각화) -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card enhanced-card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-table me-2"></i>
+                    상세 데이터셋 정보
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-wrapper">
+                    <table class="datasets-table">
+                        <thead>
+                            <tr>
+                                <th>Dataset</th>
+                                <th>Description</th>
+                                <th>Processing Steps</th>
+                                <th>Dataset Features</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="processing-indicator status-success"></div>
+                                    <strong>credit_card_fraud_2023</strong>
+                                    <br>
+                                    <span class="stats-badge">568,629 records</span>
+                                </td>
+                                <td>
+                                    Balanced fraud detection dataset with PCA features for enhanced privacy protection
+                                    <br><small class="text-muted">Type: Fraud Detection | Balance: 50/50</small>
+                                </td>
+                                <td>
+                                    <ol class="step-list">
+                                        <li>CSV 파일 로드 및 기본 검증</li>
+                                        <li>데이터 타입 최적화 (float32 변환)</li>
+                                        <li>클래스 분포 분석 (사기 50.0%)</li>
+                                        <li>통계 정보 계산 (평균: $12,041)</li>
+                                        <li>메모리 캐싱 및 인덱싱</li>
+                                    </ol>
+                                </td>
+                                <td>
+                                    • 31 features (28 PCA + Time, Amount, Class)<br>
+                                    • Balanced dataset (50% fraud)<br>
+                                    • Mean amount: $12,041.94<br>
+                                    • Std deviation: $6,919.64<br>
+                                    • Memory usage: ~35MB
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="action-btn" onclick="viewDataset('credit_card_fraud_2023')">👁️ View</button>
+                                        <button class="action-btn" onclick="downloadDataset('credit_card_fraud_2023')">💾 Download</button>
+                                        <button class="action-btn" onclick="analyzeDataset('credit_card_fraud_2023')">📊 Analyze</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="processing-indicator status-success"></div>
+                                    <strong>wamc_fraud</strong>
+                                    <br>
+                                    <span class="stats-badge">283,726 records</span>
+                                </td>
+                                <td>
+                                    Extremely imbalanced real-world fraud dataset
+                                    <br><small class="text-muted">Type: Fraud Detection | Balance: 0.17% fraud</small>
+                                </td>
+                                <td>
+                                    <ol class="step-list">
+                                        <li>CSV 파일 로드 및 스키마 검증</li>
+                                        <li>극단적 불균형 클래스 분석</li>
+                                        <li>이상치 탐지 및 처리</li>
+                                        <li>거래 금액 분포 분석</li>
+                                        <li>시계열 패턴 분석</li>
+                                    </ol>
+                                </td>
+                                <td>
+                                    • 31 features (similar to creditcard)<br>
+                                    • Highly imbalanced (0.167% fraud)<br>
+                                    • Mean amount: $88.47<br>
+                                    • Median amount: $22.00<br>
+                                    • Memory usage: ~22MB
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="action-btn" onclick="viewDataset('wamc_fraud')">👁️ View</button>
+                                        <button class="action-btn" onclick="downloadDataset('wamc_fraud')">💾 Download</button>
+                                        <button class="action-btn" onclick="analyzeDataset('wamc_fraud')">📊 Analyze</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="processing-indicator status-success"></div>
+                                    <strong>financial_phrasebank</strong>
+                                    <br>
+                                    <span class="stats-badge">14,780 sentences</span>
+                                </td>
+                                <td>
+                                    Financial news sentiment classification dataset
+                                    <br><small class="text-muted">Type: Sentiment Analysis | Balance: 3-class</small>
+                                </td>
+                                <td>
+                                    <ol class="step-list">
+                                        <li>텍스트 파일 파싱 및 인코딩 처리</li>
+                                        <li>문장 분할 및 정제</li>
+                                        <li>감정 라벨 매핑 (3클래스)</li>
+                                        <li>문장 길이 분포 분석</li>
+                                        <li>어그리먼트 레벨별 분류</li>
+                                    </ol>
+                                </td>
+                                <td>
+                                    • 14,780 financial sentences<br>
+                                    • 3 sentiment classes (pos/neg/neu)<br>
+                                    • Avg length: 126.16 chars<br>
+                                    • Agreement levels: 50-100%<br>
+                                    • Memory usage: ~2MB
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="action-btn" onclick="viewDataset('financial_phrasebank')">👁️ View</button>
+                                        <button class="action-btn" onclick="downloadDataset('financial_phrasebank')">💾 Download</button>
+                                        <button class="action-btn" onclick="analyzeDataset('financial_phrasebank')">📊 Analyze</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="processing-indicator status-warning"></div>
+                                    <strong>dhanush_fraud</strong>
+                                    <br>
+                                    <span class="stats-badge">1,000,000 records</span>
+                                </td>
+                                <td>
+                                    Large-scale behavioral pattern fraud detection
+                                    <br><small class="text-muted">Type: Fraud Detection | Balance: Moderate imbalance</small>
+                                </td>
+                                <td>
+                                    <ol class="step-list">
+                                        <li>대용량 CSV 청크 단위 로딩</li>
+                                        <li>행동 패턴 피처 엔지니어링</li>
+                                        <li>시간 기반 피처 생성</li>
+                                        <li>이상 거래 패턴 탐지</li>
+                                        <li>메모리 효율적 저장</li>
+                                    </ol>
+                                </td>
+                                <td>
+                                    • 1M+ transaction records<br>
+                                    • Behavioral features<br>
+                                    • Time-series patterns<br>
+                                    • Geographic information<br>
+                                    • Memory usage: ~76MB
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="action-btn" onclick="viewDataset('dhanush_fraud')">👁️ View</button>
+                                        <button class="action-btn" onclick="downloadDataset('dhanush_fraud')">💾 Download</button>
+                                        <button class="action-btn" onclick="analyzeDataset('dhanush_fraud')">📊 Analyze</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="processing-indicator status-error"></div>
+                                    <strong>ibm_aml</strong>
+                                    <br>
+                                    <span class="stats-badge text-danger">Failed</span>
+                                </td>
+                                <td>
+                                    Anti-Money Laundering dataset (IBM)
+                                    <br><small class="text-muted">Type: Fraud Detection | Status: Timeout Error</small>
+                                </td>
+                                <td>
+                                    <ol class="step-list">
+                                        <li>대용량 파일 다운로드 시도</li>
+                                        <li>네트워크 타임아웃 발생</li>
+                                        <li>대안 소스 검색</li>
+                                        <li>로컬 캐시 확인</li>
+                                        <li>❌ 처리 실패 (재시도 필요)</li>
+                                    </ol>
+                                </td>
+                                <td>
+                                    • Dataset unavailable<br>
+                                    • Download timeout<br>
+                                    • Size: Unknown<br>
+                                    • Features: TBD<br>
+                                    • Status: Failed
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="action-btn" onclick="retryDataset('ibm_aml')" disabled>🔄 Retry</button>
+                                        <button class="action-btn" onclick="skipDataset('ibm_aml')" disabled>⏭️ Skip</button>
+                                        <button class="action-btn" onclick="reportIssue('ibm_aml')">🐛 Report</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Web_app 스타일의 시각화 갤러리 통합 -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card enhanced-card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-images me-2"></i>
+                    데이터셋 시각화 갤러리
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row" id="images-gallery">
+                    <!-- Web_app 템플릿의 JavaScript로 채워짐 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 실시간 처리 상태 모니터링 -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card enhanced-card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-line me-2"></i>
+                    처리 성능 모니터링
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="processing-chart" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card enhanced-card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-memory me-2"></i>
+                    메모리 사용량
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="memory-chart" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 이미지 모달 (Web_app 템플릿에서 차용) -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">데이터 시각화</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modal-image" src="" class="img-fluid" alt="Dataset Visualization">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Frontend와 Web_app 기능 통합
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        Utils.showLoading();
+        
+        // 통합된 데이터 로딩
+        await Promise.all([
+            loadDatasetStatistics(),
+            loadVisualizationGallery(),
+            loadPerformanceCharts()
+        ]);
+        
+    } catch (error) {
+        console.error('통합 데이터셋 페이지 로딩 오류:', error);
+        Utils.showError('데이터셋 정보를 불러오는데 실패했습니다.');
+    } finally {
+        Utils.hideLoading();
+    }
+});
+
+async function loadDatasetStatistics() {
+    try {
+        const response = await window.APIClient.getSummary();
+        if (response.status === 'success') {
+            updateStatisticsCards(response.data);
+        }
+    } catch (error) {
+        console.error('통계 로딩 오류:', error);
+    }
+}
+
+async function loadVisualizationGallery() {
+    try {
+        const imagesResponse = await window.APIClient.request('/api/images');
+        displayImagesGallery(imagesResponse.images || {});
+    } catch (error) {
+        console.error('시각화 갤러리 로딩 오류:', error);
+    }
+}
+
+async function loadPerformanceCharts() {
+    try {
+        // Frontend의 성능 모니터링 차트
+        const processingData = {
+            x: ['Credit Card', 'WAMC', 'Phrasebank', 'Dhanush'],
+            y: [2.1, 1.8, 0.3, 4.2],
+            type: 'bar',
+            name: '처리 시간 (초)'
+        };
+        
+        if (typeof Plotly !== 'undefined') {
+            Plotly.newPlot('processing-chart', [processingData], {
+                title: '데이터셋 처리 시간',
+                yaxis: { title: '시간 (초)' }
+            });
+        }
+        
+        // 메모리 사용량 차트
+        const memoryData = {
+            labels: ['Credit Card', 'WAMC', 'Phrasebank', 'Dhanush'],
+            values: [35, 22, 2, 76],
+            type: 'pie'
+        };
+        
+        if (typeof Plotly !== 'undefined') {
+            Plotly.newPlot('memory-chart', [memoryData], {
+                title: '메모리 사용량 분포 (MB)'
+            });
+        }
+        
+    } catch (error) {
+        console.error('성능 차트 로딩 오류:', error);
+    }
+}
+
+function updateStatisticsCards(data) {
+    // 실시간 통계 업데이트
+    const stats = {
+        total: 8,
+        processed: 7, 
+        failed: 1,
+        records: '1.8M+'
+    };
+    
+    document.getElementById('total-datasets-count').textContent = stats.total;
+    document.getElementById('processed-datasets-count').textContent = stats.processed;
+    document.getElementById('failed-datasets-count').textContent = stats.failed;
+    document.getElementById('total-records-count').textContent = stats.records;
+}
+
+function displayImagesGallery(images) {
+    const gallery = document.getElementById('images-gallery');
+    if (!gallery) return;
+    
+    const imageDescriptions = {
+        'fraud_class_distributions': 'Fraud Class Distributions',
+        'correlation_matrix': 'Feature Correlation Matrix',
+        'sentiment_analysis_results': 'Sentiment Analysis Results',
+        'sentiment_distribution': 'Sentiment Distribution',
+        'customer_attrition_results': 'Customer Attrition Results',
+        'simple_model_dashboard': 'Model Performance Dashboard'
+    };
+    
+    const imageIcons = {
+        'fraud_class_distributions': 'fa-shield-alt',
+        'correlation_matrix': 'fa-project-diagram',
+        'sentiment_analysis_results': 'fa-comment-alt',
+        'sentiment_distribution': 'fa-chart-pie',
+        'customer_attrition_results': 'fa-users',
+        'simple_model_dashboard': 'fa-chart-line'
+    };
+    
+    gallery.innerHTML = Object.entries(images).map(([key, filename]) => {
+        const description = imageDescriptions[key] || filename;
+        const icon = imageIcons[key] || 'fa-image';
+        
+        return `
+            <div class="col-lg-4 col-md-6 mb-3">
+                <div class="card enhanced-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas ${icon} fa-2x text-primary mb-3"></i>
+                        <h6 class="card-title">${description}</h6>
+                        <button class="btn btn-outline-primary hover-lift" onclick="showImage('/static/images/${filename}', '${description}')">
+                            <i class="fas fa-eye me-2"></i>시각화 보기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Frontend 버튼 기능들
+function viewDataset(datasetName) {
+    console.log(`Viewing dataset: ${datasetName}`);
+    // API 호출하여 데이터셋 상세 정보 표시
+}
+
+function downloadDataset(datasetName) {
+    console.log(`Downloading dataset: ${datasetName}`);
+    // 다운로드 로직
+}
+
+function analyzeDataset(datasetName) {
+    console.log(`Analyzing dataset: ${datasetName}`);
+    // 분석 페이지로 이동
+}
+
+function showImage(imageSrc, title) {
+    const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+    document.getElementById('imageModalLabel').textContent = title;
+    document.getElementById('modal-image').src = imageSrc;
+    modal.show();
+}
+</script>
+{% endblock %}

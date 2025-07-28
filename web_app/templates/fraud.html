@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Fraud Detection Analysis{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="display-5 fw-bold">
+                <i class="fas fa-shield-alt me-3" style="color: var(--primary-color);"></i>
+                Fraud Detection Analysis
+            </h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Fraud Detection</li>
+                </ol>
+            </nav>
+        </div>
+        <hr class="mt-3 mb-4">
+    </div>
+</div>
+
+<!-- Performance Chart -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    Fraud Detection Model Performance
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="fraud-chart" style="height: 500px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Results Table -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-table me-2"></i>
+                    Detailed Results
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="fraud-table">
+                    <!-- Data will be populated by JavaScript -->
+                    <div class="text-center p-4">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Loading fraud detection statistics...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/fraud.js') }}"></script>
+<script src="{{ url_for('static', filename='js/fraud-safe.js') }}"></script>
+{% endblock %}

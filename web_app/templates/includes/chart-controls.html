@@ -1,0 +1,48 @@
+<!-- Chart Control Panel - Reusable Component -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="card-title mb-0">
+            ⚙️ 차트 제어 패널
+        </h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label for="dataset-selector" class="form-label">데이터셋</label>
+                <select class="form-select" id="dataset-selector">
+                    <option value="sample">샘플 데이터</option>
+                    <option value="fraud">사기 탐지</option>
+                    <option value="sentiment">감정 분석</option>
+                    <option value="attrition">고객 이탈</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="color-scheme-selector" class="form-label">색상 테마</label>
+                <select class="form-select" id="color-scheme-selector">
+                    <option value="viridis">Viridis</option>
+                    <option value="plasma">Plasma</option>
+                    <option value="blues">Blues</option>
+                    <option value="reds">Reds</option>
+                    <option value="rdbu">RdBu</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="chart-size-selector" class="form-label">차트 크기</label>
+                <select class="form-select" id="chart-size-selector">
+                    <option value="small">작음</option>
+                    <option value="medium" selected>보통</option>
+                    <option value="large">큼</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">애니메이션</label>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="animation-toggle" checked>
+                    <label class="form-check-label" for="animation-toggle">
+                        활성화
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

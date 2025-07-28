@@ -1,0 +1,702 @@
+/* FCA Dashboard Custom Styles - Modern & Simple */
+
+:root {
+    /* Minimalist Color Palette - inspired by clean dashboard design */
+    --primary-color: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #dbeafe;
+    --secondary-color: #6b7280;
+    --accent-color: #111827;
+    --surface-color: #ffffff;
+    --background-color: #f9fafb;
+    --background-gradient: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+    --border-color: #e5e7eb;
+    --border-light: #f3f4f6;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --success-color: #059669;
+    --success-light: #d1fae5;
+    --error-color: #dc2626;
+    --warning-color: #d97706;
+    --info-color: #0891b2;
+    
+    /* Subtle shadows for depth */
+    --card-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --card-shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --card-shadow-elevated: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    
+    /* Clean gradients */
+    --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    --gradient-success: linear-gradient(135deg, #059669 0%, #047857 100%);
+    --gradient-warning: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    --gradient-info: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+    --gradient-surface: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    background: var(--background-color);
+    color: var(--text-primary);
+    padding-top: 70px;
+    line-height: 1.5;
+    min-height: 100vh;
+    letter-spacing: -0.01em;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* Navigation - Clean & Minimal */
+.navbar {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-bottom: 1px solid var(--border-light);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    padding: 0.75rem 0;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--text-primary) !important;
+    letter-spacing: -0.02em;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 400;
+    color: var(--text-secondary) !important;
+    transition: all 0.15s ease;
+    border-radius: 8px;
+    margin: 0 2px;
+    padding: 6px 12px !important;
+    font-size: 14px;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: var(--primary-color) !important;
+    background-color: var(--primary-light);
+}
+
+/* Main Content */
+.main-content {
+    min-height: calc(100vh - 140px);
+    padding: 2rem 0;
+}
+
+/* Cards - Clean & Minimal */
+.card {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--surface-color);
+    box-shadow: var(--card-shadow);
+    transition: all 0.2s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--border-light);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card-header {
+    background: var(--surface-color);
+    border-bottom: 1px solid var(--border-light);
+    border-radius: 12px 12px 0 0 !important;
+    font-weight: 500;
+    color: var(--text-primary);
+    padding: 1.25rem 1.5rem;
+    position: relative;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Charts */
+.plotly-graph-div {
+    border-radius: 8px;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: white;
+}
+
+.loading-overlay .spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Summary Cards - Modern & Clean */
+.card.bg-primary {
+    background: var(--gradient-primary) !important;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--card-shadow-elevated);
+}
+
+.card.bg-success {
+    background: var(--gradient-success) !important;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.card.bg-info {
+    background: var(--gradient-info) !important;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.card.bg-warning {
+    background: var(--gradient-warning) !important;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.card.bg-danger {
+    background: linear-gradient(135deg, var(--error-color) 0%, #dc2626 100%) !important;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Clean overlay for gradient cards */
+.card.bg-primary::after,
+.card.bg-success::after,
+.card.bg-info::after,
+.card.bg-warning::after,
+.card.bg-danger::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
+    pointer-events: none;
+}
+
+/* Buttons */
+.btn-outline-primary {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.btn-outline-success {
+    border-color: var(--success-color);
+    color: var(--success-color);
+}
+
+.btn-outline-success:hover {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.btn-outline-danger {
+    border-color: var(--error-color);
+    color: var(--error-color);
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--error-color);
+    border-color: var(--error-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.btn-outline-warning {
+    border-color: var(--warning-color);
+    color: var(--warning-color);
+}
+
+.btn-outline-warning:hover {
+    background-color: var(--warning-color);
+    border-color: var(--warning-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+}
+
+.btn-outline-info {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+.btn-outline-info:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+}
+
+/* Tables */
+.table {
+    background-color: var(--surface-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th {
+    background-color: var(--background-color);
+    font-weight: 600;
+    border-top: none;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    padding: 1rem 0.75rem;
+}
+
+.table td {
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+    padding: 0.875rem 0.75rem;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.75rem;
+    font-weight: 500;
+    border-radius: 6px;
+}
+
+.badge.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.badge.bg-success {
+    background-color: var(--success-color) !important;
+}
+
+.badge.bg-info {
+    background-color: var(--secondary-color) !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--error-color) !important;
+}
+
+.badge.bg-warning {
+    background-color: var(--warning-color) !important;
+}
+
+/* Performance Indicators */
+.performance-high {
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+.performance-medium {
+    color: var(--warning-color);
+    font-weight: 600;
+}
+
+.performance-low {
+    color: var(--error-color);
+    font-weight: 600;
+}
+
+/* Footer */
+.footer {
+    margin-top: auto;
+    background: var(--surface-color) !important;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 1rem 0;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Status Indicators */
+.status-online {
+    color: var(--success-color);
+}
+
+.status-offline {
+    color: var(--danger-color);
+}
+
+.status-warning {
+    color: var(--warning-color);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Error States */
+.error-state {
+    text-align: center;
+    padding: 2rem;
+    color: var(--secondary-color);
+}
+
+.error-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Success States */
+.success-state {
+    text-align: center;
+    padding: 1rem;
+    color: var(--success-color);
+}
+
+/* Data Tables */
+.data-table {
+    font-size: 0.9rem;
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+}
+
+.data-table .metric-value {
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+}
+
+/* Chart Containers */
+.chart-container {
+    position: relative;
+    margin: 1rem 0;
+}
+
+.chart-title {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+/* Model Performance Indicators */
+.model-score {
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+}
+
+.model-score.excellent {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%);
+    color: var(--success-color);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.model-score.good {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%);
+    color: var(--primary-color);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.model-score.fair {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.05) 100%);
+    color: var(--warning-color);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.model-score.poor {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.05) 100%);
+    color: var(--error-color);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Metric Values */
+.metric-value {
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Summary Cards Enhancement */
+.summary-card {
+    transform: scale(1);
+    transition: all 0.2s ease;
+    border-radius: 16px;
+}
+
+.summary-card:hover {
+    transform: scale(1.02) translateY(-4px);
+    box-shadow: var(--card-shadow-elevated);
+}
+
+.summary-card .card-body {
+    position: relative;
+    z-index: 1;
+}
+
+.summary-card h2 {
+    font-size: 2.25rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    letter-spacing: -0.02em;
+}
+
+/* Quick Link Buttons - Minimal Design */
+.quick-link-btn {
+    min-height: 140px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    background: var(--surface-color);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.quick-link-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.quick-link-btn:hover::before {
+    left: 100%;
+}
+
+.quick-link-btn:hover {
+    border-color: var(--primary-color);
+    background: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+    text-decoration: none;
+}
+
+.quick-link-btn i {
+    transition: all 0.3s ease;
+}
+
+.quick-link-btn:hover i {
+    transform: scale(1.1);
+    color: var(--primary-color);
+}
+
+/* Enhanced Card Headers */
+.card-header h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.card-header i {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+}
+
+/* Chart Containers Enhancement */
+.plotly-graph-div {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Responsive Design - Mobile First */
+@media (max-width: 768px) {
+    body {
+        font-size: 13px;
+        padding-top: 65px;
+    }
+    
+    .summary-card h2 {
+        font-size: 1.75rem;
+    }
+    
+    .quick-link-btn {
+        min-height: 110px;
+    }
+    
+    .quick-link-btn i {
+        font-size: 1.25rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .card-header {
+        padding: 1rem;
+    }
+    
+    .navbar {
+        padding: 0.5rem 0;
+    }
+    
+    .main-content {
+        padding: 1rem 0;
+    }
+}
+
+/* Typography Enhancement */
+.display-4 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.card-title {
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+
+/* Layout Spacing */
+.main-content {
+    padding: 1.5rem 0;
+}
+
+.row {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+}
+
+.row > * {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+/* Status & Badge Improvements */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.65rem;
+    font-weight: 500;
+    border-radius: 6px;
+    letter-spacing: 0.025em;
+}
+
+/* Icon Styling */
+.fas, .far {
+    line-height: 1;
+}
+
+/* Animation for page load */
+.fade-in-up {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Grid Layout Enhancement */
+.container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}

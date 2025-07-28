@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>차트 테스트</title>
+    <script src="https://cdn.plot.ly/plotly-2.25.2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>🧪 Chart Test Page</h1>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>📊 Test Chart 1</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="test-chart-1" style="height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>📈 Test Chart 2</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="test-chart-2" style="height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>🔍 Debug Info</h5>
+                    </div>
+                    <div class="card-body">
+                        <pre id="debug-info"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('🧪 Starting chart test...');
+        
+        // Debug info
+        const debugInfo = {
+            plotlyAvailable: typeof Plotly !== 'undefined',
+            plotlyVersion: typeof Plotly !== 'undefined' ? Plotly.version : 'N/A',
+            userAgent: navigator.userAgent,
+            timestamp: new Date().toISOString()
+        };
+        
+        document.getElementById('debug-info').textContent = JSON.stringify(debugInfo, null, 2);
+        
+        // Test 1: Direct Plotly call
+        async function testDirectChart() {
+            console.log('🎯 Testing direct Plotly chart...');
+            
+            const data = [{
+                x: ['Test A', 'Test B', 'Test C'],
+                y: [0.9, 0.8, 0.7],
+                type: 'bar',
+                marker: {color: '#dc2626'}
+            }];
+            
+            const layout = {
+                title: 'Direct Test Chart',
+                xaxis: {title: 'Categories'},
+                yaxis: {title: 'Values'}
+            };
+            
+            try {
+                await Plotly.newPlot('test-chart-1', data, layout);
+                console.log('✅ Direct chart rendered successfully');
+            } catch (error) {
+                console.error('❌ Direct chart failed:', error);
+            }
+        }
+        
+        // Test 2: API call and chart
+        async function testApiChart() {
+            console.log('🌐 Testing API + chart...');
+            
+            try {
+                const response = await fetch('/api/chart/overview');
+                const result = await response.json();
+                
+                console.log('📡 API Response:', result);
+                
+                if (result.status === 'success') {
+                    const chartData = result.data;
+                    
+                    await Plotly.newPlot('test-chart-2', chartData.data, chartData.layout);
+                    console.log('✅ API chart rendered successfully');
+                } else {
+                    throw new Error('API returned error: ' + result.error);
+                }
+            } catch (error) {
+                console.error('❌ API chart failed:', error);
+                
+                // Show error in chart container
+                document.getElementById('test-chart-2').innerHTML = `
+                    <div class="alert alert-danger">
+                        <h6>API Chart Error</h6>
+                        <small>${error.message}</small>
+                    </div>
+                `;
+            }
+        }
+        
+        // Run tests
+        window.addEventListener('load', () => {
+            console.log('🚀 Running chart tests...');
+            testDirectChart();
+            testApiChart();
+        });
+    </script>
+</body>
+</html>

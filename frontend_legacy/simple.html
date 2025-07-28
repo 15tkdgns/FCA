@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCA 대시보드 - 간단 버전</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .header {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card h3 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .card-icon {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        .metric:last-child {
+            border-bottom: none;
+        }
+        .metric-value {
+            font-weight: bold;
+            color: #667eea;
+        }
+        .status {
+            text-align: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .status-online {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .nav-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .nav-item {
+            display: block;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .nav-item:hover {
+            transform: scale(1.05);
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏦 FCA 분석 대시보드</h1>
+            <p>Financial Crime Analysis - 종합 성과 분석</p>
+        </div>
+
+        <div class="nav-section">
+            <h3>📊 분석 영역</h3>
+            <div class="nav-grid">
+                <a href="#fraud" class="nav-item">🛡️ 사기 탐지</a>
+                <a href="#sentiment" class="nav-item">💬 감정 분석</a>
+                <a href="#attrition" class="nav-item">👥 고객 이탈</a>
+                <a href="datasets.html" class="nav-item">🗂️ 데이터셋</a>
+            </div>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h3><span class="card-icon">🛡️</span>사기 탐지 성과</h3>
+                <div class="metric">
+                    <span>활성 모델</span>
+                    <span class="metric-value">6개</span>
+                </div>
+                <div class="metric">
+                    <span>평균 정확도</span>
+                    <span class="metric-value">98.5%</span>
+                </div>
+                <div class="metric">
+                    <span>처리 데이터셋</span>
+                    <span class="metric-value">5개</span>
+                </div>
+                <div class="metric">
+                    <span>총 거래 건수</span>
+                    <span class="metric-value">3.2M</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">💬</span>감정 분석</h3>
+                <div class="metric">
+                    <span>BERT 모델</span>
+                    <span class="metric-value">94.2%</span>
+                </div>
+                <div class="metric">
+                    <span>RoBERTa 모델</span>
+                    <span class="metric-value">93.5%</span>
+                </div>
+                <div class="metric">
+                    <span>DistilBERT 모델</span>
+                    <span class="metric-value">91.2%</span>
+                </div>
+                <div class="metric">
+                    <span>분석 문장 수</span>
+                    <span class="metric-value">4,845</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">👥</span>고객 이탈 예측</h3>
+                <div class="metric">
+                    <span>총 고객 수</span>
+                    <span class="metric-value">10,127</span>
+                </div>
+                <div class="metric">
+                    <span>이탈률</span>
+                    <span class="metric-value">20.4%</span>
+                </div>
+                <div class="metric">
+                    <span>모델 정확도</span>
+                    <span class="metric-value">87.3%</span>
+                </div>
+                <div class="metric">
+                    <span>예상 절약</span>
+                    <span class="metric-value">$1.2M</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">📊</span>시스템 현황</h3>
+                <div class="metric">
+                    <span>총 모델 수</span>
+                    <span class="metric-value">14개</span>
+                </div>
+                <div class="metric">
+                    <span>성공률</span>
+                    <span class="metric-value">100%</span>
+                </div>
+                <div class="metric">
+                    <span>처리 데이터셋</span>
+                    <span class="metric-value">7/8</span>
+                </div>
+                <div class="metric">
+                    <span>시스템 상태</span>
+                    <span class="status-online">온라인</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="status">
+            <h3>📈 최고 성능 모델</h3>
+            <p><strong>사기 탐지:</strong> Random Forest (99.4%) | <strong>감정 분석:</strong> BERT (94.2%) | <strong>고객 이탈:</strong> Logistic Regression (87.3%)</p>
+        </div>
+    </div>
+
+    <script>
+        // 간단한 상호작용 추가
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    alert('해당 섹션은 개발 중입니다. datasets.html 페이지는 정상 작동합니다.');
+                }
+            });
+        });
+
+        // 페이지 로드 완료 표시
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ FCA 대시보드 로드 완료');
+        });
+    </script>
+</body>
+</html>

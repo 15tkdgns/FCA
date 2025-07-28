@@ -1,0 +1,33 @@
+/* FCA Dashboard - Modular CSS Architecture */
+/* Import all modular CSS files */
+
+@import url('./modules/variables.css');
+@import url('./modules/base.css');
+@import url('./modules/navigation.css');
+@import url('./modules/cards.css');
+@import url('./modules/components.css');
+@import url('./modules/charts.css');
+@import url('./modules/performance.css');
+@import url('./modules/error-handling.css');
+@import url('./modules/animations.css');
+@import url('./modules/responsive.css');
+@import url('./modules/utilities.css');
+
+/* 
+Modular CSS Architecture:
+- variables.css: CSS custom properties and theme configuration
+- base.css: Base styles, typography, and layout foundations
+- navigation.css: Navigation bar, menu items, and quick links
+- cards.css: Card components and their variations
+- components.css: Buttons, tables, badges, and other UI components
+- charts.css: Chart containers, data visualizations, and metrics
+- performance.css: Performance monitoring and metrics display
+- error-handling.css: Error states, toast notifications, and error display
+- animations.css: CSS animations and transitions
+- responsive.css: Media queries and responsive design
+- utilities.css: Utility classes and miscellaneous styles
+
+Total modules: 10 files
+Original size: 701 lines → Modularized into manageable components
+Enhanced with performance monitoring and error handling modules
+*/

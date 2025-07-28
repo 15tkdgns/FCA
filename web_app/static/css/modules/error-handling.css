@@ -1,0 +1,410 @@
+/**
+ * Error Handling CSS Module
+ * ==========================
+ * 
+ * 에러 표시 및 알림 관련 스타일
+ * - 에러 상태 표시
+ * - 토스트 알림
+ * - 에러 페이지
+ * - 로딩 실패 상태
+ */
+
+/* 에러 상태 컨테이너 */
+.error-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    background: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: var(--border-radius-lg);
+    margin: 1rem 0;
+}
+
+.error-state .error-icon {
+    font-size: 3rem;
+    color: var(--danger-color);
+    margin-bottom: 1rem;
+    animation: errorPulse 2s ease-in-out infinite;
+}
+
+.error-state .error-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.error-state .error-message {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    max-width: 400px;
+}
+
+.error-state .error-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@keyframes errorPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}
+
+/* 차트 에러 표시 */
+.chart-error {
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(248, 249, 250, 0.8);
+    border: 2px dashed var(--border-color);
+    border-radius: var(--border-radius);
+    margin: 1rem 0;
+}
+
+.chart-error .chart-error-icon {
+    font-size: 2.5rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.chart-error .chart-error-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.chart-error .chart-error-details {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+/* 토스트 알림 */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 400px;
+}
+
+.api-error-toast {
+    background: var(--danger-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 0.5rem;
+    animation: slideInRight 0.3s ease-out;
+}
+
+.success-toast {
+    background: var(--success-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 0.5rem;
+    animation: slideInRight 0.3s ease-out;
+}
+
+.warning-toast {
+    background: var(--warning-color);
+    color: var(--text-dark);
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 0.5rem;
+    animation: slideInRight 0.3s ease-out;
+}
+
+.info-toast {
+    background: var(--info-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 0.5rem;
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 에러 상세 정보 */
+.error-details {
+    background: var(--card-bg);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.error-details-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.error-details-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--danger-color);
+    margin: 0;
+}
+
+.error-details-content {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.error-code {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* 네트워크 에러 상태 */
+.network-error {
+    background: rgba(107, 114, 128, 0.1);
+    border-color: rgba(107, 114, 128, 0.3);
+}
+
+.network-error .error-icon {
+    color: var(--gray-600);
+}
+
+/* 서버 에러 상태 */
+.server-error {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.server-error .error-icon {
+    color: var(--danger-color);
+}
+
+/* 클라이언트 에러 상태 */
+.client-error {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.client-error .error-icon {
+    color: var(--warning-color);
+}
+
+/* 로딩 실패 상태 */
+.loading-failed {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(248, 249, 250, 0.8);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+}
+
+.loading-failed .failed-icon {
+    font-size: 2rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.loading-failed .failed-message {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* 에러 버튼 스타일 */
+.error-button {
+    background: var(--danger-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-duration) ease;
+}
+
+.error-button:hover {
+    background: color-mix(in srgb, var(--danger-color) 90%, black);
+    transform: translateY(-1px);
+}
+
+.retry-button {
+    background: var(--primary-color);
+    color: white;
+    border: 1px solid var(--primary-color);
+}
+
+.retry-button:hover {
+    background: color-mix(in srgb, var(--primary-color) 90%, black);
+    border-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+/* 에러 로그 표시 */
+.error-log {
+    background: var(--gray-900);
+    color: var(--gray-100);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    max-height: 300px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.error-log-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    color: var(--gray-300);
+    font-size: 0.75rem;
+}
+
+.error-timestamp {
+    color: var(--gray-400);
+}
+
+.error-severity {
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.error-severity.high {
+    background: var(--danger-color);
+    color: white;
+}
+
+.error-severity.medium {
+    background: var(--warning-color);
+    color: var(--text-dark);
+}
+
+.error-severity.low {
+    background: var(--info-color);
+    color: white;
+}
+
+/* 전역 에러 모달 */
+.error-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.error-modal-content {
+    background: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-xl);
+}
+
+.error-modal-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.error-modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--danger-color);
+    margin: 0;
+}
+
+.error-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.error-modal-close:hover {
+    color: var(--text-primary);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .toast-container {
+        left: 20px;
+        right: 20px;
+        max-width: none;
+    }
+    
+    .error-modal-content {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .error-state {
+        padding: 1.5rem;
+    }
+    
+    .chart-error {
+        min-height: 200px;
+        padding: 1.5rem;
+    }
+}

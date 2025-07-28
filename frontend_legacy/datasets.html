@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset Overview</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 95%; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow-x: auto; }
+        h1 { color: #0056b3; text-align: center; margin-bottom: 30px; }
+        
+        /* Table wrapper for horizontal scroll */
+        .table-wrapper { overflow-x: auto; margin-top: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        table { width: 100%; min-width: 1350px; border-collapse: collapse; margin: 0; }
+        th, td { 
+            border: 1px solid #ddd; 
+            padding: 8px 12px; 
+            text-align: left; 
+            vertical-align: top; 
+            white-space: nowrap;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        th { background-color: #f2f2f2; color: #555; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Specific column widths - New Layout */
+        th:nth-child(1), td:nth-child(1) { width: 150px; white-space: normal; } /* Dataset */
+        th:nth-child(2), td:nth-child(2) { width: 300px; white-space: normal; } /* Description */
+        th:nth-child(3), td:nth-child(3) { width: 400px; white-space: normal; } /* Processing Steps - Main Focus */
+        th:nth-child(4), td:nth-child(4) { width: 300px; white-space: normal; } /* Dataset Features */
+        th:nth-child(5), td:nth-child(5) { width: 200px; text-align: center; } /* Actions */
+        
+        .step-list { list-style-type: decimal; padding-left: 20px; margin: 0; font-size: 13px; }
+        .step-list li { margin-bottom: 3px; }
+        .error { color: red; }
+        .head-display { margin-top: 10px; background-color: #e9ecef; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .button-group { text-align: center; margin-bottom: 20px; }
+        .button-group button { padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 0 10px; }
+        
+        /* Action buttons styling */
+        .action-buttons { display: flex; flex-direction: column; gap: 5px; }
+        .action-btn { 
+            padding: 6px 12px; 
+            font-size: 12px; 
+            cursor: pointer; 
+            border: 1px solid #ddd; 
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            color: #495057;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+        .action-btn:hover { background-color: #e9ecef; }
+        .action-btn.primary { background-color: #007bff; color: white; border-color: #007bff; }
+        .action-btn.primary:hover { background-color: #0056b3; }
+        
+        /* Dataset info styling */
+        .dataset-info { 
+            font-size: 13px; 
+            line-height: 1.4;
+        }
+        .dataset-name { 
+            font-weight: bold; 
+            color: #0056b3; 
+            margin-bottom: 5px;
+        }
+        .dataset-meta { 
+            font-size: 11px; 
+            color: #6c757d; 
+            margin-top: 5px;
+        }
+        
+        /* Features list styling */
+        .features-list { 
+            font-size: 12px; 
+            line-height: 1.3;
+            margin: 0;
+            padding-left: 15px;
+        }
+        .features-list li { 
+            margin-bottom: 2px; 
+        }
+        .feature-category { 
+            font-weight: bold; 
+            color: #495057; 
+            margin-top: 8px; 
+            margin-bottom: 3px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; /* Reduced top margin */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%; /* Wider modal */
+            max-width: 1200px; /* Maximum width */
+            max-height: 80vh; /* Maximum height */
+            border-radius: 8px;
+            position: relative;
+            overflow-y: auto; /* Vertical scroll for modal */
+        }
+        
+        /* Modal content table styling */
+        #headModalContent {
+            overflow-x: auto; /* Horizontal scroll for table content */
+            max-width: 100%;
+        }
+        
+        #headModalContent table {
+            width: 100%;
+            min-width: 600px; /* Minimum width to trigger horizontal scroll */
+            font-size: 14px;
+        }
+        
+        #headModalContent th, 
+        #headModalContent td {
+            padding: 6px 8px;
+            white-space: nowrap;
+            max-width: none; /* Remove max-width restriction in modal */
+        }
+
+        /* Error and alert styling */
+        .error {
+            color: #dc3545;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .alert-warning {
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeaa7;
+        }
+
+        /* Dataset preview table styling */
+        #dataset-preview-table {
+            font-size: 12px;
+            margin-top: 15px;
+        }
+
+        #dataset-preview-table th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #dataset-preview-table td {
+            text-align: center;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Loading spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        /* Responsive design for mobile */
+        @media (max-width: 768px) {
+            body { margin: 10px; }
+            .container { padding: 15px; }
+            h1 { font-size: 24px; }
+            
+            .button-group button { 
+                padding: 8px 16px; 
+                font-size: 14px; 
+                margin: 5px;
+            }
+            
+            th, td { 
+                padding: 6px 8px; 
+                font-size: 12px;
+            }
+            
+            .step-list { font-size: 11px; }
+            
+            .modal-content {
+                width: 95%;
+                margin: 2% auto;
+                padding: 15px;
+                max-height: 90vh;
+            }
+            
+            #headModalContent table {
+                font-size: 12px;
+                min-width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="button-group">
+        <button onclick="location.href='/'">Go to Workflow Overview</button>
+    </div>
+    <div class="container">
+        <h1>Dataset Overview and Processing History</h1>
+        <div class="table-wrapper">
+            <table id="datasetTable">
+                <thead>
+                    <tr>
+                        <th>Dataset</th>
+                        <th>Description</th>
+                        <th>Processing Steps</th>
+                        <th>Dataset Features</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <p id="loadingMessage">Loading dataset information...</p>
+        <p id="errorMessage" class="error" style="display:none;"></p>
+    </div>
+
+    <!-- The Modal -->
+    <div id="headModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Dataset Head</h2>
+            <div id="headModalContent"></div>
+        </div>
+    </div>
+
+    <script src="js/datasets.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<!-- Loading Spinner Component -->
+<div class="text-center p-4" id="loading-{{ chart_id|default('chart') }}">
+    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="text-muted">{{ loading_text|default('차트를 로딩 중입니다...') }}</p>
+</div>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCA - 사기 탐지 분석</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .header {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .back-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+        .results-table {
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        .table-header {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            font-size: 1.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        .performance-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .excellent { background: #d4edda; color: #155724; }
+        .good { background: #fff3cd; color: #856404; }
+        .model-badge {
+            background: #e3f2fd;
+            color: #1565c0;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .summary-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .summary-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="simple.html" class="back-btn">← 대시보드로 돌아가기</a>
+        
+        <div class="header">
+            <h1>🛡️ 사기 탐지 분석 결과</h1>
+            <p>Credit Card Fraud Detection - 모델 성능 비교</p>
+        </div>
+
+        <div class="summary-cards">
+            <div class="summary-card">
+                <div class="summary-number">6</div>
+                <div>활성 모델</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-number">98.5%</div>
+                <div>평균 정확도</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-number">5</div>
+                <div>처리 데이터셋</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-number">3.2M</div>
+                <div>총 거래 건수</div>
+            </div>
+        </div>
+
+        <div class="results-table">
+            <div class="table-header">📊 모델 성능 결과</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>데이터셋</th>
+                        <th>모델</th>
+                        <th>AUC-ROC</th>
+                        <th>Precision</th>
+                        <th>Recall</th>
+                        <th>F1-Score</th>
+                        <th>성능 등급</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Credit Card 2023</td>
+                        <td><span class="model-badge">Random Forest</span></td>
+                        <td>0.994</td>
+                        <td>0.987</td>
+                        <td>0.991</td>
+                        <td>0.989</td>
+                        <td><span class="performance-badge excellent">EXCELLENT</span></td>
+                    </tr>
+                    <tr>
+                        <td>Incribo Fraud</td>
+                        <td><span class="model-badge">XGBoost</span></td>
+                        <td>0.989</td>
+                        <td>0.982</td>
+                        <td>0.985</td>
+                        <td>0.983</td>
+                        <td><span class="performance-badge excellent">EXCELLENT</span></td>
+                    </tr>
+                    <tr>
+                        <td>Dhanush Fraud</td>
+                        <td><span class="model-badge">Gradient Boosting</span></td>
+                        <td>0.975</td>
+                        <td>0.968</td>
+                        <td>0.972</td>
+                        <td>0.970</td>
+                        <td><span class="performance-badge good">GOOD</span></td>
+                    </tr>
+                    <tr>
+                        <td>HF Credit Card</td>
+                        <td><span class="model-badge">Random Forest</span></td>
+                        <td>0.991</td>
+                        <td>0.985</td>
+                        <td>0.988</td>
+                        <td>0.986</td>
+                        <td><span class="performance-badge excellent">EXCELLENT</span></td>
+                    </tr>
+                    <tr>
+                        <td>WAMC Fraud</td>
+                        <td><span class="model-badge">XGBoost</span></td>
+                        <td>0.987</td>
+                        <td>0.980</td>
+                        <td>0.983</td>
+                        <td>0.981</td>
+                        <td><span class="performance-badge excellent">EXCELLENT</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="results-table">
+            <div class="table-header">📈 데이터셋 상세 정보</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>데이터셋</th>
+                        <th>총 거래 수</th>
+                        <th>사기 거래 수</th>
+                        <th>사기 비율</th>
+                        <th>처리 상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Credit Card 2023</td>
+                        <td>284,807</td>
+                        <td>492</td>
+                        <td>0.17%</td>
+                        <td><span class="performance-badge excellent">완료</span></td>
+                    </tr>
+                    <tr>
+                        <td>Incribo Fraud</td>
+                        <td>1,048,575</td>
+                        <td>8,213</td>
+                        <td>0.78%</td>
+                        <td><span class="performance-badge excellent">완료</span></td>
+                    </tr>
+                    <tr>
+                        <td>Dhanush Fraud</td>
+                        <td>1,296,675</td>
+                        <td>9,651</td>
+                        <td>0.74%</td>
+                        <td><span class="performance-badge excellent">완료</span></td>
+                    </tr>
+                    <tr>
+                        <td>HF Credit Card</td>
+                        <td>568,630</td>
+                        <td>1,297</td>
+                        <td>0.23%</td>
+                        <td><span class="performance-badge excellent">완료</span></td>
+                    </tr>
+                    <tr>
+                        <td>WAMC Fraud</td>
+                        <td>284,807</td>
+                        <td>492</td>
+                        <td>0.17%</td>
+                        <td><span class="performance-badge excellent">완료</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
