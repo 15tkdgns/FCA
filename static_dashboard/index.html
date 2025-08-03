@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCA Analysis Dashboard</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="assets/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <span class="brand-text">FCA Analytics</span>
+            </div>
+        </div>
+        
+        <div class="sidebar-menu">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#dashboard" data-page="dashboard">
+                        <span class="nav-text">Overview</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#fraud" data-page="fraud">
+                        <span class="nav-text">Fraud Detection</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#sentiment" data-page="sentiment">
+                        <span class="nav-text">Sentiment Analysis</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#attrition" data-page="attrition">
+                        <span class="nav-text">Customer Attrition</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#datasets" data-page="datasets">
+                        <span class="nav-text">Datasets</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#xai" data-page="xai">
+                        <span class="nav-text">XAI Analysis</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <div class="settings-menu">
+                <button class="settings-btn" onclick="toggleTheme()">
+                    <span class="nav-text">Dark Mode</span>
+                </button>
+                <button class="settings-btn" onclick="refreshData()">
+                    <span class="nav-text">Refresh</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+        ☰
+    </button>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+        
+        <!-- Loading Indicator -->
+        <div id="loading-indicator" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-muted">Loading dashboard data...</p>
+        </div>
+
+        <!-- Page Title -->
+        <div class="row mb-4" id="page-header" style="display: none;">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="h2 mb-1" id="page-title">
+                            <span id="page-title-text">Overview Dashboard</span>
+                        </h1>
+                        <p class="text-muted mb-0" id="page-subtitle">
+                            Comprehensive analysis of fraud detection, sentiment analysis, and customer behavior
+                        </p>
+                    </div>
+                    <div class="text-end">
+                        <small class="text-muted">
+                            Last Updated: <span id="last-updated">Loading...</span>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div id="dashboard-content" style="display: none;">
+            
+            <!-- Overview Page -->
+            <div id="dashboard-page" class="page-content">
+                
+                <!-- Summary Cards -->
+                <div class="row mb-4">
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Total Datasets
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="total-datasets">
+                                            Loading...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Models Trained
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="models-trained">
+                                            Loading...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                            Fraud Detection Rate
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="fraud-detection-rate">
+                                            Loading...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            System Status
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="system-status">
+                                            Loading...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="row mb-4">
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Model Performance Comparison</h6>
+                                <div class="dropdown no-arrow">
+                                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                        ⋮
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right shadow">
+                                        <a class="dropdown-item" href="#">Download Chart</a>
+                                        <a class="dropdown-item" href="#">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="model-performance-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Fraud Risk Distribution</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="fraud-risk-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Charts Row -->
+                <div class="row mb-4">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Sentiment Distribution</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="sentiment-distribution-chart" style="height: 250px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Customer Segments</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="customer-segments-chart" style="height: 250px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Model Health Status -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Model Health Status</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row" id="model-health-cards">
+                                    <!-- Model health cards will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Fraud Detection Page -->
+            <div id="fraud-page" class="page-content" style="display: none;">
+                <!-- 사기 탐지 요약 대시보드 -->
+                <div class="row mb-4">
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="card border-left-danger shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">AUC-ROC 점수</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">92.34%</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-gray-300" style="font-size: 2rem;">🛡️</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">일일 탐지 건수</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">184건</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-gray-300" style="font-size: 2rem;">📊</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">정확도</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">99.94%</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-gray-300" style="font-size: 2rem;">✅</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 사기 탐지 모델 성능 및 특성 중요도 -->
+                <div class="row mb-4">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">특성 중요도 분석</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="fraud-feature-importance-main-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">사기 위험 분포</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="fraud-risk-detail-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- SHAP 및 모델 해석성 -->
+                <div class="row mb-4">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">SHAP Summary Plot</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="shap-summary-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">LIME Local Explanation</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="lime-explanation-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 모델 의사결정 과정 및 예측 신뢰도 -->
+                <div class="row mb-4">
+                    <div class="col-xl-8 col-lg-8">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">모델 의사결정 과정</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="decision-tree-chart" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">예측 신뢰도</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="confidence-distribution-chart" style="height: 300px;"></div>
+                                
+                                <div class="mt-3">
+                                    <h6 class="font-weight-bold mb-3">핵심 인사이트</h6>
+                                    <div id="fraud-insights">
+                                        <div class="alert alert-info">
+                                            <strong>주요 기여 특성:</strong>
+                                            <ul id="top-features-list" class="mb-0 mt-2">
+                                                <li>Amount_zscore (23.4%)</li>
+                                                <li>Time_hour (18.7%)</li>
+                                                <li>V14 (15.6%)</li>
+                                                <li>V12 (14.3%)</li>
+                                                <li>V10 (12.8%)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 성능 메트릭 및 비즈니스 임팩트 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">사기 탐지 성능 분석</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="fraud-detailed-charts"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sentiment Analysis Page -->
+            <div id="sentiment-page" class="page-content" style="display: none;">
+                <!-- 감정 분석 요약 대시보드 -->
+                <div class="row mb-4">
+                    <div class="col-xl-3 col-lg-3">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">긍정 감정</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">27.0%</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-gray-300" style="font-size: 2rem;">😊</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-3 col-lg-3">
+                        <div class="card border-left-secondary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">중립 감정</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">60.6%</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-gray-300" style="font-size: 2rem;">😐</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-3 col-lg-3">
+                        <div class="card border-left-danger shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">부정 감정</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">12.4%</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-gray-300" style="font-size: 2rem;">🙁</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-3 col-lg-3">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">정확도</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">88.7%</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-gray-300" style="font-size: 2rem;">🎯</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 감정 분포 및 시간별 트렌드 -->
+                <div class="row mb-4">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">감정 분포</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="sentiment-distribution-detail-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">시간별 감정 트렌드</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="sentiment-timeline-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 도메인별 성능 및 키워드 분석 -->
+                <div class="row mb-4">
+                    <div class="col-xl-8 col-lg-8">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">도메인별 감정 성능</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="domain-sentiment-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">주요 키워드</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <h6 class="text-success">긍정 키워드</h6>
+                                    <div class="keywords">
+                                        <span class="badge badge-success">growth</span>
+                                        <span class="badge badge-success">profit</span>
+                                        <span class="badge badge-success">strong</span>
+                                        <span class="badge badge-success">positive</span>
+                                        <span class="badge badge-success">success</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <h6 class="text-danger">부정 키워드</h6>
+                                    <div class="keywords">
+                                        <span class="badge badge-danger">loss</span>
+                                        <span class="badge badge-danger">decline</span>
+                                        <span class="badge badge-danger">risk</span>
+                                        <span class="badge badge-danger">negative</span>
+                                        <span class="badge badge-danger">concern</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <h6 class="font-weight-bold">신뢰도 분석</h6>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 65%">High: 65.2%</div>
+                                    </div>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 28%">Medium: 28.4%</div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 6%">Low: 6.4%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 상세 분석 및 모델 비교 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">감정 분석 상세 결과</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="sentiment-detailed-charts"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Attrition Page -->
+            <div id="attrition-page" class="page-content" style="display: none;">
+                <!-- 고객 이탈 요약 대시보드 -->
+                <div class="row mb-4">
+                    <div class="col-xl-3 col-lg-3">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">이탈률</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">16.1%</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-gray-300" style="font-size: 2rem;">📊</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-3 col-lg-3">
+                        <div class="card border-left-danger shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">고위험 고객</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">987명</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-gray-300" style="font-size: 2rem;">⚠️</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-3 col-lg-3">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">AUC 점수</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">89.2%</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-gray-300" style="font-size: 2rem;">🎯</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-3 col-lg-3">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">ROI</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">5.33배</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-gray-300" style="font-size: 2rem;">💰</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 고객 세그먼트 및 특성 중요도 -->
+                <div class="row mb-4">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">고객 세그먼트 분석</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="customer-segments-detail-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">이탁 예측 특성 중요도</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="attrition-feature-importance-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 예측 강도 및 특성 상호작용 -->
+                <div class="row mb-4">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">이탁 예측 강도</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="attrition-confidence-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">특성 상호작용 매트릭스</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="feature-interaction-xai-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 고객 세그먼트 상세 및 비즈니스 임팩트 -->
+                <div class="row mb-4">
+                    <div class="col-xl-8 col-lg-8">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">고객 세그먼트 상세 분석</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>세그먼트</th>
+                                                <th>고객 수</th>
+                                                <th>비율</th>
+                                                <th>이탁 확률</th>
+                                                <th>전략</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Champions</strong></td>
+                                                <td>2,456명</td>
+                                                <td>24.3%</td>
+                                                <td><span class="badge badge-success">5%</span></td>
+                                                <td>VIP 대우</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>At Risk</strong></td>
+                                                <td>987명</td>
+                                                <td>9.7%</td>
+                                                <td><span class="badge badge-danger">75%</span></td>
+                                                <td>즉시 개입</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Cannot Lose Them</strong></td>
+                                                <td>456명</td>
+                                                <td>4.5%</td>
+                                                <td><span class="badge badge-danger">80%</span></td>
+                                                <td>개인 관계 관리</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Loyal Customers</strong></td>
+                                                <td>1,834명</td>
+                                                <td>18.1%</td>
+                                                <td><span class="badge badge-warning">12%</span></td>
+                                                <td>교차 판매</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">비즈니스 임팩트</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="impact-item">
+                                    <strong>평균 LTV:</strong> 240만원
+                                </div>
+                                <div class="impact-item">
+                                    <strong>예방 ROI:</strong> 5.33배
+                                </div>
+                                <div class="impact-item">
+                                    <strong>획득 비용:</strong> 15만원
+                                </div>
+                                <div class="impact-item">
+                                    <strong>유지 비용:</strong> 4.5만원
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <h6 class="font-weight-bold">월별 이탁 트렌드</h6>
+                                    <div id="monthly-churn-trend" style="height: 150px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 상세 분석 데이터 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">고객 이탈 상세 분석</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="attrition-detailed-charts"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Datasets Page -->
+            <div id="datasets-page" class="page-content" style="display: none;">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Available Datasets</h6>
+                            </div>
+                            <div class="card-body">
+                                <p>Dataset information and statistics will be displayed here.</p>
+                                <div id="datasets-table"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- XAI Analysis Page -->
+            <div id="xai-page" class="page-content" style="display: none;">
+                
+                <!-- XAI Overview Cards -->
+                <div class="row mb-4">
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Feature Importance
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="feature-importance-count">
+                                            Loading...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            SHAP Values
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="shap-values-count">
+                                            Loading...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                            Model Transparency
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="transparency-score">
+                                            Loading...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature Importance and SHAP Charts -->
+                <div class="row mb-4">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">모델별 전역 특성 중요도</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="global-feature-importance-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">모델 비교 대시보드</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="model-comparison-xai-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIME and Decision Tree Visualization -->
+                <div class="row mb-4">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">LIME Local Explanation</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="lime-explanation-xai-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Partial Dependence Plot</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="partial-dependence-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Model Interpretability Analysis -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Model Decision Process</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div id="decision-tree-xai-chart" style="height: 400px;"></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6 class="font-weight-bold mb-3">Key Insights</h6>
+                                        <div id="xai-insights">
+                                            <div class="alert alert-info">
+                                                <strong>Top Contributing Features:</strong>
+                                                <ul id="top-features-list" class="mb-0 mt-2">
+                                                    <li>Loading...</li>
+                                                </ul>
+                                            </div>
+                                            <div class="alert alert-warning">
+                                                <strong>Model Bias Analysis:</strong>
+                                                <p id="bias-analysis" class="mb-0 mt-2">Loading bias analysis...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prediction Confidence and Uncertainty -->
+                <div class="row mb-4">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Prediction Confidence</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="confidence-distribution-xai-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Feature Interaction</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="feature-interaction-xai-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced XAI Visualizations -->
+                <div class="row mb-4">
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Model Accuracy by Feature</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="accuracy-by-feature-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Feature Correlation Network</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="correlation-network-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">SHAP Waterfall Plot</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="shap-waterfall-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Model Transparency & Fairness Analysis -->
+                <div class="row mb-4">
+                    <div class="col-xl-8 col-lg-8">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Fairness Analysis Across Demographics</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="fairness-analysis-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Model Complexity Analysis</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="complexity-analysis-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complete Model Transparency Section -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                <h6 class="m-0 font-weight-bold text-primary">Complete Model Transparency</h6>
+                                <button class="btn btn-primary btn-sm" onclick="downloadModelReport()">
+                                    Download Full Report
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 class="font-weight-bold mb-3">Model Architecture Details</h6>
+                                        <div id="model-architecture-details" class="mb-4">
+                                            <div class="table-responsive">
+                                                <table class="table table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Component</th>
+                                                            <th>Details</th>
+                                                            <th>Parameters</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="architecture-table-body">
+                                                        <tr><td colspan="3">Loading...</td></tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        
+                                        <h6 class="font-weight-bold mb-3">Training Configuration</h6>
+                                        <div id="training-config" class="mb-4">
+                                            <pre id="training-config-json" class="bg-light p-3" style="font-size: 0.8em; max-height: 300px; overflow-y: auto;">Loading training configuration...</pre>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <h6 class="font-weight-bold mb-3">Data Processing Pipeline</h6>
+                                        <div id="data-pipeline-chart" style="height: 250px;"></div>
+                                        
+                                        <h6 class="font-weight-bold mb-3 mt-4">Feature Engineering Steps</h6>
+                                        <div id="feature-engineering-steps">
+                                            <ol id="feature-steps-list">
+                                                <li>Loading feature engineering steps...</li>
+                                            </ol>
+                                        </div>
+                                        
+                                        <h6 class="font-weight-bold mb-3 mt-4">Model Validation Results</h6>
+                                        <div id="validation-results">
+                                            <div class="table-responsive">
+                                                <table class="table table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Metric</th>
+                                                            <th>Train</th>
+                                                            <th>Validation</th>
+                                                            <th>Test</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="validation-table-body">
+                                                        <tr><td colspan="4">Loading...</td></tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Analysis & Edge Cases -->
+                <div class="row mb-4">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Error Analysis by Feature Range</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="error-analysis-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Edge Case Detection</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="edge-case-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Processing & Model Training Pipeline -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                <h6 class="m-0 font-weight-bold text-primary">데이터 전처리 및 모델 학습 파이프라인</h6>
+                                <div>
+                                    <button class="btn btn-success btn-sm" onclick="startDataProcessing()">
+                                        🚀 전처리 시작
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" onclick="startModelTraining()">
+                                        🎯 학습 시작
+                                    </button>
+                                    <button class="btn btn-info btn-sm" onclick="downloadProcessingReport()">
+                                        📊 보고서 다운로드
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h6 class="font-weight-bold mb-3">처리 파이프라인 현황</h6>
+                                        <div id="processing-pipeline-chart" style="height: 400px;"></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6 class="font-weight-bold mb-3">현재 진행 상태</h6>
+                                        <div id="processing-status" class="mb-4">
+                                            <div class="alert alert-info">
+                                                <strong>상태:</strong> <span id="current-status">대기 중</span><br>
+                                                <strong>단계:</strong> <span id="current-step">-</span><br>
+                                                <strong>진행률:</strong> <span id="progress-percentage">0%</span>
+                                                <div class="progress mt-2">
+                                                    <div class="progress-bar" role="progressbar" style="width: 0%" id="main-progress"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <h6 class="font-weight-bold mb-3">주요 파라미터</h6>
+                                        <div id="key-parameters" class="mb-4">
+                                            <div class="table-responsive">
+                                                <table class="table table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>파라미터</th>
+                                                            <th>값</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="parameters-table">
+                                                        <tr><td colspan="2">파라미터 로딩 중...</td></tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Leakage Prevention & Overfitting Monitoring -->
+                <div class="row mb-4">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">데이터 누출 방지 모니터링</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="data-leakage-chart" style="height: 350px;"></div>
+                                
+                                <div class="mt-3">
+                                    <h6 class="font-weight-bold">누출 검사 결과</h6>
+                                    <div id="leakage-checks">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>🔍 Train-Test 분리:</span>
+                                            <span id="train-test-check" class="badge badge-secondary">검사 중</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>📊 Target 누출:</span>
+                                            <span id="target-leakage-check" class="badge badge-secondary">검사 중</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>⏰ 시간적 누출:</span>
+                                            <span id="temporal-leakage-check" class="badge badge-secondary">검사 중</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>🔄 피처 누출:</span>
+                                            <span id="feature-leakage-check" class="badge badge-secondary">검사 중</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">오버피팅 모니터링</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="overfitting-chart" style="height: 350px;"></div>
+                                
+                                <div class="mt-3">
+                                    <h6 class="font-weight-bold">오버피팅 지표</h6>
+                                    <div id="overfitting-metrics">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>📈 Train-Val Gap:</span>
+                                            <span id="train-val-gap" class="font-weight-bold">-</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>📉 조기 종료:</span>
+                                            <span id="early-stopping-status" class="font-weight-bold">-</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>🎯 최적 에포크:</span>
+                                            <span id="best-epoch" class="font-weight-bold">-</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>⚖️ 정규화 강도:</span>
+                                            <span id="regularization-strength" class="font-weight-bold">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Training Process -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">상세 학습 과정 추적</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <h6 class="font-weight-bold">학습 곡선</h6>
+                                                <div id="training-curves-chart" style="height: 300px;"></div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 class="font-weight-bold">검증 메트릭</h6>
+                                                <div id="validation-metrics-chart" style="height: 300px;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6 class="font-weight-bold">하이퍼파라미터 최적화</h6>
+                                                <div id="hyperparameter-optimization-chart" style="height: 300px;"></div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 class="font-weight-bold">모델 복잡도 분석</h6>
+                                                <div id="model-complexity-chart" style="height: 300px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                        <h6 class="font-weight-bold mb-3">학습 로그</h6>
+                                        <div id="training-log" style="height: 200px; overflow-y: auto; background: #f8f9fa; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 0.8em;">
+                                            <div>학습 시작 대기 중...</div>
+                                        </div>
+                                        
+                                        <h6 class="font-weight-bold mb-3 mt-4">실시간 메트릭</h6>
+                                        <div id="live-training-metrics">
+                                            <div class="mb-3">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>현재 에포크:</span>
+                                                    <span id="current-epoch" class="font-weight-bold">-</span>
+                                                </div>
+                                                <div class="progress mt-1">
+                                                    <div class="progress-bar" role="progressbar" style="width: 0%" id="epoch-progress"></div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>훈련 손실:</span>
+                                                    <span id="train-loss" class="font-weight-bold text-primary">-</span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>검증 손실:</span>
+                                                    <span id="val-loss" class="font-weight-bold text-info">-</span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>검증 정확도:</span>
+                                                    <span id="val-accuracy" class="font-weight-bold text-success">-</span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>학습률:</span>
+                                                    <span id="learning-rate" class="font-weight-bold text-warning">-</span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>소요 시간:</span>
+                                                    <span id="elapsed-time" class="font-weight-bold">-</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <h6 class="font-weight-bold mb-3 mt-4">변수 중요도</h6>
+                                        <div id="feature-importance-live">
+                                            <div id="top-features-list" style="font-size: 0.85em;">
+                                                <div>특성 중요도 계산 중...</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Model Comparison & Results -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">모델 비교 및 결과 분석</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 class="font-weight-bold mb-3">모델 성능 비교</h6>
+                                        <div id="model-comparison-chart" style="height: 350px;"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="font-weight-bold mb-3">교차 검증 결과</h6>
+                                        <div id="cross-validation-chart" style="height: 350px;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mt-4">
+                                    <div class="col-12">
+                                        <h6 class="font-weight-bold mb-3">최종 모델 상세 결과</h6>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>메트릭</th>
+                                                        <th>훈련 세트</th>
+                                                        <th>검증 세트</th>
+                                                        <th>테스트 세트</th>
+                                                        <th>교차 검증 평균</th>
+                                                        <th>표준편차</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="final-results-table">
+                                                    <tr><td colspan="6" class="text-center">모델 학습 완료 후 결과가 표시됩니다.</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real-time Model Monitoring -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Real-time Model Performance Monitoring</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div id="realtime-monitoring-chart" style="height: 300px;"></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6 class="font-weight-bold mb-3">Live Metrics</h6>
+                                        <div id="live-metrics">
+                                            <div class="mb-3">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>Current Accuracy:</span>
+                                                    <span id="live-accuracy" class="font-weight-bold text-success">Loading...</span>
+                                                </div>
+                                                <div class="progress mt-1">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 0%" id="accuracy-progress"></div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>Drift Score:</span>
+                                                    <span id="live-drift" class="font-weight-bold text-warning">Loading...</span>
+                                                </div>
+                                                <div class="progress mt-1">
+                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 0%" id="drift-progress"></div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>Throughput:</span>
+                                                    <span id="live-throughput" class="font-weight-bold text-info">Loading...</span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>Last Updated:</span>
+                                                    <span id="live-timestamp" class="text-muted">Loading...</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 모델별 상세 분석 섹션 -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                <h6 class="m-0 font-weight-bold text-primary">📊 모델별 상세 분석 리포트</h6>
+                                <div>
+                                    <button class="btn btn-outline-primary btn-sm" onclick="exportDetailedReport()">
+                                        📄 상세 리포트 내보내기
+                                    </button>
+                                    <button class="btn btn-outline-info btn-sm" onclick="refreshModelAnalysis()">
+                                        🔄 새로고침
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- 모델 개요 탭 -->
+                                <ul class="nav nav-tabs mb-4" id="modelAnalysisTabs" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="fraud-tab" data-bs-toggle="tab" data-bs-target="#fraud-analysis" type="button" role="tab">
+                                            🛡️ 사기 탐지 모델
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="sentiment-tab" data-bs-toggle="tab" data-bs-target="#sentiment-analysis" type="button" role="tab">
+                                            💭 감정 분석 모델
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="attrition-tab" data-bs-toggle="tab" data-bs-target="#attrition-analysis" type="button" role="tab">
+                                            👥 고객 이탈 모델
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="comparison-tab" data-bs-toggle="tab" data-bs-target="#model-comparison" type="button" role="tab">
+                                            📈 모델 비교
+                                        </button>
+                                    </li>
+                                </ul>
+
+                                <!-- 탭 컨텐츠 -->
+                                <div class="tab-content" id="modelAnalysisTabContent">
+                                    <!-- 사기 탐지 모델 분석 -->
+                                    <div class="tab-pane fade show active" id="fraud-analysis" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <h5 class="mb-3">🛡️ 사기 탐지 모델 상세 분석</h5>
+                                                <div class="card mb-3">
+                                                    <div class="card-header bg-danger text-white">
+                                                        <h6 class="mb-0">📊 성능 지표</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="metric-item">
+                                                                    <strong>정확도:</strong> <span class="text-success">99.94%</span>
+                                                                </div>
+                                                                <div class="metric-item">
+                                                                    <strong>정밀도:</strong> <span class="text-info">85.71%</span>
+                                                                </div>
+                                                                <div class="metric-item">
+                                                                    <strong>재현율:</strong> <span class="text-info">85.71%</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="metric-item">
+                                                                    <strong>F1-스코어:</strong> <span class="text-info">85.71%</span>
+                                                                </div>
+                                                                <div class="metric-item">
+                                                                    <strong>AUC-ROC:</strong> <span class="text-success">92.34%</span>
+                                                                </div>
+                                                                <div class="metric-item">
+                                                                    <strong>일일 탐지:</strong> <span class="text-warning">184건</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="card mb-3">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0">🎯 핵심 특성 중요도</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div id="fraud-feature-importance-chart" style="height: 300px;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card mb-3">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0">📋 데이터셋 정보</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="info-item">
+                                                            <strong>총 거래:</strong> 4,260,920건
+                                                        </div>
+                                                        <div class="info-item">
+                                                            <strong>훈련 데이터:</strong> 40,000건
+                                                        </div>
+                                                        <div class="info-item">
+                                                            <strong>테스트 데이터:</strong> 10,000건
+                                                        </div>
+                                                        <div class="info-item">
+                                                            <strong>특성 수:</strong> 30개
+                                                        </div>
+                                                        <div class="info-item">
+                                                            <strong>사기율:</strong> 0.20%
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="card mb-3">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0">⚙️ 모델 설정</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="info-item">
+                                                            <strong>알고리즘:</strong> Random Forest
+                                                        </div>
+                                                        <div class="info-item">
+                                                            <strong>트리 수:</strong> 100
+                                                        </div>
+                                                        <div class="info-item">
+                                                            <strong>최대 깊이:</strong> 10
+                                                        </div>
+                                                        <div class="info-item">
+                                                            <strong>교차 검증:</strong> 5-fold
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 감정 분석 모델 분석 -->
+                                    <div class="tab-pane fade" id="sentiment-analysis" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <h5 class="mb-3">💭 감정 분석 모델 상세 분석</h5>
+                                                <div class="card mb-3">
+                                                    <div class="card-header bg-info text-white">
+                                                        <h6 class="mb-0">📊 앙상블 모델 성능</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="metric-item">
+                                                                    <strong>앙상블 정확도:</strong> <span class="text-success">88.7%</span>
+                                                                </div>
+                                                                <div class="metric-item">
+                                                                    <strong>고신뢰도 예측:</strong> <span class="text-info">65.2%</span>
+                                                                </div>
+                                                                <div class="metric-item">
+                                                                    <strong>처리 문장:</strong> <span class="text-warning">14,780개</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="metric-item">
+                                                                    <strong>긍정:</strong> <span class="text-success">27.0%</span>
+                                                                </div>
+                                                                <div class="metric-item">
+                                                                    <strong>중립:</strong> <span class="text-secondary">60.6%</span>
+                                                                </div>
+                                                                <div class="metric-item">
+                                                                    <strong>부정:</strong> <span class="text-danger">12.4%</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="card mb-3">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0">🔄 개별 모델 성능 비교</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div id="sentiment-model-comparison-chart" style="height: 300px;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card mb-3">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0">🏢 도메인별 성능</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="domain-item">
+                                                            <strong>기술:</strong> <span class="text-success">+67%</span>
+                                                        </div>
+                                                        <div class="domain-item">
+                                                            <strong>헬스케어:</strong> <span class="text-success">+45%</span>
+                                                        </div>
+                                                        <div class="domain-item">
+                                                            <strong>은행:</strong> <span class="text-success">+23%</span>
+                                                        </div>
+                                                        <div class="domain-item">
+                                                            <strong>에너지:</strong> <span class="text-danger">-12%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="card mb-3">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0">📝 주요 키워드</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="mb-2">
+                                                            <strong>긍정:</strong>
+                                                            <div class="keywords">
+                                                                <span class="badge badge-success">growth</span>
+                                                                <span class="badge badge-success">profit</span>
+                                                                <span class="badge badge-success">strong</span>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <strong>부정:</strong>
+                                                            <div class="keywords">
+                                                                <span class="badge badge-danger">loss</span>
+                                                                <span class="badge badge-danger">decline</span>
+                                                                <span class="badge badge-danger">risk</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 고객 이탈 모델 분석 -->
+                                    <div class="tab-pane fade" id="attrition-analysis" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <h5 class="mb-3">👥 고객 이탈 예측 모델 상세 분석</h5>
+                                                <div class="card mb-3">
+                                                    <div class="card-header bg-warning">
+                                                        <h6 class="mb-0">📊 예측 성능</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="metric-item">
+                                                                    <strong>AUC 점수:</strong> <span class="text-success">89.2%</span>
+                                                                </div>
+                                                                <div class="metric-item">
+                                                                    <strong>정밀도:</strong> <span class="text-info">79.8%</span>
+                                                                </div>
+                                                                <div class="metric-item">
+                                                                    <strong>재현율:</strong> <span class="text-info">75.6%</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="metric-item">
+                                                                    <strong>전체 고객:</strong> <span class="text-primary">10,127명</span>
+                                                                </div>
+                                                                <div class="metric-item">
+                                                                    <strong>이탈률:</strong> <span class="text-danger">16.1%</span>
+                                                                </div>
+                                                                <div class="metric-item">
+                                                                    <strong>고위험 고객:</strong> <span class="text-warning">987명</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="card mb-3">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0">👑 고객 세그먼트 분석</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div id="customer-segment-chart" style="height: 300px;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card mb-3">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0">🎯 핵심 특성</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="feature-item">
+                                                            <strong>고객 가치 점수:</strong> <span class="text-primary">28.4%</span>
+                                                        </div>
+                                                        <div class="feature-item">
+                                                            <strong>활성 회원 여부:</strong> <span class="text-info">22.3%</span>
+                                                        </div>
+                                                        <div class="feature-item">
+                                                            <strong>연령:</strong> <span class="text-success">18.7%</span>
+                                                        </div>
+                                                        <div class="feature-item">
+                                                            <strong>상품 수:</strong> <span class="text-warning">15.6%</span>
+                                                        </div>
+                                                        <div class="feature-item">
+                                                            <strong>계좌 잔액:</strong> <span class="text-secondary">13.4%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="card mb-3">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0">💰 비즈니스 임팩트</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="impact-item">
+                                                            <strong>평균 LTV:</strong> 240만원
+                                                        </div>
+                                                        <div class="impact-item">
+                                                            <strong>예방 ROI:</strong> 5.33배
+                                                        </div>
+                                                        <div class="impact-item">
+                                                            <strong>획득 비용:</strong> 15만원
+                                                        </div>
+                                                        <div class="impact-item">
+                                                            <strong>유지 비용:</strong> 4.5만원
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 모델 비교 분석 -->
+                                    <div class="tab-pane fade" id="model-comparison" role="tabpanel">
+                                        <h5 class="mb-3">📈 전체 모델 성능 비교</h5>
+                                        
+                                        <div class="row mb-4">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0">🏆 모델별 성능 종합</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-hover">
+                                                                <thead class="table-dark">
+                                                                    <tr>
+                                                                        <th>모델</th>
+                                                                        <th>주요 메트릭</th>
+                                                                        <th>성능 점수</th>
+                                                                        <th>데이터 크기</th>
+                                                                        <th>비즈니스 임팩트</th>
+                                                                        <th>상태</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td><strong>🛡️ 사기 탐지</strong></td>
+                                                                        <td>AUC: 92.34%</td>
+                                                                        <td><span class="badge badge-success">우수</span></td>
+                                                                        <td>4.26M 거래</td>
+                                                                        <td>연 2.5억원 방지</td>
+                                                                        <td><span class="status-badge success">정상</span></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><strong>💭 감정 분석</strong></td>
+                                                                        <td>정확도: 88.7%</td>
+                                                                        <td><span class="badge badge-success">우수</span></td>
+                                                                        <td>14.7K 문장</td>
+                                                                        <td>실시간 시장 분석</td>
+                                                                        <td><span class="status-badge success">정상</span></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><strong>👥 고객 이탈</strong></td>
+                                                                        <td>AUC: 89.2%</td>
+                                                                        <td><span class="badge badge-success">우수</span></td>
+                                                                        <td>10.1K 고객</td>
+                                                                        <td>ROI 5.33배</td>
+                                                                        <td><span class="status-badge success">정상</span></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0">⚙️ 하이퍼파라미터 비교</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div id="hyperparameter-comparison-chart" style="height: 350px;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0">📊 성능 메트릭 레이더</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div id="performance-radar-chart" style="height: 350px;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light py-4 mt-5">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="text-muted mb-0">
+                        FCA Analysis Dashboard © 2025
+                    </p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p class="text-muted mb-0">
+                        Powered by ML Analytics
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Plotly.js for charts -->
+    <script src="https://cdn.plot.ly/plotly-2.25.2.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Modular Chart System -->
+    <script src="assets/js/modules/StaticChartFallback.js"></script>
+    <script src="assets/js/modules/ChartRenderer.js"></script>
+    <script src="assets/js/modules/PieCharts.js"></script>
+    <script src="assets/js/modules/BarCharts.js"></script>
+    <script src="assets/js/modules/XAICharts.js"></script>
+    <script src="assets/js/modules/ChartMonitor.js"></script>
+    <script src="assets/js/modules/ChartManager.js"></script>
+    <script src="assets/js/modules/SystemDebugger.js"></script>
+    
+    <!-- Legacy chart system (fallback) -->
+    <script src="assets/js/charts.js"></script>
+    
+    <!-- Dashboard Controller -->
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>
