@@ -1,0 +1,24 @@
+{
+  "dataset_info": {
+    "total_sentences": 4846,
+    "avg_sentence_length": 142.3,
+    "avg_word_count": 21.8
+  },
+  "sentiment_distribution": {
+    "positive": 1852,
+    "negative": 1674,
+    "neutral": 1320
+  },
+  "sentiment_percentages": {
+    "positive": 38.2,
+    "negative": 34.5,
+    "neutral": 27.3
+  },
+  "model_performance": {
+    "accuracy": 0.887,
+    "precision": 0.891,
+    "recall": 0.883,
+    "f1_score": 0.887
+  },
+  "timestamp": "2025-08-01T19:24:01.151665"
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Navigation Debug Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .nav-test { margin: 20px 0; }
+        .nav-test button { 
+            margin: 5px; 
+            padding: 10px 20px; 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .nav-test button:hover { background: #0056b3; }
+        .page-content { 
+            display: none; 
+            padding: 20px; 
+            border: 2px solid #007bff; 
+            border-radius: 5px; 
+            margin: 10px 0;
+        }
+        .page-content.active { display: block; }
+        .status { padding: 10px; background: #f8f9fa; border-radius: 5px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>🔧 FCA Navigation Debug Test</h1>
+    
+    <div class="status" id="status">
+        ⏳ Initializing navigation test...
+    </div>
+    
+    <div class="nav-test">
+        <h3>📊 Test Navigation Buttons:</h3>
+        <button onclick="showPage('dashboard')">Dashboard</button>
+        <button onclick="showPage('fraud')">Fraud Detection</button>
+        <button onclick="showPage('sentiment')">Sentiment Analysis</button>
+        <button onclick="showPage('attrition')">Customer Attrition</button>
+        <button onclick="showPage('datasets')">Datasets</button>
+    </div>
+    
+    <div id="dashboard" class="page-content active">
+        <h2>📊 Dashboard Page</h2>
+        <p>✅ Dashboard content is visible</p>
+        <div id="test-chart" style="height: 200px; background: #f8f9fa; display: flex; align-items: center; justify-content: center;">
+            📈 Chart placeholder
+        </div>
+    </div>
+    
+    <div id="fraud" class="page-content">
+        <h2>🛡️ Fraud Detection Page</h2>
+        <p>✅ Fraud detection content is visible</p>
+        <ul>
+            <li>Model Accuracy: 99.97%</li>
+            <li>Total Transactions: 568,630</li>
+            <li>Fraud Cases: 184</li>
+        </ul>
+    </div>
+    
+    <div id="sentiment" class="page-content">
+        <h2>💬 Sentiment Analysis Page</h2>
+        <p>✅ Sentiment analysis content is visible</p>
+        <ul>
+            <li>Total Sentences: 4,846</li>
+            <li>Positive: 2,156 (44.5%)</li>
+            <li>Negative: 1,834 (37.9%)</li>
+            <li>Neutral: 856 (17.7%)</li>
+        </ul>
+    </div>
+    
+    <div id="attrition" class="page-content">
+        <h2>👥 Customer Attrition Page</h2>
+        <p>✅ Customer attrition content is visible</p>
+        <ul>
+            <li>Total Customers: 10,127</li>
+            <li>Retained: 8,342 (82.4%)</li>
+            <li>Churned: 1,785 (17.6%)</li>
+        </ul>
+    </div>
+    
+    <div id="datasets" class="page-content">
+        <h2>📁 Datasets Page</h2>
+        <p>✅ Datasets content is visible</p>
+        <ul>
+            <li>Fraud Detection Dataset</li>
+            <li>Sentiment Analysis Dataset</li>
+            <li>Customer Attrition Dataset</li>
+        </ul>
+    </div>
+    
+    <script>
+        let currentPage = 'dashboard';
+        
+        function showPage(pageId) {
+            console.log(`🔄 Switching to page: ${pageId}`);
+            
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+                page.style.display = 'none';
+            });
+            
+            // Show target page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                targetPage.style.display = 'block';
+                currentPage = pageId;
+                
+                updateStatus(`✅ Successfully switched to ${pageId} page`);
+                console.log(`✅ Page ${pageId} is now visible`);
+            } else {
+                updateStatus(`❌ Page ${pageId} not found`);
+                console.error(`❌ Page ${pageId} not found`);
+            }
+        }
+        
+        function updateStatus(message) {
+            const statusEl = document.getElementById('status');
+            if (statusEl) {
+                statusEl.innerHTML = message;
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatus('✅ Navigation test ready - Click buttons to test navigation');
+            console.log('✅ Navigation debug test initialized');
+        });
+        
+        // Test function
+        function runNavigationTest() {
+            const pages = ['dashboard', 'fraud', 'sentiment', 'attrition', 'datasets'];
+            let testIndex = 0;
+            
+            function testNext() {
+                if (testIndex < pages.length) {
+                    showPage(pages[testIndex]);
+                    testIndex++;
+                    setTimeout(testNext, 1000);
+                } else {
+                    updateStatus('✅ All navigation tests completed successfully!');
+                }
+            }
+            
+            testNext();
+        }
+        
+        // Auto test after 2 seconds
+        setTimeout(() => {
+            updateStatus('🔄 Running automatic navigation test...');
+            runNavigationTest();
+        }, 2000);
+    </script>
+</body>
+</html>

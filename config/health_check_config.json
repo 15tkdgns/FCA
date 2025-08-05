@@ -1,0 +1,29 @@
+{
+  "dashboard_url": "http://localhost:8080",
+  "api_endpoints": [
+    "/api/health",
+    "/api/data/fraud",
+    "/api/data/sentiment"
+  ],
+  "thresholds": {
+    "cpu_percent": 80,
+    "memory_percent": 85,
+    "disk_usage_percent": 90,
+    "response_time_ms": 5000,
+    "error_rate_percent": 5
+  },
+  "notification": {
+    "enabled": false,
+    "email": {
+      "smtp_server": "smtp.gmail.com",
+      "smtp_port": 587,
+      "sender": "",
+      "password": "",
+      "recipients": []
+    }
+  },
+  "schedule": {
+    "interval_minutes": 15,
+    "daily_report_hour": 9
+  }
+}

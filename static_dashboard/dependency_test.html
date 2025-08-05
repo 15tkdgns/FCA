@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dependency Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .warning { background-color: #fff3cd; border-color: #ffeaa7; color: #856404; }
+        .log { background: #f8f9fa; padding: 10px; font-family: monospace; max-height: 300px; overflow-y: auto; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Dependency & Integration Test</h1>
+    
+    <div id="test-results"></div>
+    
+    <h2>Debug Log</h2>
+    <div id="debug-log" class="log"></div>
+
+    <!-- Load scripts in exact same order as main dashboard -->
+    <script src="https://cdn.plot.ly/plotly-2.25.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="assets/js/utils/common-utils.js"></script>
+    <script src="assets/js/utils/chart-factory.js"></script>
+    <script src="assets/js/utils/data-manager.js"></script>
+    
+    <script>
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logDiv = document.getElementById('debug-log');
+            const className = type === 'error' ? 'color: red;' : type === 'warning' ? 'color: orange;' : 'color: green;';
+            logDiv.innerHTML += `<div style="${className}">[${timestamp}] ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+        
+        function addTestResult(testName, success, message = '') {
+            const resultsDiv = document.getElementById('test-results');
+            const className = success ? 'success' : 'error';
+            const icon = success ? '✅' : '❌';
+            resultsDiv.innerHTML += `<div class="test-section ${className}">${icon} <strong>${testName}</strong>: ${message}</div>`;
+        }
+        
+        async function runDependencyTests() {
+            try {
+                log('🏁 Starting dependency tests');
+                
+                // Test 1: Basic dependencies
+                log('📦 Testing basic dependencies...');
+                
+                if (typeof Plotly !== 'undefined') {
+                    addTestResult('Plotly.js', true, 'Available and loaded');
+                    log('✅ Plotly.js is available');
+                } else {
+                    addTestResult('Plotly.js', false, 'Not available');
+                    log('❌ Plotly.js is not available', 'error');
+                    return;
+                }
+                
+                // Test 2: CommonUtils
+                log('🔧 Testing CommonUtils...');
+                
+                if (typeof CommonUtils !== 'undefined') {
+                    addTestResult('CommonUtils', true, 'Class available');
+                    log('✅ CommonUtils is available');
+                    
+                    // Test CommonUtils methods
+                    try {
+                        CommonUtils.log.info('Test message', 'TestModule');
+                        addTestResult('CommonUtils.log', true, 'Logging system works');
+                        log('✅ CommonUtils.log works');
+                    } catch (error) {
+                        addTestResult('CommonUtils.log', false, error.message);
+                        log('❌ CommonUtils.log failed: ' + error.message, 'error');
+                    }
+                } else {
+                    addTestResult('CommonUtils', false, 'Class not available');
+                    log('❌ CommonUtils is not available', 'error');
+                }
+                
+                // Test 3: ChartFactory
+                log('📊 Testing ChartFactory...');
+                
+                if (typeof ChartFactory !== 'undefined') {
+                    addTestResult('ChartFactory', true, 'Instance available');
+                    log('✅ ChartFactory is available');
+                    
+                    // Test method existence
+                    if (typeof ChartFactory.createPieChart === 'function') {
+                        addTestResult('ChartFactory.createPieChart', true, 'Method available');
+                        log('✅ ChartFactory.createPieChart is a function');
+                    } else {
+                        addTestResult('ChartFactory.createPieChart', false, 'Method not available');
+                        log('❌ ChartFactory.createPieChart is not a function', 'error');
+                    }
+                } else {
+                    addTestResult('ChartFactory', false, 'Instance not available');
+                    log('❌ ChartFactory is not available', 'error');
+                }
+                
+                // Test 4: DataManager - THIS IS THE CRITICAL TEST
+                log('🗄️ Testing DataManager...');
+                
+                if (typeof DataManager !== 'undefined') {
+                    addTestResult('DataManager', true, 'Instance available');
+                    log('✅ DataManager is available');
+                    
+                    // Test DataManager type
+                    log('🔍 DataManager type: ' + typeof DataManager);
+                    log('🔍 DataManager constructor: ' + DataManager.constructor.name);
+                    
+                    // Test method existence
+                    if (typeof DataManager.loadDashboardData === 'function') {
+                        addTestResult('DataManager.loadDashboardData', true, 'Method available');
+                        log('✅ DataManager.loadDashboardData is a function');
+                        
+                        // Test actual method call
+                        try {
+                            log('🚀 Testing DataManager.loadDashboardData() call...');
+                            const data = await DataManager.loadDashboardData();
+                            addTestResult('DataManager.loadDashboardData()', true, 'Method executed successfully');
+                            log('✅ DataManager.loadDashboardData() executed successfully');
+                            log('📄 Data keys: ' + Object.keys(data).join(', '));
+                        } catch (error) {
+                            addTestResult('DataManager.loadDashboardData()', false, error.message);
+                            log('❌ DataManager.loadDashboardData() failed: ' + error.message, 'error');
+                        }
+                    } else {
+                        addTestResult('DataManager.loadDashboardData', false, 'Method not available');
+                        log('❌ DataManager.loadDashboardData is not a function', 'error');
+                        log('🔍 Available methods: ' + Object.getOwnPropertyNames(DataManager).join(', '));
+                    }
+                } else {
+                    addTestResult('DataManager', false, 'Instance not available');
+                    log('❌ DataManager is not available', 'error');
+                    log('🔍 Window keys containing "Data": ' + Object.keys(window).filter(k => k.includes('Data')).join(', '));
+                }
+                
+                // Test 5: Data files accessibility
+                log('📂 Testing data files...');
+                
+                try {
+                    const response = await fetch('data/summary.json');
+                    if (response.ok) {
+                        addTestResult('Data Files', true, 'summary.json accessible');
+                        log('✅ Data files are accessible');
+                    } else {
+                        addTestResult('Data Files', false, `HTTP ${response.status}`);
+                        log('❌ Data files not accessible: ' + response.status, 'error');
+                    }
+                } catch (error) {
+                    addTestResult('Data Files', false, error.message);
+                    log('❌ Data file access failed: ' + error.message, 'error');
+                }
+                
+                log('🎉 Dependency tests completed');
+                
+            } catch (error) {
+                log('💥 Test suite failed: ' + error.message, 'error');
+                addTestResult('Test Suite', false, error.message);
+            }
+        }
+        
+        // Start tests when page loads
+        window.addEventListener('load', () => {
+            setTimeout(runDependencyTests, 500);
+        });
+    </script>
+</body>
+</html>

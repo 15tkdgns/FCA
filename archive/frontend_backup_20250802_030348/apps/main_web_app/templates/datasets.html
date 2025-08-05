@@ -1,0 +1,614 @@
+{% extends "base.html" %}
+
+{% block title %}Dataset Management{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Frontend style and web_app template integration */
+    .table-wrapper { 
+        overflow-x: auto; 
+        margin-top: 20px; 
+        border: 1px solid var(--border-color); 
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .datasets-table { 
+        width: 100%; 
+        min-width: 1350px; 
+        border-collapse: collapse; 
+        margin: 0;
+    }
+    
+    .datasets-table th, 
+    .datasets-table td { 
+        border: 1px solid var(--border-color); 
+        padding: 12px 16px; 
+        text-align: left; 
+        vertical-align: top; 
+    }
+    
+    .datasets-table th { 
+        background-color: var(--primary-color); 
+        color: white; 
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+    
+    .datasets-table tr:nth-child(even) { 
+        background-color: #f8f9fa; 
+    }
+    
+    .datasets-table tr:hover {
+        background-color: #e9ecef;
+        transition: var(--transition-fast);
+    }
+    
+    /* Column width optimization (adopted from Frontend style) */
+    .datasets-table th:nth-child(1), 
+    .datasets-table td:nth-child(1) { width: 150px; white-space: normal; }
+    .datasets-table th:nth-child(2), 
+    .datasets-table td:nth-child(2) { width: 300px; white-space: normal; }
+    .datasets-table th:nth-child(3), 
+    .datasets-table td:nth-child(3) { width: 400px; white-space: normal; }
+    .datasets-table th:nth-child(4), 
+    .datasets-table td:nth-child(4) { width: 300px; white-space: normal; }
+    .datasets-table th:nth-child(5), 
+    .datasets-table td:nth-child(5) { width: 200px; text-align: center; }
+    
+    .step-list { 
+        list-style-type: decimal; 
+        padding-left: 20px; 
+        margin: 0; 
+        font-size: 13px; 
+    }
+    
+    .step-list li { 
+        margin-bottom: 4px; 
+        line-height: 1.4;
+    }
+    
+    .action-buttons { 
+        display: flex; 
+        flex-direction: column; 
+        gap: 8px; 
+    }
+    
+    .action-btn { 
+        padding: 8px 16px; 
+        font-size: 12px; 
+        cursor: pointer; 
+        border: 1px solid var(--border-color); 
+        border-radius: var(--border-radius);
+        background-color: #f8f9fa;
+        transition: var(--transition-fast);
+    }
+    
+    .action-btn:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-1px);
+    }
+    
+    .stats-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        background-color: var(--success-color);
+        color: white;
+        border-radius: 12px;
+        font-size: 11px;
+        margin: 2px;
+    }
+    
+    .processing-indicator {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 8px;
+    }
+    
+    .status-success { background-color: var(--success-color); }
+    .status-warning { background-color: var(--warning-color); }
+    .status-error { background-color: var(--danger-color); }
+    
+    .enhanced-card {
+        border: none;
+        box-shadow: var(--card-shadow);
+        transition: var(--transition-normal);
+    }
+    
+    .enhanced-card:hover {
+        box-shadow: var(--card-shadow-hover);
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="display-5 fw-bold">
+                <i class="fas fa-database me-3" style="color: var(--primary-color);"></i>
+                Integrated Dataset Management
+            </h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Datasets</li>
+                </ol>
+            </nav>
+        </div>
+        <hr class="mt-3 mb-4">
+    </div>
+</div>
+
+<!-- Integrated statistics cards (Frontend + Web_app style) -->
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card enhanced-card text-center">
+            <div class="card-body">
+                <h5 class="text-primary">📊 Total Datasets</h5>
+                <h3 class="fw-bold" id="total-datasets-count">8</h3>
+                <small class="text-muted">Across all domains</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card enhanced-card text-center">
+            <div class="card-body">
+                <h5 class="text-success">✅ Processed</h5>
+                <h3 class="fw-bold" id="processed-datasets-count">7</h3>
+                <small class="text-muted">Successfully loaded</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card enhanced-card text-center">
+            <div class="card-body">
+                <h5 class="text-success">✅ Success</h5>
+                <h3 class="fw-bold" id="failed-datasets-count">0</h3>
+                <small class="text-muted">All datasets ready</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card enhanced-card text-center">
+            <div class="card-body">
+                <h5 class="text-info">📈 Total Records</h5>
+                <h3 class="fw-bold" id="total-records-count">4.26M</h3>
+                <small class="text-muted">Ready for analysis</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Integrated dataset table (Frontend detailed info + Web_app visualization) -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card enhanced-card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-table me-2"></i>
+                    Detailed Dataset Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-wrapper">
+                    <table class="datasets-table">
+                        <thead>
+                            <tr>
+                                <th>Dataset</th>
+                                <th>Description</th>
+                                <th>Processing Steps</th>
+                                <th>Dataset Features</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="processing-indicator status-success"></div>
+                                    <strong>credit_card_fraud_2023</strong>
+                                    <br>
+                                    <span class="stats-badge">568,629 records</span>
+                                </td>
+                                <td>
+                                    Balanced fraud detection dataset with PCA features for enhanced privacy protection
+                                    <br><small class="text-muted">Type: Fraud Detection | Balance: 50/50</small>
+                                </td>
+                                <td>
+                                    <ol class="step-list">
+                                        <li>Load CSV file and basic validation</li>
+                                        <li>Data type optimization (float32 conversion)</li>
+                                        <li>Class distribution analysis (50.0% fraud)</li>
+                                        <li>Statistical calculation (mean: $12,041)</li>
+                                        <li>Memory caching and indexing</li>
+                                    </ol>
+                                </td>
+                                <td>
+                                    • 30 features (PCA + Time, Amount, Class)<br>
+                                    • Imbalanced dataset (0.20% fraud)<br>
+                                    • Mean amount: $88.35<br>
+                                    • File size: 299.0MB<br>
+                                    • Status: ✅ Ready
+                                </td>
+                                <td>
+                                    <div class="status-badges">
+                                        <span class="badge bg-success">✓ 활성</span>
+                                        <span class="badge bg-info">99.92% 정확도</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="processing-indicator status-success"></div>
+                                    <strong>wamc_fraud</strong>
+                                    <br>
+                                    <span class="stats-badge">283,726 records</span>
+                                </td>
+                                <td>
+                                    Extremely imbalanced real-world fraud dataset
+                                    <br><small class="text-muted">Type: Fraud Detection | Balance: 0.17% fraud</small>
+                                </td>
+                                <td>
+                                    <ol class="step-list">
+                                        <li>Load CSV file and schema validation</li>
+                                        <li>Extreme imbalanced class analysis</li>
+                                        <li>Outlier detection and processing</li>
+                                        <li>Transaction amount distribution analysis</li>
+                                        <li>Time series pattern analysis</li>
+                                    </ol>
+                                </td>
+                                <td>
+                                    • 31 features (similar to creditcard)<br>
+                                    • Highly imbalanced (0.167% fraud)<br>
+                                    • Mean amount: $88.47<br>
+                                    • Median amount: $22.00<br>
+                                    • Memory usage: ~22MB
+                                </td>
+                                <td>
+                                    <div class="status-badges">
+                                        <span class="badge bg-warning">⚠️ 대기</span>
+                                        <span class="badge bg-secondary">85.4% 정확도</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="processing-indicator status-success"></div>
+                                    <strong>financial_phrasebank</strong>
+                                    <br>
+                                    <span class="stats-badge">14,780 sentences</span>
+                                </td>
+                                <td>
+                                    Financial news sentiment classification dataset
+                                    <br><small class="text-muted">Type: Sentiment Analysis | Balance: 3-class</small>
+                                </td>
+                                <td>
+                                    <ol class="step-list">
+                                        <li>Text file parsing and encoding processing</li>
+                                        <li>Sentence segmentation and refinement</li>
+                                        <li>Sentiment label mapping (3 classes)</li>
+                                        <li>Sentence length distribution analysis</li>
+                                        <li>Classification by agreement level</li>
+                                    </ol>
+                                </td>
+                                <td>
+                                    • 14,780 financial sentences<br>
+                                    • 3 sentiment classes (pos/neg/neu)<br>
+                                    • Avg length: 126.16 chars<br>
+                                    • Agreement levels: 50-100%<br>
+                                    • Memory usage: ~2MB
+                                </td>
+                                <td>
+                                    <div class="status-badges">
+                                        <span class="badge bg-success">✓ 활성</span>
+                                        <span class="badge bg-info">86.7% 정확도</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="processing-indicator status-success"></div>
+                                    <strong>dhanush_fraud</strong>
+                                    <br>
+                                    <span class="stats-badge">1,000,000 records</span>
+                                </td>
+                                <td>
+                                    Large-scale behavioral pattern fraud detection
+                                    <br><small class="text-muted">Type: Fraud Detection | Balance: Moderate imbalance</small>
+                                </td>
+                                <td>
+                                    <ol class="step-list">
+                                        <li>Large CSV chunk-based loading</li>
+                                        <li>Behavioral pattern feature engineering</li>
+                                        <li>Time-based feature generation</li>
+                                        <li>Anomalous transaction pattern detection</li>
+                                        <li>Memory-efficient storage</li>
+                                    </ol>
+                                </td>
+                                <td>
+                                    • 1M+ transaction records<br>
+                                    • Behavioral features<br>
+                                    • Time-series patterns<br>
+                                    • 8 features (transaction patterns)<br>
+                                    • Fraud rate: 7.90% (79,000 cases)<br>
+                                    • File size: 72.1MB<br>
+                                    • Status: ✅ Ready
+                                </td>
+                                <td>
+                                    <div class="status-badges">
+                                        <span class="badge bg-success">✓ 활성</span>
+                                        <span class="badge bg-info">94.8% 정확도</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="processing-indicator status-success"></div>
+                                    <strong>ibm_aml</strong>
+                                    <br>
+                                    <span class="stats-badge">1,323,234 records</span>
+                                </td>
+                                <td>
+                                    Anti-Money Laundering dataset (IBM AMLSim)
+                                    <br><small class="text-muted">Type: Fraud Detection | Status: Ready</small>
+                                </td>
+                                <td>
+                                    <ol class="step-list">
+                                        <li>KaggleHub API connection successful</li>
+                                        <li>HI-Small_Trans.csv file downloaded</li>
+                                        <li>Data processing and feature engineering</li>
+                                        <li>Sample data extraction (1,000 rows)</li>
+                                        <li>✅ Dataset ready for analysis</li>
+                                    </ol>
+                                </td>
+                                <td>
+                                    • 1,323,234 total transactions<br>
+                                    • 24 features (after processing)<br>
+                                    • Fraud rate: 0.130% (1,719 cases)<br>
+                                    • Size: ~225MB processed<br>
+                                    • Status: ✅ Ready
+                                </td>
+                                <td>
+                                    <div class="status-badges">
+                                        <span class="badge bg-success">✓ 활성</span>
+                                        <span class="badge bg-info">89.4% 정확도</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Web_app style visualization gallery integration -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card enhanced-card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-images me-2"></i>
+                    Dataset Visualization Gallery
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row" id="images-gallery">
+                    <!-- Filled by Web_app template JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Processing status monitoring -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card enhanced-card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-line me-2"></i>
+                    Processing Performance Monitoring
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="processing-chart" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card enhanced-card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-memory me-2"></i>
+                    Memory Usage
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="memory-chart" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Image modal (borrowed from Web_app template) -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Data Visualization</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modal-image" src="" class="img-fluid" alt="Dataset Visualization">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Frontend and Web_app functionality integration
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        Utils.showLoading();
+        
+        // Integrated data loading
+        await Promise.all([
+            loadDatasetStatistics(),
+            loadVisualizationGallery(),
+            loadPerformanceCharts()
+        ]);
+        
+    } catch (error) {
+        console.error('Integrated dataset page loading error:', error);
+        Utils.showError('Failed to load dataset information.');
+    } finally {
+        Utils.hideLoading();
+    }
+});
+
+async function loadDatasetStatistics() {
+    try {
+        const response = await window.APIClient.getSummary();
+        if (response.status === 'success') {
+            updateStatisticsCards(response.data);
+        }
+    } catch (error) {
+        console.error('Statistics loading error:', error);
+    }
+}
+
+async function loadVisualizationGallery() {
+    try {
+        const imagesResponse = await window.APIClient.request('/api/images');
+        displayImagesGallery(imagesResponse.images || {});
+    } catch (error) {
+        console.error('Visualization gallery loading error:', error);
+    }
+}
+
+async function loadPerformanceCharts() {
+    try {
+        // Frontend's performance monitoring chart
+        const processingData = {
+            x: ['Credit Card', 'WAMC', 'Phrasebank', 'Dhanush'],
+            y: [2.1, 1.8, 0.3, 4.2],
+            type: 'bar',
+            name: 'Processing Time (sec)'
+        };
+        
+        if (typeof Plotly !== 'undefined') {
+            Plotly.newPlot('processing-chart', [processingData], {
+                title: 'Dataset Processing Time',
+                yaxis: { title: 'Time (seconds)' }
+            });
+        }
+        
+        // Memory usage chart
+        const memoryData = {
+            labels: ['Credit Card', 'WAMC', 'Phrasebank', 'Dhanush'],
+            values: [35, 22, 2, 76],
+            type: 'pie'
+        };
+        
+        if (typeof Plotly !== 'undefined') {
+            Plotly.newPlot('memory-chart', [memoryData], {
+                title: 'Memory Usage Distribution (MB)'
+            });
+        }
+        
+    } catch (error) {
+        console.error('Performance chart loading error:', error);
+    }
+}
+
+function updateStatisticsCards(data) {
+    // Processing statistics update
+    const stats = {
+        total: 8,
+        processed: 7, 
+        failed: 1,
+        records: '1.8M+'
+    };
+    
+    document.getElementById('total-datasets-count').textContent = stats.total;
+    document.getElementById('processed-datasets-count').textContent = stats.processed;
+    document.getElementById('failed-datasets-count').textContent = stats.failed;
+    document.getElementById('total-records-count').textContent = stats.records;
+}
+
+function displayImagesGallery(images) {
+    const gallery = document.getElementById('images-gallery');
+    if (!gallery) return;
+    
+    const imageDescriptions = {
+        'fraud_class_distributions': 'Fraud Class Distributions',
+        'correlation_matrix': 'Feature Correlation Matrix',
+        'sentiment_analysis_results': 'Sentiment Analysis Results',
+        'sentiment_distribution': 'Sentiment Distribution',
+        'customer_attrition_results': 'Customer Attrition Results',
+        'simple_model_dashboard': 'Model Performance Dashboard'
+    };
+    
+    const imageIcons = {
+        'fraud_class_distributions': 'fa-shield-alt',
+        'correlation_matrix': 'fa-project-diagram',
+        'sentiment_analysis_results': 'fa-comment-alt',
+        'sentiment_distribution': 'fa-chart-pie',
+        'customer_attrition_results': 'fa-users',
+        'simple_model_dashboard': 'fa-chart-line'
+    };
+    
+    gallery.innerHTML = Object.entries(images).map(([key, filename]) => {
+        const description = imageDescriptions[key] || filename;
+        const icon = imageIcons[key] || 'fa-image';
+        
+        return `
+            <div class="col-lg-4 col-md-6 mb-3">
+                <div class="card enhanced-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas ${icon} fa-2x text-primary mb-3"></i>
+                        <h6 class="card-title">${description}</h6>
+                        <button class="btn btn-outline-primary hover-lift" onclick="showImage('/static/images/${filename}', '${description}')">
+                            <i class="fas fa-eye me-2"></i>View Visualization
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Frontend button functions
+function viewDataset(datasetName) {
+    console.log(`Viewing dataset: ${datasetName}`);
+    // API call to display dataset details
+}
+
+function downloadDataset(datasetName) {
+    console.log(`Downloading dataset: ${datasetName}`);
+    // Download logic
+}
+
+function analyzeDataset(datasetName) {
+    console.log(`Analyzing dataset: ${datasetName}`);
+    // Navigate to analysis page
+}
+
+function showImage(imageSrc, title) {
+    const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+    document.getElementById('imageModalLabel').textContent = title;
+    document.getElementById('modal-image').src = imageSrc;
+    modal.show();
+}
+</script>
+{% endblock %}

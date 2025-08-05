@@ -1,0 +1,745 @@
+{
+  "scan_summary": {
+    "total_findings": 143,
+    "critical": 6,
+    "high": 32,
+    "medium": 86,
+    "low": 19,
+    "info": 0
+  },
+  "findings_by_severity": {
+    "critical": [
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/six.py",
+        "description": "위험한 함수 사용: exec",
+        "severity": "critical"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pkg_resources/__init__.py",
+        "description": "위험한 함수 사용: exec",
+        "severity": "critical"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pkg_resources/__init__.py",
+        "description": "위험한 함수 사용: exec",
+        "severity": "critical"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/packages/six.py",
+        "description": "위험한 함수 사용: exec",
+        "severity": "critical"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pygments/lexers/__init__.py",
+        "description": "위험한 함수 사용: exec",
+        "severity": "critical"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pygments/formatters/__init__.py",
+        "description": "위험한 함수 사용: exec",
+        "severity": "critical"
+      }
+    ],
+    "high": [
+      {
+        "file": "advanced_fraud_detection_engine.py",
+        "description": "Unsafe deserialization (라인 919)",
+        "severity": "high"
+      },
+      {
+        "file": "generate_dashboard_data.py",
+        "description": "Unsafe deserialization (라인 57)",
+        "severity": "high"
+      },
+      {
+        "file": "optimization_analysis.py",
+        "description": "Dangerous eval() usage (라인 160)",
+        "severity": "high"
+      },
+      {
+        "file": "optimization_analysis.py",
+        "description": "Dangerous exec() usage (라인 161)",
+        "severity": "high"
+      },
+      {
+        "file": "security_audit.py",
+        "description": "Dangerous eval() usage (라인 42)",
+        "severity": "high"
+      },
+      {
+        "file": "security_audit.py",
+        "description": "Dangerous eval() usage (라인 222)",
+        "severity": "high"
+      },
+      {
+        "file": "security_audit.py",
+        "description": "Dangerous eval() usage (라인 223)",
+        "severity": "high"
+      },
+      {
+        "file": "security_audit.py",
+        "description": "Dangerous exec() usage (라인 43)",
+        "severity": "high"
+      },
+      {
+        "file": "security_audit.py",
+        "description": "SQL concatenation detected (라인 51)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/typing_extensions.py",
+        "description": "Dangerous eval() usage (라인 1251)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/typing_extensions.py",
+        "description": "Dangerous exec() usage (라인 1251)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/six.py",
+        "description": "Dangerous exec() usage (라인 735)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pyparsing/results.py",
+        "description": "Dangerous eval() usage (라인 57)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pkg_resources/__init__.py",
+        "description": "Dangerous exec() usage (라인 1561)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pkg_resources/__init__.py",
+        "description": "Dangerous exec() usage (라인 1572)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/rich/markup.py",
+        "description": "Dangerous eval() usage (라인 184)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/packages/six.py",
+        "description": "Dangerous exec() usage (라인 787)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pygments/lexers/__init__.py",
+        "description": "Dangerous exec() usage (라인 153)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pygments/formatters/__init__.py",
+        "description": "Dangerous eval() usage (라인 91)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pygments/formatters/__init__.py",
+        "description": "Dangerous exec() usage (라인 103)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_internal/utils/misc.py",
+        "description": "Hardcoded password (라인 520)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_internal/utils/misc.py",
+        "description": "하드코딩된 비밀번호: password",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_internal/utils/setuptools_build.py",
+        "description": "Dangerous exec() usage (라인 10)",
+        "severity": "high"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_internal/utils/setuptools_build.py",
+        "description": "Dangerous exec() usage (라인 43)",
+        "severity": "high"
+      },
+      {
+        "file": "archive/deprecated/advanced_fraud_detection_engine.py",
+        "description": "Unsafe deserialization (라인 919)",
+        "severity": "high"
+      },
+      {
+        "file": "static_dashboard/test_stability.js",
+        "description": "SQL concatenation detected (라인 186)",
+        "severity": "high"
+      },
+      {
+        "file": "static_dashboard/assets/js/user-experience.js",
+        "description": "SQL concatenation detected (라인 191)",
+        "severity": "high"
+      },
+      {
+        "file": "static_dashboard/assets/js/user-experience.js",
+        "description": "Potential XSS vulnerability (라인 191)",
+        "severity": "high"
+      },
+      {
+        "file": "static_dashboard/assets/js/user-experience.js",
+        "description": "잠재적 XSS 취약점: innerHTML\\s*=.*\\+",
+        "severity": "high"
+      },
+      {
+        "file": "frontend_legacy/fca-performance-report-2025-07-26T14:01:49.json",
+        "description": "민감한 데이터 노출: 의심스러운 긴 토큰/키",
+        "severity": "high"
+      },
+      {
+        "file": "requirements.txt",
+        "description": "잠재적 취약 패키지: pickle",
+        "severity": "high"
+      },
+      {
+        "file": "requirements.txt",
+        "description": "잠재적 취약 패키지: yaml",
+        "severity": "high"
+      }
+    ],
+    "medium": [
+      {
+        "file": "performance_optimizer.py",
+        "description": "긴 함수: run_optimization (61줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "test_advanced_fraud_detection.py",
+        "description": "긴 함수: run_performance_benchmark (52줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "production_deployment.py",
+        "description": "긴 함수: deploy_production_service (54줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "simple_api.py",
+        "description": "긴 함수: get_chart (96줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "backend/server.py",
+        "description": "긴 함수: get_dataset_head (77줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "static_dashboard/bundle_data.py",
+        "description": "긴 함수: bundle_data (65줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "tests/test_advanced_fraud_detection.py",
+        "description": "긴 함수: run_performance_benchmark (52줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "examples/improved_fraud_detection_example.py",
+        "description": "긴 함수: demonstrate_improved_fraud_detection (153줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "notebooks/model_comparison_dashboard.py",
+        "description": "Python 구문 오류",
+        "severity": "medium"
+      },
+      {
+        "file": "notebooks/simple_dashboard.py",
+        "description": "긴 함수: create_simple_dashboard (71줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "notebooks/quick_fraud_models.py",
+        "description": "긴 함수: main (68줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/typing_extensions.py",
+        "description": "긴 함수: NamedTuple (76줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_internal/exceptions.py",
+        "description": "긴 함수: __rich_console__ (61줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_internal/build_env.py",
+        "description": "긴 함수: _install_requirements (57줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/truststore/_macos.py",
+        "description": "긴 함수: _handle_osstatus (53줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pyparsing/common.py",
+        "description": "긴 함수: strip_html_tags (108줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/poolmanager.py",
+        "description": "긴 함수: urlopen (68줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/connectionpool.py",
+        "description": "긴 함수: _is_ssl_error_message_from_http_proxy (144줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/request.py",
+        "description": "긴 함수: request_encode_body (75줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/tomli/_parser.py",
+        "description": "긴 함수: loads (66줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/requests/models.py",
+        "description": "긴 함수: _encode_files (69줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/idna/uts46data.py",
+        "description": "긴 함수: _seg_81 (82줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/distlib/locators.py",
+        "description": "긴 함수: locate (57줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/distlib/version.py",
+        "description": "긴 함수: _pep_440_key (69줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/distlib/version.py",
+        "description": "긴 함수: _suggest_normalized_version (110줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/distlib/util.py",
+        "description": "긴 함수: get_host_platform (84줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/distlib/wheel.py",
+        "description": "긴 함수: compatible_tags (80줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/distlib/compat.py",
+        "description": "긴 함수: find_cookie (62줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/distlib/metadata.py",
+        "description": "긴 함수: _has_marker (68줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pygments/lexer.py",
+        "description": "긴 함수: get_tokens_unprocessed (62줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pygments/lexer.py",
+        "description": "긴 함수: do_insertions (64줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pygments/cmdline.py",
+        "description": "긴 함수: is_only_option (325줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/rich/markup.py",
+        "description": "긴 함수: pop_style (88줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/rich/segment.py",
+        "description": "긴 함수: divide (69줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/rich/columns.py",
+        "description": "긴 함수: iter_renderables (88줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/rich/table.py",
+        "description": "긴 함수: align_cell (90줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/rich/_log_render.py",
+        "description": "긴 함수: __call__ (57줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/rich/ansi.py",
+        "description": "긴 함수: decode_line (76줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/rich/traceback.py",
+        "description": "긴 함수: render_locals (102줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/packages/six.py",
+        "description": "긴 함수: write (52줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/contrib/pyopenssl.py",
+        "description": "긴 함수: get_subj_alt_name (53줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/contrib/securetransport.py",
+        "description": "긴 함수: _write_callback (51줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/contrib/socks.py",
+        "description": "긴 함수: _new_conn (59줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/contrib/_securetransport/low_level.py",
+        "description": "긴 함수: _load_client_cert_chain (75줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/chardet/cli/chardetect.py",
+        "description": "긴 함수: main (53줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/colorama/tests/initialise_test.py",
+        "description": "긴 함수: fake_std (52줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/pygments/formatters/latex.py",
+        "description": "긴 함수: format_unencoded (104줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_internal/cli/req_command.py",
+        "description": "긴 함수: _build_session (54줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_internal/index/collector.py",
+        "description": "긴 함수: _get_index_content (61줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_internal/operations/freeze.py",
+        "description": "긴 함수: _get_editable_info (66줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_internal/network/session.py",
+        "description": "긴 함수: user_agent (101줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_internal/operations/install/wheel.py",
+        "description": "긴 함수: get_console_script_specs (77줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "web_app/api/endpoints/base_routes.py",
+        "description": "긴 함수: compare_models (56줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "web_app/api/endpoints/visualization_routes.py",
+        "description": "긴 함수: get_sample_data (95줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "web_app/modules/charts/performance_charts.py",
+        "description": "긴 함수: get_grade (61줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "web_app/modules/charts/performance_charts.py",
+        "description": "긴 함수: generate (59줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "web_app/modules/charts/performance_charts.py",
+        "description": "긴 함수: generate (52줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/deprecated/production_deployment.py",
+        "description": "긴 함수: deploy_production_service (54줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/deprecated/simple_api.py",
+        "description": "긴 함수: get_chart (96줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/deprecated/unified_web_app_sidebar.py",
+        "description": "긴 함수: sentiment_page (93줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/deprecated/unified_web_app_sidebar.py",
+        "description": "긴 함수: attrition_page (91줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/deprecated/unified_web_app_sidebar.py",
+        "description": "긴 함수: datasets_page (123줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/deprecated/unified_web_app_sidebar.py",
+        "description": "긴 함수: comparison_page (174줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/run_web_app.py",
+        "description": "긴 함수: api_metrics (73줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/run_web_app.py",
+        "description": "긴 함수: api_charts_performance (66줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/run_web_app.py",
+        "description": "긴 함수: api_validation_report (57줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/run_web_app.py",
+        "description": "긴 함수: api_model_comparison (81줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/run_web_app.py",
+        "description": "긴 함수: api_security_validation (63줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/api/endpoints/detection_api.py",
+        "description": "긴 함수: detect_fraud (64줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/api/endpoints/detection_api.py",
+        "description": "긴 함수: predict_churn (65줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/api/endpoints/detection_api.py",
+        "description": "긴 함수: analyze_sentiment (61줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/api/endpoints/detection_api.py",
+        "description": "긴 함수: batch_analyze (68줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/api/endpoints/dataset_api.py",
+        "description": "긴 함수: dataset_preview (104줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/api/endpoints/dataset_api.py",
+        "description": "긴 함수: dataset_info (68줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/api/endpoints/base_routes.py",
+        "description": "긴 함수: compare_models (56줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/api/endpoints/visualization_routes.py",
+        "description": "긴 함수: get_sample_data (95줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/api/endpoints/enhanced_base_routes.py",
+        "description": "긴 함수: get_domain_results (106줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/api/endpoints/enhanced_base_routes.py",
+        "description": "긴 함수: compare_models (60줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/modules/charts/performance_charts.py",
+        "description": "긴 함수: get_grade (61줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/modules/charts/performance_charts.py",
+        "description": "긴 함수: generate (59줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/modules/charts/performance_charts.py",
+        "description": "긴 함수: generate (52줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/modular_web_app/routes/page_routes.py",
+        "description": "긴 함수: comparison_page (181줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/modular_web_app/charts/chart_generator.py",
+        "description": "긴 함수: create_dataset_overview_chart (59줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "tools/notebooks/quick_fraud_models.py",
+        "description": "긴 함수: main (68줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "fca/engines/validation_framework.py",
+        "description": "긴 함수: plot_validation_results (78줄)",
+        "severity": "medium"
+      },
+      {
+        "file": "fca/engines/fraud_detector.py",
+        "description": "긴 함수: detect_overfitting (69줄)",
+        "severity": "medium"
+      }
+    ],
+    "low": [
+      {
+        "file": "performance_optimizer.py",
+        "description": "중복 import 발견",
+        "severity": "low"
+      },
+      {
+        "file": "static_dashboard/modular-test.py",
+        "description": "중복 import 발견",
+        "severity": "low"
+      },
+      {
+        "file": "web_app/app.py",
+        "description": "중복 import 발견",
+        "severity": "low"
+      },
+      {
+        "file": "venv/lib/python3.12/site-packages/pip/_vendor/distlib/scripts.py",
+        "description": "중복 import 발견",
+        "severity": "low"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/app.py",
+        "description": "중복 import 발견",
+        "severity": "low"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/routes/handlers/api_handlers.py",
+        "description": "중복 import 발견",
+        "severity": "low"
+      },
+      {
+        "file": "static_dashboard/test_stability.js",
+        "description": "console.log 과다 사용: 33개",
+        "severity": "low"
+      },
+      {
+        "file": "frontend_legacy/performance-test-runner.js",
+        "description": "console.log 과다 사용: 40개",
+        "severity": "low"
+      },
+      {
+        "file": "frontend_legacy/run-ml-validation.js",
+        "description": "console.log 과다 사용: 79개",
+        "severity": "low"
+      },
+      {
+        "file": "frontend_legacy/performance-test.js",
+        "description": "console.log 과다 사용: 40개",
+        "severity": "low"
+      },
+      {
+        "file": "frontend_legacy/ml-validation-suite.js",
+        "description": "console.log 과다 사용: 73개",
+        "severity": "low"
+      },
+      {
+        "file": "static_dashboard/assets/js/dashboard.js",
+        "description": "console.log 과다 사용: 88개",
+        "severity": "low"
+      },
+      {
+        "file": "static_dashboard/assets/js/charts.js",
+        "description": "console.log 과다 사용: 72개",
+        "severity": "low"
+      },
+      {
+        "file": "static_dashboard/assets/js/dashboard/dashboard-xai-handlers.js",
+        "description": "console.log 과다 사용: 29개",
+        "severity": "low"
+      },
+      {
+        "file": "static_dashboard/assets/js/charts/chart-loader.js",
+        "description": "console.log 과다 사용: 23개",
+        "severity": "low"
+      },
+      {
+        "file": "static_dashboard/assets/js/modules/SystemDebugger.js",
+        "description": "console.log 과다 사용: 22개",
+        "severity": "low"
+      },
+      {
+        "file": "web_app/static/js/dashboard-safe.js",
+        "description": "console.log 과다 사용: 22개",
+        "severity": "low"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/static_web/assets/js/dashboard-safe.js",
+        "description": "console.log 과다 사용: 22개",
+        "severity": "low"
+      },
+      {
+        "file": "archive/frontend_backup_20250802_030348/apps/main_web_app/static/js/dashboard-safe.js",
+        "description": "console.log 과다 사용: 22개",
+        "severity": "low"
+      }
+    ],
+    "info": []
+  },
+  "recommendations": [
+    "🚨 즉시 조치 필요: Critical 이슈들을 최우선으로 해결하세요",
+    "⚠️ 높은 우선순위: High 이슈들을 빠른 시일 내에 해결하세요",
+    "📊 Medium 이슈가 많습니다. 코드 리뷰 프로세스 강화를 고려하세요",
+    "🔐 정기적인 보안 스캔 자동화 구축",
+    "📚 개발팀 보안 교육 실시",
+    "🛡️ 의존성 취약점 모니터링 시스템 구축",
+    "🔍 코드 리뷰 시 보안 체크리스트 적용"
+  ]
+}

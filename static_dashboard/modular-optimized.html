@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCA Dashboard - Optimized Architecture</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* Modern theme variables */
+        :root[data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fc;
+            --text-primary: #5a5c69;
+            --text-secondary: #858796;
+            --border-color: #e3e6f0;
+            --accent-primary: #4e73df;
+            --accent-success: #1cc88a;
+            --accent-warning: #f6c23e;
+            --accent-danger: #e74a3b;
+        }
+        
+        :root[data-theme="dark"] {
+            --bg-primary: #2c2c54;
+            --bg-secondary: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #b8b9bd;
+            --border-color: #40407a;
+            --accent-primary: #5b9bd5;
+            --accent-success: #70a1ff;
+            --accent-warning: #ffa502;
+            --accent-danger: #ff3838;
+        }
+        
+        body {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        .sidebar {
+            background-color: var(--bg-primary);
+            border-right: 1px solid var(--border-color);
+            min-height: 100vh;
+        }
+        
+        .main-content {
+            background-color: var(--bg-secondary);
+            min-height: 100vh;
+        }
+        
+        .card {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            border-radius: 0.5rem;
+            margin: 0.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--accent-primary);
+            color: white;
+        }
+        
+        .chart-container {
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-primary);
+            border-radius: 0.5rem;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .loading-spinner {
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            color: white;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .toast-error {
+            background-color: var(--accent-danger);
+        }
+        
+        .toast-success {
+            background-color: var(--accent-success);
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .stats-card {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-success));
+            color: white;
+            border: none;
+        }
+        
+        .page-content {
+            display: none;
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            background-color: var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-3 mb-0">Loading Dashboard...</p>
+        </div>
+    </div>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar p-3">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-bar text-primary"></i>
+                        FCA Dashboard
+                    </h5>
+                    <button class="theme-toggle" data-theme-toggle>🌙</button>
+                </div>
+                
+                <nav class="nav flex-column">
+                    <a class="nav-link active" href="#" data-page="dashboard">
+                        <i class="fas fa-tachometer-alt me-2"></i>
+                        Dashboard
+                    </a>
+                    <a class="nav-link" href="#" data-page="fraud">
+                        <i class="fas fa-shield-alt me-2"></i>
+                        Fraud Analysis
+                    </a>
+                    <a class="nav-link" href="#" data-page="sentiment">
+                        <i class="fas fa-heart me-2"></i>
+                        Sentiment Analysis
+                    </a>
+                    <a class="nav-link" href="#" data-page="xai">
+                        <i class="fas fa-brain me-2"></i>
+                        XAI Analysis
+                    </a>
+                </nav>
+                
+                <div class="mt-auto pt-4">
+                    <button class="btn btn-outline-primary btn-sm w-100 mb-2" data-refresh>
+                        <i class="fas fa-sync-alt me-1"></i>
+                        Refresh Data
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm w-100" data-export>
+                        <i class="fas fa-download me-1"></i>
+                        Export Data
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-10 main-content p-4">
+                <!-- Dashboard Overview Page -->
+                <div id="dashboard-page" class="page-content active">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Dashboard Overview</h2>
+                        <small class="text-muted">Real-time analytics and insights</small>
+                    </div>
+                    
+                    <!-- KPI Cards -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card stats-card">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-chart-line fa-2x mb-2"></i>
+                                    <h4 id="total-transactions">0</h4>
+                                    <small>Total Transactions</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stats-card">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                                    <h4 id="fraud-detected">0</h4>
+                                    <small>Fraud Detected</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stats-card">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-smile fa-2x mb-2"></i>
+                                    <h4 id="positive-sentiment">0%</h4>
+                                    <small>Positive Sentiment</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stats-card">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-robot fa-2x mb-2"></i>
+                                    <h4 id="model-accuracy">0%</h4>
+                                    <small>Model Accuracy</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Charts -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Summary Overview</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="summary-charts" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Trend Analysis</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="trend-charts" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Key Performance Indicators</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="kpi-charts" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fraud Analysis Page -->
+                <div id="fraud-page" class="page-content">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Fraud Analysis</h2>
+                        <small class="text-muted">Advanced fraud detection insights</small>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Fraud Overview</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="fraud-overview-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Fraud Trends</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="fraud-trends-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Fraud Distribution</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="fraud-distribution-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sentiment Analysis Page -->
+                <div id="sentiment-page" class="page-content">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Sentiment Analysis</h2>
+                        <small class="text-muted">Customer sentiment insights</small>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Sentiment Overview</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="sentiment-overview-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Sentiment Trends</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="sentiment-trends-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Sentiment Distribution</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="sentiment-distribution-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- XAI Analysis Page -->
+                <div id="xai-page" class="page-content">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Explainable AI Analysis</h2>
+                        <small class="text-muted">Model interpretability and explanations</small>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0">LIME Local Explanation</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="lime-explanation-xai-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Model Decision Process</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="decision-tree-xai-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Global Feature Importance</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="global-feature-importance-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Model Comparison</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="model-comparison-xai-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Prediction Confidence</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="confidence-distribution-xai-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Partial Dependence Plot</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="partial-dependence-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.plot.ly/plotly-2.25.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Core Infrastructure -->
+    <script src="assets/js/core/config-manager.js"></script>
+    <script src="assets/js/core/event-bus.js"></script>
+    <script src="assets/js/core/dependency-injection.js"></script>
+    <script src="assets/js/core/api-service.js"></script>
+    <script src="assets/js/core/chart-renderer.js"></script>
+    
+    <!-- Chart Modules -->
+    <script src="assets/js/charts/basic-charts.js"></script>
+    <script src="assets/js/modules/XAICharts.js"></script>
+    
+    <!-- Dashboard Core -->
+    <script src="assets/js/dashboard/dashboard-core.js"></script>
+    
+    <!-- Chart Factory and Manager -->
+    <script src="assets/js/utils/chart-factory.js"></script>
+    
+    <!-- Application Bootstrap -->
+    <script>
+        // Application Bootstrap with Dependency Injection
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                console.log('🚀 Starting optimized FCA Dashboard...');
+                
+                // Register services in DI container
+                container.registerSingleton('apiService', () => new ApiService());
+                container.registerSingleton('chartRenderer', () => new ChartRenderer());
+                container.registerSingleton('basicCharts', ['chartRenderer'], (renderer) => new BasicCharts(renderer));
+                container.registerSingleton('xaiCharts', ['chartRenderer'], (renderer) => new XAICharts(renderer));
+                
+                // Initialize dashboard core
+                const dashboard = new DashboardCore();
+                
+                // Register dashboard as global service
+                container.registerValue('dashboard', dashboard);
+                
+                // Setup chart rendering listeners
+                eventBus.on('chart.render.request', async (data) => {
+                    try {
+                        const { type, containers, data: chartData, config } = data;
+                        
+                        // Route to appropriate chart service
+                        if (type.startsWith('xai') || type.includes('lime') || type.includes('decision') || type.includes('feature') || type.includes('confidence') || type.includes('partial')) {
+                            const xaiCharts = container.resolve('xaiCharts');
+                            await renderXAIChart(xaiCharts, type, chartData, containers, config);
+                        } else {
+                            const basicCharts = container.resolve('basicCharts');
+                            await renderBasicChart(basicCharts, type, chartData, containers, config);
+                        }
+                        
+                    } catch (error) {
+                        console.error('❌ Chart rendering failed:', error);
+                        eventBus.emit('error.occurred', { error, context: 'chart_rendering' });
+                    }
+                });
+                
+                // Start dashboard
+                await dashboard.render();
+                
+                console.log('✅ Optimized dashboard initialized successfully');
+                
+            } catch (error) {
+                console.error('❌ Dashboard initialization failed:', error);
+                showErrorMessage('Failed to initialize dashboard: ' + error.message);
+            }
+        });
+        
+        // Chart rendering helpers
+        async function renderXAIChart(xaiCharts, type, data, containers, config) {
+            switch (type) {
+                case 'lime_explanation':
+                    return xaiCharts.renderLIMEExplanation(data, containers);
+                case 'decision_process':
+                    return xaiCharts.renderModelDecisionProcess(data, containers);
+                case 'feature_importance':
+                    return xaiCharts.renderFeatureInteraction(data, containers);
+                case 'model_comparison':
+                    return xaiCharts.renderModelComparison(data, containers);
+                case 'confidence_distribution':
+                    return xaiCharts.renderPredictionConfidence(data, containers);
+                case 'partial_dependence':
+                    return xaiCharts.renderTrainingProcess(data, containers);
+                default:
+                    console.warn(`Unknown XAI chart type: ${type}`);
+            }
+        }
+        
+        async function renderBasicChart(basicCharts, type, data, containers, config) {
+            // Mock data for demo
+            const mockData = generateMockData(type);
+            
+            switch (type) {
+                case 'summary':
+                    return basicCharts.renderPieChart(mockData.pie, containers, { title: 'Data Summary' });
+                case 'trends':
+                    return basicCharts.renderLineChart(mockData.line, containers, { title: 'Trend Analysis' });
+                case 'kpis':
+                    return basicCharts.renderBarChart(mockData.bar, containers, { title: 'Key Performance Indicators' });
+                case 'fraud_overview':
+                    return basicCharts.renderDonutChart(mockData.donut, containers, { title: 'Fraud Overview' });
+                case 'fraud_trends':
+                    return basicCharts.renderLineChart(mockData.timeSeries, containers, { title: 'Fraud Trends' });
+                case 'fraud_distribution':
+                    return basicCharts.renderBarChart(mockData.distribution, containers, { title: 'Fraud Distribution' });
+                case 'sentiment_overview':
+                    return basicCharts.renderPieChart(mockData.sentiment, containers, { title: 'Sentiment Overview' });
+                case 'sentiment_trends':
+                    return basicCharts.renderLineChart(mockData.sentimentTrends, containers, { title: 'Sentiment Trends' });
+                case 'sentiment_distribution':
+                    return basicCharts.renderBarChart(mockData.sentimentDist, containers, { title: 'Sentiment Distribution' });
+                default:
+                    console.warn(`Unknown chart type: ${type}`);
+            }
+        }
+        
+        // Mock data generator
+        function generateMockData(type) {
+            return {
+                pie: {
+                    labels: ['Legitimate', 'Fraudulent', 'Suspicious'],
+                    values: [85, 10, 5]
+                },
+                line: {
+                    x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    y: [100, 120, 105, 140, 130, 160]
+                },
+                bar: {
+                    x: ['Accuracy', 'Precision', 'Recall', 'F1-Score'],
+                    y: [0.94, 0.89, 0.92, 0.90]
+                },
+                donut: {
+                    labels: ['Normal', 'Fraud', 'Pending'],
+                    values: [870, 95, 35]
+                },
+                timeSeries: {
+                    x: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    y: [23, 31, 18, 27]
+                },
+                distribution: {
+                    x: ['Credit Card', 'Bank Transfer', 'Online Payment', 'Mobile Payment'],
+                    y: [45, 23, 18, 14]
+                },
+                sentiment: {
+                    labels: ['Positive', 'Neutral', 'Negative'],
+                    values: [65, 25, 10]
+                },
+                sentimentTrends: {
+                    x: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                    y: [0.65, 0.68, 0.72, 0.69, 0.74]
+                },
+                sentimentDist: {
+                    x: ['Very Positive', 'Positive', 'Neutral', 'Negative', 'Very Negative'],
+                    y: [234, 456, 123, 67, 23]
+                }
+            };
+        }
+        
+        // Utility function for error messages
+        function showErrorMessage(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast toast-error';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
+    </script>
+</body>
+</html>

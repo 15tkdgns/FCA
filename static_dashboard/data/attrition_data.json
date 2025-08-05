@@ -1,0 +1,177 @@
+{
+  "last_updated": "2025-08-02T05:02:49.693882",
+  "dataset_info": {
+    "total_customers": 10127,
+    "churn_rate": 0.161,
+    "retained_customers": 8500,
+    "churned_customers": 1627
+  },
+  "model_performance": {
+    "ensemble_auc": 0.892,
+    "individual_models": {
+      "random_forest": {
+        "auc": 0.887,
+        "precision": 0.782,
+        "recall": 0.743
+      },
+      "xgboost": {
+        "auc": 0.894,
+        "precision": 0.798,
+        "recall": 0.756
+      },
+      "gradient_boosting": {
+        "auc": 0.885,
+        "precision": 0.773,
+        "recall": 0.738
+      },
+      "logistic_regression": {
+        "auc": 0.863,
+        "precision": 0.745,
+        "recall": 0.721
+      }
+    }
+  },
+  "customer_segments": {
+    "Champions": {
+      "count": 2456,
+      "percentage": 24.3,
+      "avg_churn_prob": 0.05,
+      "avg_customer_value": 0.85,
+      "retention_strategy": "VIP treatment and exclusive offers"
+    },
+    "Loyal_Customers": {
+      "count": 1834,
+      "percentage": 18.1,
+      "avg_churn_prob": 0.12,
+      "avg_customer_value": 0.78,
+      "retention_strategy": "Cross-selling and upselling"
+    },
+    "Potential_Loyalists": {
+      "count": 1523,
+      "percentage": 15.0,
+      "avg_churn_prob": 0.28,
+      "avg_customer_value": 0.65,
+      "retention_strategy": "Engagement campaigns"
+    },
+    "At_Risk": {
+      "count": 987,
+      "percentage": 9.7,
+      "avg_churn_prob": 0.75,
+      "avg_customer_value": 0.55,
+      "retention_strategy": "Immediate intervention"
+    },
+    "Cannot_Lose_Them": {
+      "count": 456,
+      "percentage": 4.5,
+      "avg_churn_prob": 0.8,
+      "avg_customer_value": 0.9,
+      "retention_strategy": "Personal relationship management"
+    },
+    "New_Customers": {
+      "count": 1245,
+      "percentage": 12.3,
+      "avg_churn_prob": 0.35,
+      "avg_customer_value": 0.42,
+      "retention_strategy": "Onboarding optimization"
+    },
+    "Promising": {
+      "count": 892,
+      "percentage": 8.8,
+      "avg_churn_prob": 0.45,
+      "avg_customer_value": 0.38,
+      "retention_strategy": "Product education"
+    },
+    "Need_Attention": {
+      "count": 567,
+      "percentage": 5.6,
+      "avg_churn_prob": 0.65,
+      "avg_customer_value": 0.25,
+      "retention_strategy": "Service improvement"
+    },
+    "About_to_Sleep": {
+      "count": 167,
+      "percentage": 1.7,
+      "avg_churn_prob": 0.85,
+      "avg_customer_value": 0.15,
+      "retention_strategy": "Win-back campaigns"
+    }
+  },
+  "feature_importance": [
+    {
+      "feature": "Customer_Value_Score",
+      "importance": 0.284
+    },
+    {
+      "feature": "IsActiveMember",
+      "importance": 0.223
+    },
+    {
+      "feature": "Age",
+      "importance": 0.187
+    },
+    {
+      "feature": "NumOfProducts",
+      "importance": 0.156
+    },
+    {
+      "feature": "Balance",
+      "importance": 0.134
+    },
+    {
+      "feature": "CreditScore",
+      "importance": 0.098
+    },
+    {
+      "feature": "Geography",
+      "importance": 0.076
+    },
+    {
+      "feature": "HasCrCard",
+      "importance": 0.054
+    },
+    {
+      "feature": "EstimatedSalary",
+      "importance": 0.043
+    },
+    {
+      "feature": "Tenure",
+      "importance": 0.032
+    }
+  ],
+  "churn_prediction_timeline": {
+    "dates": [
+      "2024-09",
+      "2024-10",
+      "2024-11",
+      "2024-12",
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08"
+    ],
+    "churn_predictions": [
+      0.16513237025429614,
+      0.17413349427725475,
+      0.20360862861251883,
+      0.13416649558541788,
+      0.20440700778334084,
+      0.19193178115776416,
+      0.18962676674767143,
+      0.16252591942386946,
+      0.18749839183142167,
+      0.14905792111864,
+      0.15169049430984458,
+      0.16667600352499223
+    ]
+  },
+  "retention_roi": {
+    "cost_per_acquisition": 150,
+    "cost_per_retention": 45,
+    "average_customer_lifetime_value": 2400,
+    "roi_retention_vs_acquisition": 5.33
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "last_updated": "2025-08-05T09:35:05.189263",
+  "dataset_info": {
+    "total_sentences": 14780,
+    "source": "Financial PhraseBank",
+    "domain": "Financial News"
+  },
+  "sentiment_distribution": {
+    "positive": 0.26982408660351825,
+    "neutral": 0.605615696887686,
+    "negative": 0.12456021650879567
+  },
+  "model_performance": {
+    "ensemble_accuracy": 0.887,
+    "individual_models": {
+      "svm": {
+        "accuracy": 0.842,
+        "f1": 0.839,
+        "precision": 0.845
+      },
+      "naive_bayes": {
+        "accuracy": 0.823,
+        "f1": 0.817,
+        "precision": 0.828
+      },
+      "logistic_regression": {
+        "accuracy": 0.856,
+        "f1": 0.851,
+        "precision": 0.863
+      },
+      "vader": {
+        "accuracy": 0.734,
+        "f1": 0.721,
+        "precision": 0.745
+      }
+    }
+  },
+  "confidence_distribution": {
+    "high_confidence": 0.652,
+    "medium_confidence": 0.284,
+    "low_confidence": 0.064
+  },
+  "time_series": {
+    "dates": [
+      "2025-07-07",
+      "2025-07-08",
+      "2025-07-09",
+      "2025-07-10",
+      "2025-07-11",
+      "2025-07-12",
+      "2025-07-13",
+      "2025-07-14",
+      "2025-07-15",
+      "2025-07-16",
+      "2025-07-17",
+      "2025-07-18",
+      "2025-07-19",
+      "2025-07-20",
+      "2025-07-21",
+      "2025-07-22",
+      "2025-07-23",
+      "2025-07-24",
+      "2025-07-25",
+      "2025-07-26",
+      "2025-07-27",
+      "2025-07-28",
+      "2025-07-29",
+      "2025-07-30",
+      "2025-07-31",
+      "2025-08-01",
+      "2025-08-02",
+      "2025-08-03",
+      "2025-08-04",
+      "2025-08-05"
+    ],
+    "positive": [
+      121,
+      98,
+      131,
+      145,
+      107,
+      112,
+      77,
+      124,
+      129,
+      97,
+      94,
+      105,
+      118,
+      133,
+      136,
+      155,
+      132,
+      92,
+      122,
+      108,
+      119,
+      123,
+      113,
+      111,
+      127,
+      133,
+      127,
+      106,
+      107,
+      97
+    ],
+    "neutral": [
+      97,
+      80,
+      88,
+      75,
+      82,
+      74,
+      91,
+      75,
+      85,
+      86,
+      74,
+      89,
+      77,
+      81,
+      67,
+      81,
+      79,
+      89,
+      83,
+      81,
+      95,
+      71,
+      77,
+      75,
+      96,
+      91,
+      84,
+      88,
+      95,
+      102
+    ],
+    "negative": [
+      43,
+      52,
+      35,
+      39,
+      38,
+      40,
+      38,
+      48,
+      32,
+      36,
+      46,
+      60,
+      51,
+      46,
+      54,
+      36,
+      42,
+      38,
+      43,
+      29,
+      40,
+      50,
+      28,
+      43,
+      52,
+      48,
+      33,
+      38,
+      45,
+      65
+    ]
+  },
+  "top_positive_words": [
+    "growth",
+    "profit",
+    "increase",
+    "strong",
+    "positive",
+    "gain",
+    "success",
+    "improvement",
+    "expansion",
+    "bullish"
+  ],
+  "top_negative_words": [
+    "loss",
+    "decline",
+    "negative",
+    "drop",
+    "weak",
+    "concern",
+    "risk",
+    "bearish",
+    "uncertainty",
+    "volatility"
+  ],
+  "domain_specific_insights": {
+    "financial_sentiment_accuracy": 0.89,
+    "news_vs_social_media": {
+      "news": 0.91,
+      "social": 0.83
+    },
+    "sector_sentiment": {
+      "banking": 0.23,
+      "technology": 0.67,
+      "energy": -0.12,
+      "healthcare": 0.45
+    }
+  }
+}

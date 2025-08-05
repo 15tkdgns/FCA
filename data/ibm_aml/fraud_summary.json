@@ -1,0 +1,26 @@
+{
+  "dataset_name": "IBM AML Dataset",
+  "total_transactions": 1000,
+  "fraud_cases": 0,
+  "fraud_rate": 0.0,
+  "total_volume": 1644403430.3400002,
+  "avg_transaction_amount": 1644403.4303400002,
+  "unique_banks": 80,
+  "currencies": [
+    "US Dollar"
+  ],
+  "payment_formats": [
+    "Reinvestment",
+    "Cheque",
+    "Credit Card",
+    "ACH",
+    "Cash",
+    "Wire"
+  ],
+  "date_range": {
+    "start": "2022/09/01 00:00",
+    "end": "2022/09/01 00:29"
+  },
+  "status": "active",
+  "integration_method": "kagglehub"
+}

@@ -1,0 +1,39 @@
+{
+  "dataset_info": {
+    "total_customers": 10127,
+    "churned_customers": 8500,
+    "churn_rate": 83.934037720944,
+    "features_count": 22
+  },
+  "model_performance": {
+    "accuracy": 1.0,
+    "precision": 0.912,
+    "recall": 0.889,
+    "f1_score": 0.9
+  },
+  "customer_segments": {
+    "Adult": 6784,
+    "Senior": 3077,
+    "Young": 265,
+    "Elderly": 1
+  },
+  "feature_importance": {
+    "CLIENTNUM": 0.0010298542851527614,
+    "Customer_Age": 0.0015876698707317362,
+    "Gender": 0.0004121108183005911,
+    "Dependent_count": 0.0003048360407040795,
+    "Education_Level": 0.00025155291816751125,
+    "Marital_Status": 0.00015464888511355912,
+    "Income_Category": 0.00037119440934202326,
+    "Card_Category": 0.00015530370239431234,
+    "Months_on_book": 0.0007944481023960265,
+    "Total_Relationship_Count": 0.010124474099192891
+  },
+  "churn_by_segment": {
+    "Young": 233.0,
+    "Adult": 5695.0,
+    "Senior": 2571.0,
+    "Elderly": 1.0
+  },
+  "timestamp": "2025-08-01T19:24:09.802586"
+}

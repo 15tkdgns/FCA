@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XAI Charts Debug</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .chart-container { height: 300px; border: 1px solid #ddd; margin: 10px 0; }
+        .debug-log { background: #f8f9fa; padding: 10px; font-family: monospace; max-height: 400px; overflow-y: auto; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid mt-3">
+        <h1>🔬 XAI Charts Debug Tool</h1>
+        <p class="text-muted">Debugging and testing XAI chart rendering issues</p>
+        
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>XAI Chart Containers Test</h5>
+                        <button class="btn btn-primary btn-sm" onclick="testXAICharts()">Test All XAI Charts</button>
+                        <button class="btn btn-outline-secondary btn-sm ms-2" onclick="loadXAIData()">Load XAI Data</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>LIME Local Explanation</h6>
+                                <div id="lime-explanation-xai-chart" class="chart-container"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Model Decision Process</h6>
+                                <div id="decision-tree-xai-chart" class="chart-container"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Feature Importance</h6>
+                                <div id="global-feature-importance-chart" class="chart-container"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Model Comparison</h6>
+                                <div id="model-comparison-xai-chart" class="chart-container"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Confidence Distribution</h6>
+                                <div id="confidence-distribution-xai-chart" class="chart-container"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Partial Dependence</h6>
+                                <div id="partial-dependence-chart" class="chart-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h5>XAI Data Structure Analysis</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="data-analysis"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h6>Debug Log</h6>
+                        <button class="btn btn-sm btn-outline-secondary float-end" onclick="clearLog()">Clear</button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="debug-log" class="debug-log"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-2.25.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="assets/js/utils/common-utils.js"></script>
+    <script src="assets/js/utils/chart-factory.js"></script>
+    <script src="assets/js/utils/data-manager.js"></script>
+    
+    <script>
+        let xaiData = null;
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logDiv = document.getElementById('debug-log');
+            const color = type === 'error' ? 'color: #dc3545;' : type === 'warn' ? 'color: #ffc107;' : 'color: #28a745;';
+            logDiv.innerHTML += `<div style="${color}">[${timestamp}] ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+        
+        async function loadXAIData() {
+            try {
+                log('📂 Loading XAI data from file...');
+                const response = await fetch('data/xai_data.json');
+                xaiData = await response.json();
+                
+                log('✅ XAI data loaded successfully');
+                log(`📊 Data keys: ${Object.keys(xaiData).join(', ')}`);
+                
+                // Analyze data structure
+                analyzeXAIData();
+                
+            } catch (error) {
+                log(`❌ Failed to load XAI data: ${error.message}`, 'error');
+            }
+        }
+        
+        function analyzeXAIData() {
+            const analysisDiv = document.getElementById('data-analysis');
+            if (!xaiData) {
+                analysisDiv.innerHTML = '<p class="text-muted">No XAI data loaded</p>';
+                return;
+            }
+            
+            let html = '<h6>XAI Data Structure Analysis:</h6>';
+            
+            // Check LIME data
+            if (xaiData.lime_explanations?.fraud_detection?.features) {
+                const features = xaiData.lime_explanations.fraud_detection.features;
+                html += `<p><strong>✅ LIME Data:</strong> ${features.length} features available</p>`;
+                html += `<small>Features: ${features.map(f => f.name).join(', ')}</small><br>`;
+            } else {
+                html += `<p><strong>❌ LIME Data:</strong> Missing or invalid structure</p>`;
+            }
+            
+            // Check Decision Process data
+            if (xaiData.model_decision_process?.fraud_detection?.decision_tree_path) {
+                const steps = xaiData.model_decision_process.fraud_detection.decision_tree_path;
+                html += `<p><strong>✅ Decision Process:</strong> ${steps.length} steps available</p>`;
+            } else {
+                html += `<p><strong>❌ Decision Process:</strong> Missing or invalid structure</p>`;
+            }
+            
+            // Check Feature Importance
+            if (xaiData.global_feature_importance?.fraud_detection) {
+                html += `<p><strong>✅ Feature Importance:</strong> Available</p>`;
+            } else {
+                html += `<p><strong>❌ Feature Importance:</strong> Missing</p>`;
+            }
+            
+            // Check other structures
+            html += `<p><strong>Other Keys:</strong> ${Object.keys(xaiData).join(', ')}</p>`;
+            
+            analysisDiv.innerHTML = html;
+        }
+        
+        async function testXAICharts() {
+            log('🚀 Starting XAI charts test...');
+            
+            if (!xaiData) {
+                await loadXAIData();
+            }
+            
+            try {
+                // Test 1: LIME Chart
+                log('📊 Testing LIME chart...');
+                if (xaiData?.lime_explanations?.fraud_detection?.features) {
+                    await ChartFactory.createLIMEChart('lime-explanation-xai-chart', {
+                        features: xaiData.lime_explanations.fraud_detection.features
+                    }, {
+                        title: 'LIME Local Explanation'
+                    });
+                    log('✅ LIME chart rendered successfully');
+                } else {
+                    // Fallback with mock data
+                    await ChartFactory.createLIMEChart('lime-explanation-xai-chart', {
+                        features: [
+                            { name: "V14", impact: 0.42 },
+                            { name: "V12", impact: 0.38 },
+                            { name: "Amount", impact: -0.31 },
+                            { name: "V10", impact: 0.28 }
+                        ]
+                    }, {
+                        title: 'LIME Local Explanation (Mock)'
+                    });
+                    log('⚠️ LIME chart rendered with mock data', 'warn');
+                }
+                
+                // Test 2: Decision Process
+                log('📊 Testing Decision Process chart...');
+                if (xaiData?.model_decision_process?.fraud_detection?.decision_tree_path) {
+                    const steps = xaiData.model_decision_process.fraud_detection.decision_tree_path;
+                    await ChartFactory.createBarChart('decision-tree-xai-chart', {
+                        x: steps.map(s => s.feature),
+                        y: steps.map(s => s.gini)
+                    }, {
+                        title: 'Model Decision Process',
+                        xTitle: 'Features',
+                        yTitle: 'Gini Impurity'
+                    });
+                    log('✅ Decision Process chart rendered successfully');
+                } else {
+                    await ChartFactory.createBarChart('decision-tree-xai-chart', {
+                        x: ['V14', 'Amount', 'V12', 'V10'],
+                        y: [0.45, 0.32, 0.18, 0.08]
+                    }, {
+                        title: 'Model Decision Process (Mock)',
+                        xTitle: 'Features',
+                        yTitle: 'Gini Impurity'
+                    });
+                    log('⚠️ Decision Process chart rendered with mock data', 'warn');
+                }
+                
+                // Test 3: Feature Importance
+                log('📊 Testing Feature Importance chart...');
+                await ChartFactory.createBarChart('global-feature-importance-chart', {
+                    x: ['V14', 'V12', 'V10', 'Amount', 'V17', 'V4'],
+                    y: [0.42, 0.38, 0.31, 0.28, 0.25, 0.19]
+                }, {
+                    title: 'Global Feature Importance',
+                    xTitle: 'Features',
+                    yTitle: 'Importance Score'
+                });
+                log('✅ Feature Importance chart rendered');
+                
+                // Test 4: Model Comparison
+                log('📊 Testing Model Comparison chart...');
+                await ChartFactory.createBarChart('model-comparison-xai-chart', {
+                    x: ['Random Forest', 'XGBoost', 'Neural Network', 'SVM'],
+                    y: [0.94, 0.96, 0.92, 0.89]
+                }, {
+                    title: 'Model Comparison',
+                    xTitle: 'Models',
+                    yTitle: 'Accuracy'
+                });
+                log('✅ Model Comparison chart rendered');
+                
+                // Test 5: Confidence Distribution
+                log('📊 Testing Confidence Distribution chart...');
+                await ChartFactory.createBarChart('confidence-distribution-xai-chart', {
+                    x: ['0-20%', '20-40%', '40-60%', '60-80%', '80-100%'],
+                    y: [45, 123, 234, 456, 678]
+                }, {
+                    title: 'Prediction Confidence Distribution',
+                    xTitle: 'Confidence Range',
+                    yTitle: 'Count'
+                });
+                log('✅ Confidence Distribution chart rendered');
+                
+                // Test 6: Partial Dependence (mock)
+                log('📊 Testing Partial Dependence chart...');
+                await ChartFactory.createLineChart('partial-dependence-chart', {
+                    x: [0, 0.2, 0.4, 0.6, 0.8, 1.0],
+                    y: [0.1, 0.3, 0.7, 0.8, 0.6, 0.4]
+                }, {
+                    title: 'Partial Dependence Plot',
+                    xTitle: 'Feature Value',
+                    yTitle: 'Prediction'
+                });
+                log('✅ Partial Dependence chart rendered');
+                
+                log('🎉 All XAI charts test completed successfully!');
+                
+            } catch (error) {
+                log(`❌ XAI charts test failed: ${error.message}`, 'error');
+            }
+        }
+        
+        function clearLog() {
+            document.getElementById('debug-log').innerHTML = '';
+        }
+        
+        // Auto-load data when page loads
+        window.addEventListener('load', () => {
+            log('🏁 XAI Debug tool loaded');
+            setTimeout(loadXAIData, 1000);
+        });
+    </script>
+</body>
+</html>

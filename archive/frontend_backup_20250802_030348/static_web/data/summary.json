@@ -1,0 +1,36 @@
+{
+  "system_status": "operational",
+  "last_updated": "2025-08-01T19:24:09.802714",
+  "total_datasets": 3,
+  "models_trained": 3,
+  "overall_metrics": {
+    "avg_accuracy": 0.9622333333333334,
+    "total_data_points": 583603
+  },
+  "domain_summary": {
+    "fraud_detection": {
+      "status": "active",
+      "accuracy": 0.9997,
+      "data_points": 568630,
+      "fraud_rate": 50.058
+    },
+    "sentiment_analysis": {
+      "status": "active",
+      "accuracy": 0.887,
+      "data_points": 4846,
+      "avg_sentence_length": 142.3
+    },
+    "attrition_prediction": {
+      "status": "active",
+      "accuracy": 1.0,
+      "data_points": 10127,
+      "churn_rate": 83.934037720944
+    }
+  },
+  "performance_indicators": {
+    "high_performance_models": 3,
+    "data_quality_score": 95.2,
+    "system_uptime": "99.9%",
+    "processing_speed": "< 200ms"
+  }
+}

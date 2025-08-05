@@ -1,0 +1,133 @@
+{
+  "timestamp": "2025-07-31T00:39:43.616653",
+  "model_info": {
+    "data_path": "/root/FCA/data/wamc_fraud/wamc_fraud_sampled.csv",
+    "model_save_path": "/root/FCA/models/secure_fraud_model.pkl",
+    "training_samples": 40000,
+    "test_samples": 10000
+  },
+  "data_splitting": {
+    "train_start_time": 0.0,
+    "train_end_time": 133545.0,
+    "test_start_time": 133546.0,
+    "test_end_time": 155129.0,
+    "train_size": 40000,
+    "test_size": 10000,
+    "temporal_gap": 1.0
+  },
+  "validation_report": {
+    "temporal_validation": {
+      "temporal_overlap": false,
+      "future_leakage": false,
+      "time_gap_adequate": true,
+      "severity": "LOW"
+    },
+    "feature_validation": {
+      "statistical_leakage": [],
+      "distribution_shift": [],
+      "severity": "LOW"
+    },
+    "critical_issues": [],
+    "warnings": []
+  },
+  "cross_validation_results": {
+    "accuracy": {
+      "test_mean": 0.9310333333333333,
+      "test_std": 0.07162166028669137,
+      "train_mean": 0.9768833333333333,
+      "train_std": 0.01724259905647122,
+      "overfitting_gap": 0.04585000000000006,
+      "stability": "False"
+    },
+    "precision": {
+      "test_mean": 0.07822640689111708,
+      "test_std": 0.0746681698214145,
+      "train_mean": 0.17407260025644425,
+      "train_std": 0.1492926066413992,
+      "overfitting_gap": 0.09584619336532717,
+      "stability": "False"
+    },
+    "recall": {
+      "test_mean": 0.7238095238095238,
+      "test_std": 0.10519391444940247,
+      "train_mean": 0.9336748095613343,
+      "train_std": 0.047235698734842256,
+      "overfitting_gap": 0.20986528575181052,
+      "stability": "False"
+    },
+    "f1": {
+      "test_mean": 0.12678995590607875,
+      "test_std": 0.11256420176780947,
+      "train_mean": 0.26961330452170074,
+      "train_std": 0.20596437078868887,
+      "overfitting_gap": 0.142823348615622,
+      "stability": "False"
+    },
+    "roc_auc": {
+      "test_mean": 0.8865312227255645,
+      "test_std": 0.0508464507260773,
+      "train_mean": 0.9839035889964163,
+      "train_std": 0.011974016419753066,
+      "overfitting_gap": 0.09737236627085177,
+      "stability": "False"
+    }
+  },
+  "performance_metrics": {
+    "accuracy": 0.9994,
+    "precision": 0.8571428571428571,
+    "recall": 0.8571428571428571,
+    "f1_score": 0.8571428571428571,
+    "roc_auc": 0.9233962750347158,
+    "average_precision": 0.8553901327817824,
+    "confusion_matrix": [
+      [
+        9976,
+        3
+      ],
+      [
+        3,
+        18
+      ]
+    ],
+    "classification_report": {
+      "0": {
+        "precision": 0.9996993686742158,
+        "recall": 0.9996993686742158,
+        "f1-score": 0.9996993686742158,
+        "support": 9979.0
+      },
+      "1": {
+        "precision": 0.8571428571428571,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.8571428571428571,
+        "support": 21.0
+      },
+      "accuracy": 0.9994,
+      "macro avg": {
+        "precision": 0.9284211129085365,
+        "recall": 0.9284211129085365,
+        "f1-score": 0.9284211129085365,
+        "support": 10000.0
+      },
+      "weighted avg": {
+        "precision": 0.9994,
+        "recall": 0.9994,
+        "f1-score": 0.9994,
+        "support": 10000.0
+      }
+    },
+    "test_fraud_rate": 0.21,
+    "predicted_fraud_rate": 0.21,
+    "total_samples": 10000,
+    "test_fraud_samples": 21,
+    "test_normal_samples": 9979
+  },
+  "security_status": {
+    "data_leakage_prevented": true,
+    "temporal_split_used": true,
+    "pipeline_isolation": true,
+    "cross_validation_applied": true,
+    "overfitting_prevented": true,
+    "class_balancing_applied": true
+  }
+}

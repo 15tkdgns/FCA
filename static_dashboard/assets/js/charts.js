@@ -1825,7 +1825,7 @@ class FCACharts {
             
             const layout = {
                 ...this.defaultLayout,
-                title: 'Feature Importance (사기 탐지)',
+                title: 'Feature Importance (Fraud Detection)',
                 xaxis: { title: 'Importance (%)' },
                 yaxis: { title: 'Features' },
                 height: 300

@@ -1,0 +1,140 @@
+{
+  "last_updated": "2025-08-02T05:05:00.000000",
+  "available_datasets": {
+    "fraud_detection": [
+      {
+        "name": "Credit Card Fraud 2023",
+        "type": "fraud_detection",
+        "records": 568629,
+        "features": 30,
+        "size_mb": 299.0,
+        "fraud_rate": 0.20,
+        "status": "ready",
+        "description": "Enhanced fraud detection with PCA features",
+        "source": "Kaggle",
+        "last_processed": "2025-07-31"
+      },
+      {
+        "name": "WAMC Fraud Dataset", 
+        "type": "fraud_detection",
+        "records": 283726,
+        "features": 31,
+        "size_mb": 143.3,
+        "fraud_rate": 0.20,
+        "status": "ready",
+        "description": "Comprehensive fraud detection dataset",
+        "source": "Kaggle",
+        "last_processed": "2025-07-30"
+      },
+      {
+        "name": "Dhanush Fraud Dataset",
+        "type": "fraud_detection", 
+        "records": 1000000,
+        "features": 8,
+        "size_mb": 72.1,
+        "fraud_rate": 7.90,
+        "status": "ready",
+        "description": "Large-scale behavioral pattern fraud detection",
+        "source": "Kaggle",
+        "last_processed": "2025-07-29"
+      },
+      {
+        "name": "IBM Anti-Money Laundering",
+        "type": "aml_detection",
+        "records": 1323234,
+        "features": 24,
+        "size_mb": 161.7,
+        "fraud_rate": 0.13,
+        "status": "ready",
+        "description": "IBM AMLSim synthetic dataset",
+        "source": "IBM",
+        "last_processed": "2025-07-28"
+      },
+      {
+        "name": "HuggingFace Credit Card Fraud",
+        "type": "fraud_detection",
+        "records": 1048575,
+        "features": 23,
+        "size_mb": 250.9,
+        "fraud_rate": 0.00,
+        "status": "ready",
+        "description": "Large-scale credit card fraud dataset",
+        "source": "HuggingFace",
+        "last_processed": "2025-07-27"
+      },
+      {
+        "name": "Incribo Fraud Dataset",
+        "type": "fraud_detection",
+        "records": 11849,
+        "features": 20,
+        "size_mb": 3.4,
+        "fraud_rate": 48.40,
+        "status": "ready",
+        "description": "High fraud rate dataset for imbalanced learning",
+        "source": "Kaggle",
+        "last_processed": "2025-07-26"
+      }
+    ],
+    "sentiment_analysis": [
+      {
+        "name": "Financial PhraseBank",
+        "type": "sentiment_analysis",
+        "records": 14780,
+        "features": 3,
+        "size_mb": 2.0,
+        "sentiment_distribution": {
+          "positive": 0.270,
+          "neutral": 0.358,
+          "negative": 0.372
+        },
+        "status": "ready",
+        "description": "Financial news sentiment classification",
+        "source": "Research",
+        "last_processed": "2025-08-01"
+      }
+    ],
+    "customer_analytics": [
+      {
+        "name": "Customer Attrition",
+        "type": "churn_prediction",
+        "records": 10127,
+        "features": 23,
+        "size_mb": 1.4,
+        "churn_rate": 9.95,
+        "status": "ready",
+        "description": "Bank customer churn prediction dataset",
+        "source": "Kaggle",
+        "last_processed": "2025-08-01"
+      }
+    ]
+  },
+  "dataset_statistics": {
+    "total_datasets": 8,
+    "total_records": 4260920,
+    "total_size_mb": 933.8,
+    "by_type": {
+      "fraud_detection": 6,
+      "sentiment_analysis": 1,
+      "customer_analytics": 1
+    },
+    "by_status": {
+      "ready": 8,
+      "processing": 0,
+      "error": 0
+    }
+  },
+  "data_quality_metrics": {
+    "completeness": 0.98,
+    "consistency": 0.95,
+    "accuracy": 0.97,
+    "timeliness": 0.93,
+    "overall_score": 0.96
+  },
+  "processing_pipeline": {
+    "preprocessing_enabled": true,
+    "feature_engineering": true,
+    "data_validation": true,
+    "temporal_split": true,
+    "cross_validation": true
+  }
+}

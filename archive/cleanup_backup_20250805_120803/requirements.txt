@@ -1,0 +1,134 @@
+# FCA 웹 대시보드 의존성 관리
+# ================================
+
+# 웹 프레임워크
+Flask==3.0.0
+Flask-CORS==4.0.0
+
+# 데이터 처리 및 분석
+pandas==2.1.4
+numpy==1.24.3
+scikit-learn==1.3.2
+
+# 시각화
+plotly==5.17.0
+matplotlib==3.8.2
+seaborn==0.13.0
+
+# 데이터베이스 (선택적)
+# SQLAlchemy==2.0.23
+# psycopg2-binary==2.9.9
+
+# 캐싱 (선택적)
+# redis==5.0.1
+# pymemcache==4.0.0
+
+# 모니터링 및 성능
+psutil==5.9.6
+
+# 보안
+cryptography==41.0.8
+python-dotenv==1.0.0
+
+# 개발 도구 (개발 환경에만 필요)
+# pytest==7.4.3
+# pytest-cov==4.1.0
+# black==23.11.0
+# flake8==6.1.0
+
+# 로깅 및 유틸리티
+python-json-logger==2.0.7
+colorama==0.4.6
+
+# HTTP 요청 (API 테스트용)
+requests==2.31.0
+
+# 파일 처리
+openpyxl==3.1.2
+xlsxwriter==3.1.9
+
+# 설정 관리
+pyyaml==6.0.1
+configparser==6.0.0
+
+# 백그라운드 작업 (선택적)
+# celery==5.3.4
+# redis==5.0.1  # Celery 브로커용
+
+# API 문서화 (선택적)
+# flask-restx==1.3.0
+
+# 이메일 발송 (선택적)
+# flask-mail==0.9.1
+
+# 파일 업로드 처리 (선택적)
+# werkzeug==3.0.1
+
+# 타임존 처리
+pytz==2023.3
+
+# UUID 생성
+uuid==1.30
+
+# Base64 인코딩/디코딩 (내장 모듈이므로 불필요)
+# base64
+
+# JSON 처리 (내장 모듈이므로 불필요)  
+# json
+
+# 정규식 처리 (내장 모듈이므로 불필요)
+# re
+
+# 로깅 (내장 모듈이므로 불필요)
+# logging
+
+# 스레딩 (내장 모듈이므로 불필요)
+# threading
+
+# 날짜/시간 처리 (내장 모듈이므로 불필요)
+# datetime
+
+# 파일 시스템 (내장 모듈이므로 불필요)
+# os
+# pathlib
+
+# 해시 처리 (내장 모듈이므로 불필요)
+# hashlib
+# hmac
+
+# 암호화 난수 (내장 모듈이므로 불필요)
+# secrets
+
+# HTML 이스케이프 (내장 모듈이므로 불필요)
+# html
+
+# URL 처리 (내장 모듈이므로 불필요)
+# urllib.parse
+
+# MIME 타입 (내장 모듈이므로 불필요)
+# mimetypes
+
+# 성능 측정 (내장 모듈이므로 불필요)
+# time
+# functools
+
+# 컨텍스트 관리 (내장 모듈이므로 불필요)
+# contextlib
+
+# 타입 힌팅 (내장 모듈이므로 불필요)
+# typing
+
+# 데이터클래스 (내장 모듈이므로 불필요, Python 3.7+)
+# dataclasses
+
+# ABC (내장 모듈이므로 불필요)
+# abc
+
+# Pickle (내장 모듈이므로 불필요)
+# pickle
+
+# 검사 모듈 (내장 모듈이므로 불필요)
+# inspect
+
+# 파일명 매칭 (내장 모듈이므로 불필요)
+# fnmatch

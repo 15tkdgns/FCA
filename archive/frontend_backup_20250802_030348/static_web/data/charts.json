@@ -1,0 +1,91 @@
+{
+  "fraud_distribution": {
+    "labels": [
+      "Legitimate",
+      "Fraud"
+    ],
+    "data": [
+      24971,
+      25029
+    ],
+    "colors": [
+      "#28a745",
+      "#dc3545"
+    ]
+  },
+  "sentiment_distribution": {
+    "labels": [
+      "positive",
+      "negative",
+      "neutral"
+    ],
+    "data": [
+      1852,
+      1674,
+      1320
+    ],
+    "colors": [
+      "#17a2b8",
+      "#ffc107",
+      "#dc3545"
+    ]
+  },
+  "attrition_distribution": {
+    "labels": [
+      "Retained",
+      "Churned"
+    ],
+    "data": [
+      1627,
+      8500
+    ],
+    "colors": [
+      "#28a745",
+      "#fd7e14"
+    ]
+  },
+  "model_comparison": {
+    "models": [
+      "Fraud Detection",
+      "Sentiment Analysis",
+      "Attrition Prediction"
+    ],
+    "accuracy": [
+      0.9997,
+      0.887,
+      1.0
+    ],
+    "colors": [
+      "#007bff",
+      "#28a745",
+      "#ffc107"
+    ]
+  },
+  "feature_importance": {
+    "fraud": {
+      "id": 0.416421109021385,
+      "V1": 0.002780670529369487,
+      "V2": 0.015022890562110291,
+      "V3": 0.024925457818599898,
+      "V4": 0.07886386517909291,
+      "V5": 0.0035000032490500725,
+      "V6": 0.0017436291598436854,
+      "V7": 0.0018644892376875222,
+      "V8": 0.0027830906178160685,
+      "V9": 0.019573957140604874
+    },
+    "attrition": {
+      "CLIENTNUM": 0.0010298542851527614,
+      "Customer_Age": 0.0015876698707317362,
+      "Gender": 0.0004121108183005911,
+      "Dependent_count": 0.0003048360407040795,
+      "Education_Level": 0.00025155291816751125,
+      "Marital_Status": 0.00015464888511355912,
+      "Income_Category": 0.00037119440934202326,
+      "Card_Category": 0.00015530370239431234,
+      "Months_on_book": 0.0007944481023960265,
+      "Total_Relationship_Count": 0.010124474099192891
+    }
+  },
+  "timestamp": "2025-08-01T19:24:09.802700"
+}

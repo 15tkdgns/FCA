@@ -1,0 +1,663 @@
+{% extends "base.html" %}
+
+{% block title %}FCA Unified Dashboard{% endblock %}
+
+{% block extra_head %}
+<style>
+/* Enhanced Dashboard Styles */
+.dashboard-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    border-radius: 0 0 20px 20px;
+}
+
+/* Quick Navigation */
+.quick-nav-container {
+    position: sticky;
+    top: 80px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.quick-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.quick-nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+}
+
+.quick-nav-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+/* Dashboard Sections */
+.dashboard-section {
+    scroll-margin-top: 120px;
+    padding: 2rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.dashboard-section:last-child {
+    border-bottom: none;
+}
+
+.section-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.section-title {
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.section-subtitle {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+}
+
+/* Enhanced Cards */
+.enhanced-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.enhanced-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.enhanced-card .card-header {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: none;
+    padding: 1.25rem 1.5rem;
+    font-weight: 600;
+    color: #495057;
+}
+
+.summary-card {
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+}
+
+.summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.metric-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.metric-icon {
+    font-size: 3rem;
+    opacity: 0.1;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Detection Cards */
+.detection-card {
+    border-left: 4px solid #007bff;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.detection-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateX(5px);
+}
+
+.priority-critical { border-left-color: #dc3545; }
+.priority-high { border-left-color: #fd7e14; }
+.priority-medium { border-left-color: #ffc107; }
+.priority-low { border-left-color: #6c757d; }
+
+/* Chart Containers */
+.chart-container {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+}
+
+/* Status Indicators */
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-online { background: #d4edda; color: #155724; }
+.status-warning { background: #fff3cd; color: #856404; }
+.status-offline { background: #f8d7da; color: #721c24; }
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.loading-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dashboard Header -->
+<div class="dashboard-header">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="display-4 fw-bold mb-2">
+                    <i class="fas fa-shield-alt me-3"></i>
+                    FCA Unified Dashboard
+                </h1>
+                <p class="lead mb-0 opacity-90">
+                    Financial Crime Analysis & Real-time Detection System
+                </p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="status-indicator status-online">
+                    <i class="fas fa-circle me-2"></i>
+                    System Online
+                </div>
+                <div class="mt-2 text-white-50">
+                    <i class="fas fa-clock me-1"></i>
+                    <span id="current-time"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Navigation -->
+<div class="quick-nav-container mb-4">
+    <div class="quick-nav">
+        <a href="#overview-section" class="quick-nav-link">
+            <i class="fas fa-tachometer-alt me-2"></i>Overview
+        </a>
+        <a href="#detection-section" class="quick-nav-link">
+            <i class="fas fa-exclamation-triangle me-2"></i>Live Detection
+        </a>
+        <a href="#analytics-section" class="quick-nav-link">
+            <i class="fas fa-chart-line me-2"></i>Analytics
+        </a>
+        <a href="#models-section" class="quick-nav-link">
+            <i class="fas fa-robot me-2"></i>Models
+        </a>
+    </div>
+</div>
+
+<!-- Overview Section -->
+<section id="overview-section" class="dashboard-section mb-5">
+    <div class="section-header">
+        <h2 class="section-title">
+            <i class="fas fa-tachometer-alt me-3"></i>System Overview
+        </h2>
+        <p class="section-subtitle">Real-time system metrics and performance indicators</p>
+    </div>
+        <!-- Summary Cards -->
+        <div class="row mb-4" id="summary-cards">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card summary-card h-100">
+                    <div class="card-body position-relative">
+                        <h6 class="card-title text-muted mb-2">🤖 Total Models</h6>
+                        <div class="metric-value" id="total-models">{{ stats.total_models if stats else 12 }}</div>
+                        <small class="text-muted">ML Models Active</small>
+                        <i class="fas fa-robot metric-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card summary-card h-100">
+                    <div class="card-body position-relative">
+                        <h6 class="card-title text-muted mb-2">📊 Datasets</h6>
+                        <div class="metric-value" id="total-datasets">{{ stats.total_datasets if stats else 4 }}</div>
+                        <small class="text-muted">Data Sources</small>
+                        <i class="fas fa-database metric-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card summary-card h-100">
+                    <div class="card-body position-relative">
+                        <h6 class="card-title text-muted mb-2">🎯 Accuracy</h6>
+                        <div class="metric-value" id="avg-accuracy">{{ "%.1f"|format(stats.average_accuracy) }}%</div>
+                        <small class="text-muted">Average Model Performance</small>
+                        <i class="fas fa-bullseye metric-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card summary-card h-100">
+                    <div class="card-body position-relative">
+                        <h6 class="card-title text-muted mb-2">⚡ Detections</h6>
+                        <div class="metric-value" id="total-detections">{{ stats.total_detections if stats else 1247 }}</div>
+                        <small class="text-muted">Real-time Alerts</small>
+                        <i class="fas fa-exclamation-triangle metric-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Chart -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="chart-container">
+                    <h5 class="mb-3">
+                        <i class="fas fa-chart-area me-2 text-primary"></i>
+                        System Performance Overview
+                    </h5>
+                    <div id="performance-chart" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+</section>
+
+<!-- Live Detection Section -->
+<section id="detection-section" class="dashboard-section mb-5">
+    <div class="section-header">
+        <h2 class="section-title">
+            <i class="fas fa-exclamation-triangle me-3"></i>Live Detection
+        </h2>
+        <p class="section-subtitle">Real-time fraud detection and monitoring system</p>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="enhanced-card">
+                <div class="card-header">
+                    <i class="fas fa-radar me-2"></i>
+                    Real-time Detection Feed
+                </div>
+                <div class="card-body">
+                    <div id="detection-feed">
+                        <!-- Detection cards will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="enhanced-card">
+                <div class="card-header">
+                    <i class="fas fa-chart-pie me-2"></i>
+                    Detection Summary
+                </div>
+                <div class="card-body">
+                    <div id="detection-summary-chart" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Analytics Section -->
+<section id="analytics-section" class="dashboard-section mb-5">
+    <div class="section-header">
+        <h2 class="section-title">
+            <i class="fas fa-chart-line me-3"></i>Analytics
+        </h2>
+        <p class="section-subtitle">Advanced data analysis and trend visualization</p>
+    </div>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="chart-container">
+                    <h5 class="mb-3">
+                        <i class="fas fa-chart-bar me-2 text-info"></i>
+                        Fraud Detection Trends
+                    </h5>
+                    <div id="fraud-trends-chart" style="height: 350px;"></div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="chart-container">
+                    <h5 class="mb-3">
+                        <i class="fas fa-heart me-2 text-danger"></i>
+                        Sentiment Analysis
+                    </h5>
+                    <div id="sentiment-chart" style="height: 350px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="chart-container">
+                    <h5 class="mb-3">
+                        <i class="fas fa-users me-2 text-warning"></i>
+                        Customer Attrition Prediction
+                    </h5>
+                    <div id="attrition-chart" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+</section>
+
+<!-- Models Section -->
+<section id="models-section" class="dashboard-section mb-5">
+    <div class="section-header">
+        <h2 class="section-title">
+            <i class="fas fa-robot me-3"></i>Models
+        </h2>
+        <p class="section-subtitle">Machine learning model performance and comparison</p>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="enhanced-card">
+                <div class="card-header">
+                    <i class="fas fa-balance-scale me-2"></i>
+                    Model Comparison
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="models-comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Domain</th>
+                                    <th>Model</th>
+                                    <th>Dataset</th>
+                                    <th>Accuracy</th>
+                                    <th>F1-Score</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="models-tbody">
+                                <!-- Model data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Unified Dashboard Controller
+class UnifiedDashboard {
+    constructor() {
+        // APIClient가 로드될 때까지 기다리기
+        this.initAPIClient();
+        this.charts = {};
+        this.init();
+    }
+
+    initAPIClient() {
+        // 전역 APIClient가 있는지 확인
+        if (window.APIClient) {
+            this.apiClient = window.APIClient;
+        } else {
+            // APIClient가 아직 로드되지 않았다면 잠시 기다린 후 재시도
+            setTimeout(() => {
+                if (window.APIClient) {
+                    this.apiClient = window.APIClient;
+                } else {
+                    console.warn('APIClient not found, creating fallback');
+                    this.apiClient = {
+                        getSummary: () => Promise.resolve({status: 'error', error: 'APIClient not available'}),
+                        getPerformanceChart: () => Promise.resolve({status: 'error', error: 'APIClient not available'}),
+                        getModelComparison: () => Promise.resolve({status: 'error', error: 'APIClient not available'})
+                    };
+                }
+            }, 100);
+        }
+    }
+
+    async init() {
+        this.updateTime();
+        setInterval(() => this.updateTime(), 1000);
+        
+        await this.loadSummaryData();
+        await this.loadChartsData();
+        await this.loadDetectionFeed();
+        await this.loadModelsData();
+        
+        // Auto-refresh every 30 seconds
+        setInterval(() => this.refreshData(), 30000);
+    }
+
+    updateTime() {
+        const now = new Date();
+        document.getElementById('current-time').textContent = 
+            now.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+    }
+
+    async loadSummaryData() {
+        try {
+            const response = await this.apiClient.getSummary();
+            if (response && response.data) {
+                this.updateSummaryCards(response.data);
+            }
+        } catch (error) {
+            console.error('Error loading summary data:', error);
+        }
+    }
+
+    updateSummaryCards(data) {
+        document.getElementById('total-models').textContent = data.models || 0;
+        document.getElementById('total-datasets').textContent = data.datasets || 0;
+        document.getElementById('avg-accuracy').textContent = 
+            data.accuracy ? (data.accuracy * 100).toFixed(1) + '%' : '-';
+        document.getElementById('total-detections').textContent = data.detections || 0;
+    }
+
+    async loadChartsData() {
+        try {
+            // Load performance chart
+            const perfResponse = await this.apiClient.getPerformanceChart();
+            if (perfResponse && perfResponse.chart_data) {
+                this.renderPerformanceChart(perfResponse.chart_data);
+            }
+        } catch (error) {
+            console.error('Error loading charts data:', error);
+        }
+    }
+
+    renderPerformanceChart(data) {
+        const layout = {
+            title: 'Model Performance Over Time',
+            xaxis: { title: 'Time' },
+            yaxis: { title: 'Performance Score' },
+            showlegend: true,
+            responsive: true
+        };
+
+        Plotly.newPlot('performance-chart', data.data || [], layout);
+    }
+
+    async loadDetectionFeed() {
+        try {
+            // Simulate real-time detection feed
+            const detections = [
+                {
+                    id: 1,
+                    type: 'Fraud',
+                    severity: 'critical',
+                    message: 'Suspicious transaction detected',
+                    timestamp: new Date(),
+                    confidence: 0.95
+                },
+                {
+                    id: 2,
+                    type: 'Sentiment',
+                    severity: 'medium',
+                    message: 'Negative sentiment spike detected',
+                    timestamp: new Date(Date.now() - 300000),
+                    confidence: 0.78
+                }
+            ];
+
+            this.renderDetectionFeed(detections);
+        } catch (error) {
+            console.error('Error loading detection feed:', error);
+        }
+    }
+
+    renderDetectionFeed(detections) {
+        const feedContainer = document.getElementById('detection-feed');
+        feedContainer.innerHTML = detections.map(detection => `
+            <div class="detection-card priority-${detection.severity} fade-in">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="card-title mb-1">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                ${detection.type} Detection
+                            </h6>
+                            <p class="card-text mb-2">${detection.message}</p>
+                            <small class="text-muted">
+                                <i class="fas fa-clock me-1"></i>
+                                ${detection.timestamp.toLocaleTimeString()}
+                            </small>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-primary">
+                                ${(detection.confidence * 100).toFixed(0)}%
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    async loadModelsData() {
+        try {
+            const response = await this.apiClient.getModelComparison();
+            if (response && response.comparison) {
+                this.renderModelsTable(response.comparison);
+            }
+        } catch (error) {
+            console.error('Error loading models data:', error);
+        }
+    }
+
+    renderModelsTable(models) {
+        const tbody = document.getElementById('models-tbody');
+        tbody.innerHTML = models.map(model => `
+            <tr>
+                <td><span class="badge bg-primary">${model.domain}</span></td>
+                <td><strong>${model.model}</strong></td>
+                <td>${model.dataset}</td>
+                <td><span class="text-success">${(model.primary_score * 100).toFixed(1)}%</span></td>
+                <td><span class="text-info">${(model.secondary_score * 100).toFixed(1)}%</span></td>
+                <td><span class="badge bg-success">Active</span></td>
+            </tr>
+        `).join('');
+    }
+
+    async refreshData() {
+        await this.loadSummaryData();
+        await this.loadDetectionFeed();
+        
+        // Show refresh indicator
+        const indicator = document.createElement('div');
+        indicator.className = 'position-fixed top-0 end-0 m-3 alert alert-info alert-dismissible fade show';
+        indicator.innerHTML = `
+            <i class="fas fa-sync-alt fa-spin me-2"></i>
+            Data refreshed
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        document.body.appendChild(indicator);
+        
+        setTimeout(() => {
+            if (indicator.parentNode) {
+                indicator.remove();
+            }
+        }, 3000);
+    }
+}
+
+// Initialize dashboard when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // APIClient가 완전히 로드될 때까지 기다린 후 대시보드 초기화
+    function initDashboard() {
+        if (window.APIClient) {
+            console.log('✅ APIClient found, initializing dashboard');
+            const dashboard = new UnifiedDashboard();
+            window.dashboard = dashboard; // 전역 접근을 위해 저장
+        } else {
+            console.log('⏳ Waiting for APIClient...');
+            setTimeout(initDashboard, 100);
+        }
+    }
+    
+    initDashboard();
+});
+</script>
+{% endblock %}

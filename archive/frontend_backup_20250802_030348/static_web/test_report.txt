@@ -1,0 +1,58 @@
+
+📊 FCA Static Web Test Report
+==================================================
+📅 Test Time: 2025-08-02 02:09:39
+🌐 Base URL: http://localhost:8083
+
+📈 Summary:
+  Total Tests: 26
+  ✅ Passed: 25
+  ❌ Failed: 1
+  ⚠️  Warnings: 0
+  📊 Success Rate: 96.2%
+
+📋 Detailed Results:
+
+🔹 General:
+  ✅ Server Connection: Server responding on http://localhost:8083
+
+🔹 HTML:
+  ✅ HTML - Main Page: Valid HTML with Bootstrap
+  ✅ HTML - Simple Page: Valid HTML with Bootstrap
+  ✅ HTML - Debug Page: Valid HTML with Bootstrap
+
+🔹 CSS:
+  ✅ CSS - style.css: Loaded (6495 bytes)
+
+🔹 JS:
+  ✅ JS - utils.js: Valid JS (1709 bytes)
+  ✅ JS - static-api-client.js: Valid JS (3554 bytes)
+  ✅ JS - static-dashboard.js: Valid JS (16796 bytes)
+  ✅ JS - navigation.js: Valid JS (6329 bytes)
+
+🔹 Data:
+  ✅ Data - Summary: Valid JSON (705 chars)
+  ✅ Data - Fraud Data: Valid JSON (649 chars)
+  ✅ Data - Sentiment Data: Valid JSON (399 chars)
+  ✅ Data - Attrition Data: Valid JSON (866 chars)
+  ✅ Data - Charts Data: Valid JSON (1345 chars)
+  ✅ Data - Datasets Info: Valid JSON (1057 chars)
+
+🔹 CDN:
+  ✅ CDN - Bootstrap CSS: Available
+  ✅ CDN - Font Awesome: Available
+  ✅ CDN - Plotly.js: Available
+  ✅ CDN - Bootstrap JS: Available
+
+🔹 Structure:
+  ✅ Structure - Sidebar Navigation: Found in HTML
+  ✅ Structure - Main Content: Found in HTML
+  ❌ Structure - Dashboard Cards: Not found in HTML
+  ✅ Structure - Chart Containers: Found in HTML
+  ✅ Structure - Bootstrap Integration: Found in HTML
+  ✅ Structure - Plotly Integration: Found in HTML
+  ✅ Structure - Font Awesome Icons: Found in HTML
+
+🔧 Recommendations:
+
+==================================================

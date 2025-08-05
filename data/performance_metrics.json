@@ -1,0 +1,18 @@
+{
+  "wamc_fraud_fraud_50000": {
+    "metrics": {
+      "dataset_name": "wamc_fraud",
+      "total_samples": 50000,
+      "fraud_rate": 0.154,
+      "accuracy": 0.9992,
+      "precision": 0.8182,
+      "recall": 0.6,
+      "f1_score": 0.6923,
+      "auc_roc": 0.9294,
+      "model_type": "Random Forest",
+      "features_count": 30,
+      "calculated_at": "2025-08-01T16:31:22.344666"
+    },
+    "timestamp": "2025-08-01T16:31:22.344673"
+  }
+}

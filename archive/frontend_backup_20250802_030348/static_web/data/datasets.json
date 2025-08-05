@@ -1,0 +1,48 @@
+{
+  "available_datasets": [
+    {
+      "id": "credit_card_fraud_2023",
+      "name": "Credit Card Fraud 2023",
+      "type": "fraud_detection",
+      "status": "active",
+      "size": "284,807 transactions",
+      "features": 31,
+      "target": "Class",
+      "description": "Credit card transactions with fraud labels",
+      "last_updated": "2024-01-15"
+    },
+    {
+      "id": "financial_phrasebank",
+      "name": "Financial PhraseBank",
+      "type": "sentiment_analysis",
+      "status": "active",
+      "size": "4,846 sentences",
+      "features": 2,
+      "target": "sentiment",
+      "description": "Financial news sentences with sentiment labels",
+      "last_updated": "2024-01-10"
+    },
+    {
+      "id": "bank_churners",
+      "name": "Bank Customer Churners",
+      "type": "attrition_prediction",
+      "status": "active",
+      "size": "10,127 customers",
+      "features": 20,
+      "target": "Attrition_Flag",
+      "description": "Bank customer data with churn labels",
+      "last_updated": "2024-01-12"
+    }
+  ],
+  "dataset_statistics": {
+    "total_datasets": 3,
+    "total_records": 299780,
+    "domains": [
+      "fraud_detection",
+      "sentiment_analysis",
+      "attrition_prediction"
+    ],
+    "avg_quality_score": 92.5
+  },
+  "timestamp": "2025-08-01T19:24:09.802740"
+}

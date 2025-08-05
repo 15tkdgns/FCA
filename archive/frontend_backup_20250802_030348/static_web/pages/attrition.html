@@ -1,0 +1,128 @@
+<!-- Customer Attrition Page -->
+<div class="page-content" id="attrition-page" style="display: none;">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">👥 Customer Attrition Analysis</h4>
+                    <p class="card-text">Bank customer churn pattern analysis and prediction results</p>
+                    
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h3 class="text-primary" id="attrition-total-customers">10,127</h3>
+                                <small class="text-muted">Total Customers</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h3 class="text-danger" id="attrition-churned-customers">8,500</h3>
+                                <small class="text-muted">Churned Customers</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h3 class="text-warning" id="attrition-churn-rate">83.9%</h3>
+                                <small class="text-muted">Churn Rate</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h3 class="text-success" id="attrition-accuracy-display">100%</h3>
+                                <small class="text-muted">Model Accuracy</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <!-- Attrition Distribution -->
+        <div class="col-lg-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">📊 Customer Retention vs Churn</h5>
+                </div>
+                <div class="card-body">
+                    <div id="attrition-page-distribution-chart" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Customer Segments -->
+        <div class="col-lg-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">👥 Customer Segments</h5>
+                </div>
+                <div class="card-body">
+                    <div id="attrition-segments-chart" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Importance -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">🔍 Key Factors in Customer Churn</h5>
+                </div>
+                <div class="card-body">
+                    <div id="attrition-features-chart" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Analysis -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">📈 Churn Analysis by Segment</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h6 class="text-info">Young Customers</h6>
+                            <div class="progress mb-3">
+                                <div class="progress-bar bg-info" style="width: 25%"></div>
+                            </div>
+                            <small class="text-muted">2,534 customers (25.0%)</small>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <h6 class="text-success">Adult Customers</h6>
+                            <div class="progress mb-3">
+                                <div class="progress-bar bg-success" style="width: 48.3%"></div>
+                            </div>
+                            <small class="text-muted">4,891 customers (48.3%)</small>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <h6 class="text-warning">Senior Customers</h6>
+                            <div class="progress mb-3">
+                                <div class="progress-bar bg-warning" style="width: 23.2%"></div>
+                            </div>
+                            <small class="text-muted">2,345 customers (23.2%)</small>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <h6 class="text-danger">Elderly Customers</h6>
+                            <div class="progress mb-3">
+                                <div class="progress-bar bg-danger" style="width: 3.5%"></div>
+                            </div>
+                            <small class="text-muted">357 customers (3.5%)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

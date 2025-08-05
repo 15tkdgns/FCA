@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integration Test - FCA Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .test-panel { margin: 15px 0; }
+        .test-result { margin: 5px 0; padding: 10px; border-radius: 5px; }
+        .test-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .test-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .test-warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .log-area { background: #f8f9fa; padding: 10px; font-family: monospace; max-height: 400px; overflow-y: auto; border: 1px solid #ddd; }
+        .chart-test { height: 200px; border: 1px solid #ddd; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid mt-3">
+        <h1><i class="fas fa-flask"></i> FCA Dashboard Integration Test</h1>
+        <p class="text-muted">Comprehensive testing of all components and their interactions</p>
+        
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Dependency Tests -->
+                <div class="card test-panel">
+                    <div class="card-header">
+                        <h5><i class="fas fa-puzzle-piece"></i> Dependency Tests</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="dependency-results"></div>
+                        <button class="btn btn-primary btn-sm" onclick="testDependencies()">
+                            <i class="fas fa-play"></i> Run Dependency Tests
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Utility Tests -->
+                <div class="card test-panel">
+                    <div class="card-header">
+                        <h5><i class="fas fa-tools"></i> Utility Function Tests</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="utility-results"></div>
+                        <button class="btn btn-primary btn-sm" onclick="testUtilities()">
+                            <i class="fas fa-play"></i> Run Utility Tests
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Data Loading Tests -->
+                <div class="card test-panel">
+                    <div class="card-header">
+                        <h5><i class="fas fa-database"></i> Data Loading Tests</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="data-results"></div>
+                        <button class="btn btn-primary btn-sm" onclick="testDataLoading()">
+                            <i class="fas fa-play"></i> Run Data Tests
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Chart Tests -->
+                <div class="card test-panel">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-bar"></i> Chart Rendering Tests</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="chart-results"></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div id="test-chart-1" class="chart-test"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="test-chart-2" class="chart-test"></div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="testCharts()">
+                            <i class="fas fa-play"></i> Run Chart Tests
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Integration Test -->
+                <div class="card test-panel">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cogs"></i> Full Integration Test</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="integration-results"></div>
+                        <button class="btn btn-success" onclick="runFullIntegrationTest()">
+                            <i class="fas fa-rocket"></i> Run Full Integration Test
+                        </button>
+                        <button class="btn btn-outline-secondary ms-2" onclick="clearAllTests()">
+                            <i class="fas fa-broom"></i> Clear Results
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <!-- Live Log -->
+                <div class="card">
+                    <div class="card-header">
+                        <h6><i class="fas fa-terminal"></i> Live Test Log</h6>
+                        <button class="btn btn-sm btn-outline-secondary float-end" onclick="clearLog()">Clear</button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="live-log" class="log-area"></div>
+                    </div>
+                </div>
+                
+                <!-- Test Stats -->
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h6><i class="fas fa-chart-pie"></i> Test Statistics</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="test-stats">
+                            <p class="mb-1">Total Tests: <span id="total-tests">0</span></p>
+                            <p class="mb-1 text-success">Passed: <span id="passed-tests">0</span></p>
+                            <p class="mb-1 text-danger">Failed: <span id="failed-tests">0</span></p>
+                            <p class="mb-0 text-warning">Warnings: <span id="warning-tests">0</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts in exact same order as main dashboard -->
+    <script src="https://cdn.plot.ly/plotly-2.25.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Our utilities -->
+    <script src="assets/js/utils/common-utils.js"></script>
+    <script src="assets/js/utils/chart-factory.js"></script>
+    <script src="assets/js/utils/data-manager.js"></script>
+    
+    <script>
+        let testStats = { total: 0, passed: 0, failed: 0, warnings: 0 };
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logDiv = document.getElementById('live-log');
+            const color = type === 'error' ? 'color: #dc3545;' : type === 'warn' ? 'color: #ffc107;' : 'color: #28a745;';
+            logDiv.innerHTML += `<div style="${color}">[${timestamp}] ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+        
+        function addTestResult(containerId, testName, success, message = '', isWarning = false) {
+            const container = document.getElementById(containerId);
+            const className = isWarning ? 'test-warning' : (success ? 'test-success' : 'test-error');
+            const icon = isWarning ? '⚠️' : (success ? '✅' : '❌');
+            
+            container.innerHTML += `<div class="test-result ${className}">${icon} <strong>${testName}</strong>: ${message}</div>`;
+            
+            testStats.total++;
+            if (isWarning) testStats.warnings++;
+            else if (success) testStats.passed++;
+            else testStats.failed++;
+            
+            updateTestStats();
+        }
+        
+        function updateTestStats() {
+            document.getElementById('total-tests').textContent = testStats.total;
+            document.getElementById('passed-tests').textContent = testStats.passed;
+            document.getElementById('failed-tests').textContent = testStats.failed;
+            document.getElementById('warning-tests').textContent = testStats.warnings;
+        }
+        
+        async function testDependencies() {
+            log('🔍 Testing dependencies...');
+            
+            // Test Plotly
+            if (typeof Plotly !== 'undefined') {
+                addTestResult('dependency-results', 'Plotly.js', true, 'Loaded and available');
+                log('✅ Plotly.js available');
+            } else {
+                addTestResult('dependency-results', 'Plotly.js', false, 'Not loaded');
+                log('❌ Plotly.js not available');
+            }
+            
+            // Test CommonUtils
+            if (typeof CommonUtils !== 'undefined') {
+                addTestResult('dependency-results', 'CommonUtils', true, 'Class available');
+                log('✅ CommonUtils available');
+            } else {
+                addTestResult('dependency-results', 'CommonUtils', false, 'Class not available');
+                log('❌ CommonUtils not available');
+            }
+            
+            // Test ChartFactory
+            if (typeof ChartFactory !== 'undefined') {
+                addTestResult('dependency-results', 'ChartFactory', true, 'Instance available');
+                log('✅ ChartFactory available');
+            } else {
+                addTestResult('dependency-results', 'ChartFactory', false, 'Instance not available');
+                log('❌ ChartFactory not available');
+            }
+            
+            // Test DataManager
+            if (typeof DataManager !== 'undefined') {
+                if (typeof DataManager.loadDashboardData === 'function') {
+                    addTestResult('dependency-results', 'DataManager', true, 'Instance and methods available');
+                    log('✅ DataManager fully available');
+                } else {
+                    addTestResult('dependency-results', 'DataManager', false, 'Instance available but methods missing', true);
+                    log('⚠️ DataManager instance available but methods missing');
+                }
+            } else {
+                addTestResult('dependency-results', 'DataManager', false, 'Instance not available');
+                log('❌ DataManager not available');
+            }
+        }
+        
+        async function testUtilities() {
+            log('🔧 Testing utility functions...');
+            
+            try {
+                // Test CommonUtils logging
+                CommonUtils.log.info('Test log message', 'TestModule');
+                addTestResult('utility-results', 'CommonUtils.log', true, 'Logging system works');
+                log('✅ CommonUtils logging works');
+            } catch (error) {
+                addTestResult('utility-results', 'CommonUtils.log', false, error.message);
+                log('❌ CommonUtils logging failed: ' + error.message);
+            }
+            
+            try {
+                // Test DOM utilities
+                const testDiv = document.createElement('div');
+                testDiv.id = 'test-dom-element';
+                document.body.appendChild(testDiv);
+                
+                CommonUtils.dom.updateText('test-dom-element', 'Test text');
+                CommonUtils.dom.show('test-dom-element');
+                CommonUtils.dom.hide('test-dom-element');
+                
+                document.body.removeChild(testDiv);
+                
+                addTestResult('utility-results', 'CommonUtils.dom', true, 'DOM operations work');
+                log('✅ CommonUtils DOM utilities work');
+            } catch (error) {
+                addTestResult('utility-results', 'CommonUtils.dom', false, error.message);
+                log('❌ CommonUtils DOM utilities failed: ' + error.message);
+            }
+        }
+        
+        async function testDataLoading() {
+            log('📊 Testing data loading...');
+            
+            try {
+                // Test basic data loading
+                const data = await DataManager.loadData('data/summary.json');
+                addTestResult('data-results', 'Basic Data Loading', true, 'summary.json loaded successfully');
+                log('✅ Basic data loading works');
+            } catch (error) {
+                addTestResult('data-results', 'Basic Data Loading', false, error.message);
+                log('❌ Basic data loading failed: ' + error.message);
+            }
+            
+            try {
+                // Test dashboard data loading
+                const dashboardData = await DataManager.loadDashboardData();
+                const dataKeys = Object.keys(dashboardData);
+                addTestResult('data-results', 'Dashboard Data Loading', true, `Loaded ${dataKeys.length} data sources: ${dataKeys.join(', ')}`);
+                log('✅ Dashboard data loading works');
+            } catch (error) {
+                addTestResult('data-results', 'Dashboard Data Loading', false, error.message);
+                log('❌ Dashboard data loading failed: ' + error.message);
+            }
+        }
+        
+        async function testCharts() {
+            log('📈 Testing chart rendering...');
+            
+            try {
+                // Test pie chart
+                await ChartFactory.createPieChart('test-chart-1', {
+                    labels: ['Test A', 'Test B', 'Test C'],
+                    values: [30, 40, 30]
+                }, {
+                    title: 'Test Pie Chart'
+                });
+                addTestResult('chart-results', 'Pie Chart', true, 'Rendered successfully');
+                log('✅ Pie chart rendering works');
+            } catch (error) {
+                addTestResult('chart-results', 'Pie Chart', false, error.message);
+                log('❌ Pie chart rendering failed: ' + error.message);
+            }
+            
+            try {
+                // Test bar chart
+                await ChartFactory.createBarChart('test-chart-2', {
+                    x: ['A', 'B', 'C', 'D'],
+                    y: [10, 20, 15, 25]
+                }, {
+                    title: 'Test Bar Chart'
+                });
+                addTestResult('chart-results', 'Bar Chart', true, 'Rendered successfully');
+                log('✅ Bar chart rendering works');
+            } catch (error) {
+                addTestResult('chart-results', 'Bar Chart', false, error.message);
+                log('❌ Bar chart rendering failed: ' + error.message);
+            }
+        }
+        
+        async function runFullIntegrationTest() {
+            log('🚀 Running full integration test...');
+            
+            clearAllTests();
+            
+            try {
+                await testDependencies();
+                await CommonUtils.delay(500);
+                
+                await testUtilities();
+                await CommonUtils.delay(500);
+                
+                await testDataLoading();
+                await CommonUtils.delay(500);
+                
+                await testCharts();
+                
+                const successRate = (testStats.passed / testStats.total * 100).toFixed(1);
+                addTestResult('integration-results', 'Full Integration Test', 
+                    testStats.failed === 0, 
+                    `Completed with ${successRate}% success rate (${testStats.passed}/${testStats.total} passed)`
+                );
+                
+                if (testStats.failed === 0) {
+                    log('🎉 Full integration test PASSED!');
+                } else {
+                    log(`⚠️ Integration test completed with ${testStats.failed} failures`);
+                }
+                
+            } catch (error) {
+                addTestResult('integration-results', 'Full Integration Test', false, error.message);
+                log('💥 Integration test failed: ' + error.message);
+            }
+        }
+        
+        function clearAllTests() {
+            document.getElementById('dependency-results').innerHTML = '';
+            document.getElementById('utility-results').innerHTML = '';
+            document.getElementById('data-results').innerHTML = '';
+            document.getElementById('chart-results').innerHTML = '';
+            document.getElementById('integration-results').innerHTML = '';
+            testStats = { total: 0, passed: 0, failed: 0, warnings: 0 };
+            updateTestStats();
+        }
+        
+        function clearLog() {
+            document.getElementById('live-log').innerHTML = '';
+        }
+        
+        // Auto-start basic dependency test
+        window.addEventListener('load', () => {
+            log('🏁 Integration test page loaded');
+            setTimeout(testDependencies, 1000);
+        });
+    </script>
+</body>
+</html>

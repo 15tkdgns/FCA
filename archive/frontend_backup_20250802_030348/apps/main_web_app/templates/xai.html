@@ -1,0 +1,313 @@
+{% extends "base.html" %}
+
+{% block title %}XAI - Explainable AI{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="display-4 fw-bold">
+                🔍 Explainable AI (XAI)
+            </h1>
+            <div class="text-muted">
+                <i class="fas fa-brain me-2"></i>
+                Model Interpretability & Transparency
+            </div>
+        </div>
+        <p class="lead text-muted">
+            Understand and interpret AI model decision-making processes with various explainable AI techniques and methods.
+        </p>
+        <hr class="mt-3 mb-4">
+    </div>
+</div>
+
+<!-- XAI Overview Cards -->
+<div class="row mb-5" id="xai-overview">
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card bg-primary text-white h-100 summary-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title mb-2 opacity-90">🎯 SHAP Values</h6>
+                        <h2 class="mb-0 fw-bold" id="shap-features">-</h2>
+                        <small class="opacity-75">Feature Explanations</small>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-chart-bar fa-3x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card bg-success text-white h-100 summary-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title mb-2 opacity-90">🔬 LIME Analysis</h6>
+                        <h2 class="mb-0 fw-bold" id="lime-samples">-</h2>
+                        <small class="opacity-75">Local Explanations</small>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-microscope fa-3x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card bg-info text-white h-100 summary-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title mb-2 opacity-90">📊 Feature Importance</h6>
+                        <h2 class="mb-0 fw-bold" id="feature-count">-</h2>
+                        <small class="opacity-75">Key Features</small>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-ranking-star fa-3x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card bg-warning text-white h-100 summary-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title mb-2 opacity-90">🎭 Model Transparency</h6>
+                        <h2 class="mb-0 fw-bold" id="transparency-score">-</h2>
+                        <small class="opacity-75">Interpretability Score</small>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-eye fa-3x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main XAI Charts -->
+<div class="row mb-4">
+    <div class="col-lg-8 mb-3">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    🎯 SHAP Feature Importance
+                </h5>
+                <small class="text-muted">Impact of each feature on model predictions</small>
+            </div>
+            <div class="card-body">
+                <div id="shap-importance-chart" style="height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-3">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    📊 Global Feature Ranking
+                </h5>
+                <small class="text-muted">Feature importance across all models</small>
+            </div>
+            <div class="card-body">
+                <div id="global-importance-chart" style="height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SHAP Waterfall and Summary -->
+<div class="row mb-4">
+    <div class="col-lg-6 mb-3">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    🌊 SHAP Waterfall Plot
+                </h5>
+                <small class="text-muted">Feature contributions for individual predictions</small>
+            </div>
+            <div class="card-body">
+                <div id="shap-waterfall-chart" style="height: 350px;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-6 mb-3">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    📈 SHAP Summary Plot
+                </h5>
+                <small class="text-muted">SHAP value distribution across all samples</small>
+            </div>
+            <div class="card-body">
+                <div id="shap-summary-chart" style="height: 350px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LIME and Partial Dependence -->
+<div class="row mb-4">
+    <div class="col-lg-6 mb-3">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    🔬 LIME Local Explanation
+                </h5>
+                <small class="text-muted">Local explanations for individual samples</small>
+            </div>
+            <div class="card-body">
+                <div id="lime-explanation-chart" style="height: 350px;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-6 mb-3">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    📉 Partial Dependence Plot
+                </h5>
+                <small class="text-muted">Prediction changes based on feature value variations</small>
+            </div>
+            <div class="card-body">
+                <div id="pdp-chart" style="height: 350px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Model Comparison and Interpretation -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    🎭 Model Interpretability Comparison
+                </h5>
+                <small class="text-muted">Model interpretability comparison across domains</small>
+            </div>
+            <div class="card-body">
+                <div class="row" id="interpretability-comparison">
+                    <div class="col-lg-8">
+                        <div id="interpretability-radar-chart" style="height: 400px;"></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="mt-3">
+                            <h6 class="fw-bold mb-3">Interpretability Metrics</h6>
+                            
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <small class="fw-medium">Feature Importance</small>
+                                    <small class="text-muted">95%</small>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-primary" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <small class="fw-medium">SHAP Consistency</small>
+                                    <small class="text-muted">88%</small>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-success" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <small class="fw-medium">LIME Stability</small>
+                                    <small class="text-muted">82%</small>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-info" style="width: 82%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <small class="fw-medium">Model Transparency</small>
+                                    <small class="text-muted">79%</small>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-warning" style="width: 79%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- XAI Method Explanation -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    📚 XAI Method Explanations
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="text-center">
+                            <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-chart-bar fa-lg"></i>
+                            </div>
+                            <h6 class="fw-bold">SHAP (SHapley Additive exPlanations)</h6>
+                            <p class="text-muted small">Game theory-based feature contribution calculation that quantifies each feature's impact on predictions.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="text-center">
+                            <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-microscope fa-lg"></i>
+                            </div>
+                            <h6 class="fw-bold">LIME</h6>
+                            <p class="text-muted small">Local Interpretable Model-agnostic Explanations providing local interpretations for individual predictions.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="text-center">
+                            <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-ranking-star fa-lg"></i>
+                            </div>
+                            <h6 class="fw-bold">Feature Importance</h6>
+                            <p class="text-muted small">Measures the importance of each feature when making predictions to identify the most influential factors.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="text-center">
+                            <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-chart-line fa-lg"></i>
+                            </div>
+                            <h6 class="fw-bold">Partial Dependence</h6>
+                            <p class="text-muted small">Visualizes how changes in specific feature values affect model predictions to understand relationships.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/xai.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCA Static Web Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { padding: 10px; margin: 5px 0; border-radius: 4px; }
+        .pass { background: #d4edda; color: #155724; }
+        .fail { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>FCA Static Web Application Test</h1>
+    <div id="test-results"></div>
+
+    <script>
+        async function runTests() {
+            const results = [];
+            
+            // Test 1: Data Loading
+            try {
+                const response = await fetch('data/summary.json');
+                const data = await response.json();
+                if (data.total_datasets) {
+                    results.push({ test: 'Data Loading', status: 'PASS', message: 'Summary data loaded successfully' });
+                } else {
+                    results.push({ test: 'Data Loading', status: 'FAIL', message: 'Summary data invalid' });
+                }
+            } catch (error) {
+                results.push({ test: 'Data Loading', status: 'FAIL', message: error.message });
+            }
+
+            // Test 2: Charts Data
+            try {
+                const response = await fetch('data/charts.json');
+                const data = await response.json();
+                if (data.fraud_distribution && data.sentiment_distribution) {
+                    results.push({ test: 'Chart Data', status: 'PASS', message: 'Chart data loaded successfully' });
+                } else {
+                    results.push({ test: 'Chart Data', status: 'FAIL', message: 'Chart data incomplete' });
+                }
+            } catch (error) {
+                results.push({ test: 'Chart Data', status: 'FAIL', message: error.message });
+            }
+
+            // Test 3: All Required Files
+            const files = ['fraud_data.json', 'sentiment_data.json', 'attrition_data.json', 'datasets.json'];
+            let allFilesExist = true;
+            for (const file of files) {
+                try {
+                    const response = await fetch(`data/${file}`);
+                    if (!response.ok) allFilesExist = false;
+                } catch {
+                    allFilesExist = false;
+                }
+            }
+            
+            if (allFilesExist) {
+                results.push({ test: 'All Data Files', status: 'PASS', message: 'All required data files accessible' });
+            } else {
+                results.push({ test: 'All Data Files', status: 'FAIL', message: 'Some data files missing or inaccessible' });
+            }
+
+            // Display results
+            const container = document.getElementById('test-results');
+            results.forEach(result => {
+                const div = document.createElement('div');
+                div.className = `test-result ${result.status.toLowerCase() === 'pass' ? 'pass' : 'fail'}`;
+                div.innerHTML = `<strong>${result.test}:</strong> ${result.status} - ${result.message}`;
+                container.appendChild(div);
+            });
+
+            // Summary
+            const passed = results.filter(r => r.status === 'PASS').length;
+            const total = results.length;
+            const summary = document.createElement('div');
+            summary.innerHTML = `<h2>Test Summary: ${passed}/${total} tests passed</h2>`;
+            container.appendChild(summary);
+        }
+
+        window.addEventListener('load', runTests);
+    </script>
+</body>
+</html>

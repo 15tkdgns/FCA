@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCA Analysis Dashboard - Clean Version</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.25.2.min.js"></script>
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Mobile Toggle Button -->
+    <button class="mobile-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+        <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-brand">
+                <i class="fas fa-chart-line me-2"></i>FCA Dashboard
+            </a>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="#dashboard" class="nav-link active" data-page="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Overview
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#fraud" class="nav-link" data-page="fraud">
+                    <i class="fas fa-shield-alt"></i>
+                    Fraud Detection
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#sentiment" class="nav-link" data-page="sentiment">
+                    <i class="fas fa-comments"></i>
+                    Sentiment Analysis
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#attrition" class="nav-link" data-page="attrition">
+                    <i class="fas fa-users"></i>
+                    Customer Attrition
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#datasets" class="nav-link" data-page="datasets">
+                    <i class="fas fa-database"></i>
+                    Datasets
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">
+                <i class="fas fa-tachometer-alt" id="page-icon"></i>
+                <span id="page-title-text">Overview</span>
+            </h1>
+            <p class="page-subtitle" id="page-subtitle">View overall system status and key metrics for FCA analysis</p>
+        </div>
+        
+        <!-- Loading Indicator -->
+        <div id="loading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading data...</p>
+        </div>
+        
+        <!-- Page Content Container -->
+        <div id="page-content" style="display: none;">
+            <!-- Dashboard Page (기본 페이지) -->
+            <div class="page-content" id="dashboard-page" style="display: block;">
+                <!-- Summary Cards -->
+                <div class="row mb-5" id="summary-cards">
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card bg-primary text-white h-100 summary-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title mb-2 opacity-90">🤖 Total Models</h6>
+                                        <h2 class="mb-0 fw-bold" id="total-models">3</h2>
+                                        <small class="opacity-75">ML Models Trained</small>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-robot fa-3x opacity-75"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card bg-success text-white h-100 summary-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title mb-2 opacity-90">📊 Datasets</h6>
+                                        <h2 class="mb-0 fw-bold" id="total-datasets">3</h2>
+                                        <small class="opacity-75">Processed Successfully</small>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-database fa-3x opacity-75"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card bg-info text-white h-100 summary-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title mb-2 opacity-90">🏷️ Domains</h6>
+                                        <h2 class="mb-0 fw-bold" id="total-domains">3</h2>
+                                        <small class="opacity-75">Analysis Categories</small>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-layer-group fa-3x opacity-75"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card bg-warning text-white h-100 summary-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title mb-2 opacity-90">📈 Performance</h6>
+                                        <h2 class="mb-0 fw-bold" id="avg-performance">96.2%</h2>
+                                        <small class="opacity-75">Overall Model Score</small>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-chart-bar fa-3x opacity-75"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Charts Row -->
+                <div class="row mb-4">
+                    <div class="col-lg-8 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    📊 Performance Overview by Domain
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="model-comparison-chart" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    🔍 System Status
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row text-center">
+                                    <div class="col-12 mb-3">
+                                        <span class="badge bg-success fs-6" id="system-status">OPERATIONAL</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-6 text-center">
+                                        <h5 id="fraud-accuracy" class="text-primary">99.9%</h5>
+                                        <small class="text-muted">Fraud Detection</small>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <h5 id="sentiment-accuracy" class="text-success">88.7%</h5>
+                                        <small class="text-muted">Sentiment Analysis</small>
+                                    </div>
+                                </div>
+                                
+                                <hr>
+                                
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h5 id="attrition-accuracy" class="text-warning">100%</h5>
+                                        <small class="text-muted">Attrition Prediction</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Domain Distribution Charts -->
+                <div class="row mb-4">
+                    <div class="col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6 class="card-title mb-0">🛡️ Fraud Detection</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="fraud-distribution-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6 class="card-title mb-0">💬 Sentiment Analysis</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="sentiment-distribution-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6 class="card-title mb-0">👥 Customer Attrition</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="attrition-distribution-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other pages -->
+            <div class="page-content" id="fraud-page" style="display: none;">
+                <h2>🛡️ Fraud Detection Analysis</h2>
+                <p>Detailed fraud detection analysis...</p>
+                <div id="fraud-page-charts" style="height: 400px;"></div>
+            </div>
+
+            <div class="page-content" id="sentiment-page" style="display: none;">
+                <h2>💬 Sentiment Analysis</h2>
+                <p>Financial news sentiment classification...</p>
+                <div id="sentiment-page-charts" style="height: 400px;"></div>
+            </div>
+
+            <div class="page-content" id="attrition-page" style="display: none;">
+                <h2>👥 Customer Attrition Analysis</h2>
+                <p>Bank customer churn analysis...</p>
+                <div id="attrition-page-charts" style="height: 400px;"></div>
+            </div>
+
+            <div class="page-content" id="datasets-page" style="display: none;">
+                <h2>📊 Dataset Management</h2>
+                <p>Manage and view dataset information...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Simplified JavaScript - Only Essential Components -->
+    <script>
+        // Simple API Client
+        class SimpleAPI {
+            async loadData(endpoint) {
+                try {
+                    const response = await fetch(`./data/${endpoint}.json`);
+                    return await response.json();
+                } catch (error) {
+                    console.warn(`Failed to load ${endpoint}:`, error);
+                    return {};
+                }
+            }
+        }
+
+        // Simple Dashboard
+        class SimpleDashboard {
+            constructor() {
+                this.api = new SimpleAPI();
+                this.init();
+            }
+
+            async init() {
+                console.log('🚀 Simple Dashboard initializing...');
+                
+                // Load data
+                await this.loadData();
+                
+                // Setup navigation  
+                this.setupNavigation();
+                
+                // Render charts
+                this.renderCharts();
+                
+                // Hide loading
+                this.hideLoading();
+                
+                console.log('✅ Simple Dashboard ready!');
+            }
+
+            async loadData() {
+                this.data = {
+                    summary: await this.api.loadData('summary'),
+                    fraud: await this.api.loadData('fraud_data'),
+                    sentiment: await this.api.loadData('sentiment_data'),
+                    attrition: await this.api.loadData('attrition_data'),
+                    charts: await this.api.loadData('charts')
+                };
+
+                // Update summary cards
+                this.updateSummaryCards();
+            }
+
+            updateSummaryCards() {
+                const summary = this.data.summary;
+                if (!summary) return;
+
+                // Update performance
+                const perfEl = document.getElementById('avg-performance');
+                if (perfEl && summary.overall_metrics) {
+                    const accuracy = (summary.overall_metrics.avg_accuracy * 100).toFixed(1);
+                    perfEl.textContent = `${accuracy}%`;
+                }
+            }
+
+            setupNavigation() {
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const pageId = link.getAttribute('data-page');
+                        this.showPage(pageId);
+                    });
+                });
+            }
+
+            showPage(pageId) {
+                // Hide all pages
+                document.querySelectorAll('.page-content').forEach(page => {
+                    page.style.display = 'none';
+                });
+
+                // Show selected page
+                const targetPage = document.getElementById(`${pageId}-page`);
+                if (targetPage) {
+                    targetPage.style.display = 'block';
+                }
+
+                // Update navigation
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                document.querySelector(`[data-page="${pageId}"]`)?.classList.add('active');
+
+                // Update page header
+                this.updatePageHeader(pageId);
+
+                console.log(`📄 Switched to ${pageId} page`);
+            }
+
+            updatePageHeader(pageId) {
+                const titles = {
+                    dashboard: 'Overview',
+                    fraud: 'Fraud Detection Analysis',
+                    sentiment: 'Sentiment Analysis',
+                    attrition: 'Customer Attrition Analysis',
+                    datasets: 'Dataset Management'
+                };
+
+                const titleEl = document.getElementById('page-title-text');
+                if (titleEl) titleEl.textContent = titles[pageId] || 'Dashboard';
+            }
+
+            renderCharts() {
+                if (typeof Plotly === 'undefined') {
+                    console.warn('Plotly not available');
+                    return;
+                }
+
+                // Model comparison chart  
+                this.renderModelComparisonChart();
+                
+                // Distribution charts
+                this.renderDistributionCharts();
+            }
+
+            renderModelComparisonChart() {
+                const data = this.data.charts?.model_comparison;
+                if (!data) return;
+
+                const trace = {
+                    x: data.models || ['Fraud Detection', 'Sentiment Analysis', 'Attrition Prediction'],
+                    y: data.accuracy || [0.999, 0.887, 1.0],
+                    type: 'bar',
+                    marker: { color: ['#007bff', '#28a745', '#ffc107'] },
+                    text: (data.accuracy || [0.999, 0.887, 1.0]).map(acc => `${(acc * 100).toFixed(1)}%`),
+                    textposition: 'auto'
+                };
+
+                const layout = {
+                    title: 'Model Performance Comparison',
+                    xaxis: { title: 'Models' },
+                    yaxis: { title: 'Accuracy', range: [0, 1] },
+                    margin: { l: 50, r: 50, t: 50, b: 100 }
+                };
+
+                Plotly.newPlot('model-comparison-chart', [trace], layout, {responsive: true});
+                console.log('✅ Model comparison chart rendered');
+            }
+
+            renderDistributionCharts() {
+                // Fraud distribution
+                this.renderPieChart('fraud-distribution-chart', {
+                    labels: ['Legitimate', 'Fraud'],
+                    data: [284315, 492],
+                    colors: ['#28a745', '#dc3545']
+                }, 'Fraud vs Legitimate');
+
+                // Sentiment distribution  
+                this.renderPieChart('sentiment-distribution-chart', {
+                    labels: ['Positive', 'Negative', 'Neutral'],
+                    data: [1852, 1674, 1320],
+                    colors: ['#28a745', '#dc3545', '#6c757d']
+                }, 'Sentiment Distribution');
+
+                // Attrition distribution
+                this.renderPieChart('attrition-distribution-chart', {
+                    labels: ['Retained', 'Churned'],
+                    data: [1627, 8500],
+                    colors: ['#28a745', '#dc3545']
+                }, 'Customer Retention vs Churn');
+            }
+
+            renderPieChart(elementId, data, title) {
+                const trace = {
+                    labels: data.labels,
+                    values: data.data,
+                    type: 'pie',
+                    marker: { colors: data.colors },
+                    textinfo: 'label+percent',
+                    textposition: 'auto'
+                };
+
+                const layout = {
+                    title: title,
+                    margin: { t: 50, b: 50, l: 50, r: 50 }
+                };
+
+                Plotly.newPlot(elementId, [trace], layout, {responsive: true});
+                console.log(`✅ ${title} chart rendered`);
+            }
+
+            hideLoading() {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('page-content').style.display = 'block';
+            }
+        }
+
+        // Utility functions
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar?.classList.toggle('show');
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                icon.className = document.body.classList.contains('dark-theme') ? 
+                    'fas fa-sun' : 'fas fa-moon';
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            window.dashboard = new SimpleDashboard();
+        });
+    </script>
+</body>
+</html>

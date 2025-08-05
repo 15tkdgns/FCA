@@ -1,0 +1,182 @@
+{
+  "last_updated": "2025-08-02T05:02:49.693882",
+  "model_comparison": {
+    "labels": [
+      "Fraud Detection",
+      "Sentiment Analysis",
+      "Customer Attrition"
+    ],
+    "datasets": [
+      {
+        "label": "AUC/Accuracy",
+        "data": [
+          0.9234,
+          0.887,
+          0.892
+        ],
+        "backgroundColor": [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56"
+        ]
+      }
+    ]
+  },
+  "fraud_distribution": {
+    "labels": [
+      "Minimal",
+      "Low",
+      "Medium",
+      "High"
+    ],
+    "data": [
+      45140,
+      3420,
+      1256,
+      184
+    ],
+    "backgroundColor": [
+      "#4CAF50",
+      "#FFC107",
+      "#FF9800",
+      "#F44336"
+    ]
+  },
+  "sentiment_distribution": {
+    "labels": [
+      "Positive",
+      "Neutral",
+      "Negative"
+    ],
+    "data": [
+      0.26982408660351825,
+      0.605615696887686,
+      0.12456021650879567
+    ],
+    "backgroundColor": [
+      "#4CAF50",
+      "#9E9E9E",
+      "#F44336"
+    ]
+  },
+  "customer_segments": {
+    "labels": [
+      "Champions",
+      "Loyal_Customers",
+      "Potential_Loyalists",
+      "At_Risk",
+      "Cannot_Lose_Them",
+      "New_Customers",
+      "Promising",
+      "Need_Attention",
+      "About_to_Sleep"
+    ],
+    "data": [
+      2456,
+      1834,
+      1523,
+      987,
+      456,
+      1245,
+      892,
+      567,
+      167
+    ],
+    "backgroundColor": [
+      "#1f77b4",
+      "#ff7f0e",
+      "#2ca02c",
+      "#d62728",
+      "#9467bd",
+      "#8c564b",
+      "#e377c2",
+      "#7f7f7f",
+      "#bcbd22"
+    ]
+  },
+  "roc_curves": {
+    "fraud_detection": {
+      "fpr": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        1.0
+      ],
+      "tpr": [
+        0.0,
+        0.75,
+        0.83,
+        0.87,
+        0.9,
+        0.92,
+        0.94,
+        0.95,
+        0.96,
+        0.98,
+        1.0
+      ],
+      "auc": 0.9234
+    }
+  },
+  "feature_importance": {
+    "fraud": {
+      "labels": [
+        "Amount_zscore",
+        "Time_hour",
+        "V14",
+        "V12",
+        "V10",
+        "V17",
+        "V16",
+        "V18",
+        "V11",
+        "V4"
+      ],
+      "data": [
+        0.234,
+        0.187,
+        0.156,
+        0.143,
+        0.128,
+        0.098,
+        0.087,
+        0.076,
+        0.065,
+        0.054
+      ]
+    },
+    "attrition": {
+      "labels": [
+        "Customer_Value_Score",
+        "IsActiveMember",
+        "Age",
+        "NumOfProducts",
+        "Balance",
+        "CreditScore",
+        "Geography",
+        "HasCrCard",
+        "EstimatedSalary",
+        "Tenure"
+      ],
+      "data": [
+        0.284,
+        0.223,
+        0.187,
+        0.156,
+        0.134,
+        0.098,
+        0.076,
+        0.054,
+        0.043,
+        0.032
+      ]
+    }
+  }
+}

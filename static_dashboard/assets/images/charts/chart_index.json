@@ -1,0 +1,90 @@
+{
+  "generated_at": "2025-08-03T00:35:20.514808",
+  "generator": "matplotlib",
+  "charts": {
+    "prediction_confidence": {
+      "filename": "prediction_confidence.png",
+      "path": "assets/images/charts/prediction_confidence.png",
+      "size": 71982,
+      "modified": "2025-08-03T00:35:19.060468"
+    },
+    "customer_segments": {
+      "filename": "customer_segments.png",
+      "path": "assets/images/charts/customer_segments.png",
+      "size": 104719,
+      "modified": "2025-08-03T00:35:18.820468"
+    },
+    "lime_explanation": {
+      "filename": "lime_explanation.png",
+      "path": "assets/images/charts/lime_explanation.png",
+      "size": 57501,
+      "modified": "2025-08-03T00:35:18.940468"
+    },
+    "sentiment_distribution": {
+      "filename": "sentiment_distribution.png",
+      "path": "assets/images/charts/sentiment_distribution.png",
+      "size": 51689,
+      "modified": "2025-08-03T00:35:18.730468"
+    },
+    "shap_waterfall": {
+      "filename": "shap_waterfall.png",
+      "path": "assets/images/charts/shap_waterfall.png",
+      "size": 61985,
+      "modified": "2025-08-03T00:35:20.340468"
+    },
+    "fraud_feature_importance": {
+      "filename": "fraud_feature_importance.png",
+      "path": "assets/images/charts/fraud_feature_importance.png",
+      "size": 73382,
+      "modified": "2025-08-03T00:35:19.630468"
+    },
+    "feature_interaction": {
+      "filename": "feature_interaction.png",
+      "path": "assets/images/charts/feature_interaction.png",
+      "size": 116556,
+      "modified": "2025-08-03T00:35:19.290468"
+    },
+    "model_comparison": {
+      "filename": "model_comparison.png",
+      "path": "assets/images/charts/model_comparison.png",
+      "size": 65629,
+      "modified": "2025-08-03T00:35:18.580468"
+    },
+    "correlation_network": {
+      "filename": "correlation_network.png",
+      "path": "assets/images/charts/correlation_network.png",
+      "size": 112887,
+      "modified": "2025-08-03T00:35:20.230468"
+    },
+    "training_process": {
+      "filename": "training_process.png",
+      "path": "assets/images/charts/training_process.png",
+      "size": 133237,
+      "modified": "2025-08-03T00:35:19.500468"
+    },
+    "accuracy_by_feature": {
+      "filename": "accuracy_by_feature.png",
+      "path": "assets/images/charts/accuracy_by_feature.png",
+      "size": 71150,
+      "modified": "2025-08-03T00:35:20.110468"
+    },
+    "fraud_distribution": {
+      "filename": "fraud_distribution.png",
+      "path": "assets/images/charts/fraud_distribution.png",
+      "size": 58277,
+      "modified": "2025-08-03T00:35:18.660468"
+    },
+    "partial_dependence": {
+      "filename": "partial_dependence.png",
+      "path": "assets/images/charts/partial_dependence.png",
+      "size": 202057,
+      "modified": "2025-08-03T00:35:19.930468"
+    },
+    "fairness_analysis": {
+      "filename": "fairness_analysis.png",
+      "path": "assets/images/charts/fairness_analysis.png",
+      "size": 90422,
+      "modified": "2025-08-03T00:35:20.480468"
+    }
+  }
+}

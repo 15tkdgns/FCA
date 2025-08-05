@@ -1,0 +1,366 @@
+/**
+ * FCA Dashboard - Modular CSS
+ * ============================
+ * 
+ * Modular CSS architecture for the FCA Analysis Dashboard
+ * Imports all component modules for optimal organization
+ */
+
+/* Core Variables and Theme System */
+@import url('./modules/variables.css');
+
+/* Layout and Structure */
+@import url('./modules/layout.css');
+
+/* Reusable Components */
+@import url('./modules/components.css');
+
+/* Additional Base Styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus Management */
+:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Selection Styles */
+::selection {
+    background-color: var(--color-primary);
+    color: var(--text-white);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+    border-radius: var(--border-radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-secondary);
+    border-radius: var(--border-radius-sm);
+    transition: background var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Improved Link Styles */
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+}
+
+/* Button Enhancements */
+.btn {
+    border-radius: var(--border-radius);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    transition: all var(--transition-fast);
+    text-decoration: none;
+}
+
+.btn:focus {
+    box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.25);
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--text-white);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
+    color: var(--text-white);
+}
+
+.btn-success {
+    background-color: var(--color-success);
+    border-color: var(--color-success);
+    color: var(--text-white);
+}
+
+.btn-outline-primary {
+    background-color: transparent;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--color-primary);
+    color: var(--text-white);
+}
+
+.btn-sm {
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--font-size-xs);
+}
+
+.btn-lg {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--font-size-lg);
+}
+
+/* Form Elements */
+.form-control {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    padding: var(--space-2) var(--space-3);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-control:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+    outline: none;
+}
+
+.form-label {
+    color: var(--text-primary);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-1);
+}
+
+/* Table Styles */
+.table {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.table th {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border-color);
+    padding: var(--space-3);
+}
+
+.table td {
+    padding: var(--space-3);
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--bg-secondary);
+}
+
+.table-hover tbody tr:hover {
+    background-color: var(--bg-tertiary);
+}
+
+/* Alert Styles */
+.alert {
+    border: none;
+    border-radius: var(--border-radius);
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-4);
+    border-left: 4px solid;
+}
+
+.alert-primary {
+    background-color: rgba(78, 115, 223, 0.1);
+    border-left-color: var(--color-primary);
+    color: var(--color-primary-dark);
+}
+
+.alert-success {
+    background-color: rgba(28, 200, 138, 0.1);
+    border-left-color: var(--color-success);
+    color: var(--color-success-dark);
+}
+
+.alert-danger {
+    background-color: rgba(231, 74, 59, 0.1);
+    border-left-color: var(--color-danger);
+    color: var(--color-danger-dark);
+}
+
+.alert-warning {
+    background-color: rgba(246, 194, 62, 0.1);
+    border-left-color: var(--color-warning);
+    color: var(--color-warning-dark);
+}
+
+.alert-info {
+    background-color: rgba(54, 185, 204, 0.1);
+    border-left-color: var(--color-info);
+    color: var(--color-info-dark);
+}
+
+/* Dropdown Styles */
+.dropdown-menu {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    padding: var(--space-2) 0;
+    min-width: 200px;
+}
+
+.dropdown-item {
+    color: var(--text-primary);
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--font-size-sm);
+    transition: background-color var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.dropdown-item:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.dropdown-item.active {
+    background-color: var(--color-primary);
+    color: var(--text-white);
+}
+
+.dropdown-divider {
+    border-top: 1px solid var(--border-color);
+    margin: var(--space-2) 0;
+}
+
+/* Utility Classes */
+.text-primary { color: var(--color-primary) !important; }
+.text-success { color: var(--color-success) !important; }
+.text-danger { color: var(--color-danger) !important; }
+.text-warning { color: var(--color-warning) !important; }
+.text-info { color: var(--color-info) !important; }
+.text-muted { color: var(--text-muted) !important; }
+.text-white { color: var(--text-white) !important; }
+
+.bg-primary { background-color: var(--color-primary) !important; }
+.bg-success { background-color: var(--color-success) !important; }
+.bg-danger { background-color: var(--color-danger) !important; }
+.bg-warning { background-color: var(--color-warning) !important; }
+.bg-info { background-color: var(--color-info) !important; }
+.bg-light { background-color: var(--bg-secondary) !important; }
+
+.border { border: 1px solid var(--border-color) !important; }
+.border-top { border-top: 1px solid var(--border-color) !important; }
+.border-bottom { border-bottom: 1px solid var(--border-color) !important; }
+.border-left { border-left: 1px solid var(--border-color) !important; }
+.border-right { border-right: 1px solid var(--border-color) !important; }
+
+.rounded { border-radius: var(--border-radius) !important; }
+.rounded-sm { border-radius: var(--border-radius-sm) !important; }
+.rounded-lg { border-radius: var(--border-radius-lg) !important; }
+
+.shadow { box-shadow: var(--shadow) !important; }
+.shadow-sm { box-shadow: var(--shadow-sm) !important; }
+.shadow-lg { box-shadow: var(--shadow-lg) !important; }
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .btn {
+        font-size: var(--font-size-xs);
+        padding: var(--space-2) var(--space-3);
+    }
+}
+
+/* Performance Optimizations */
+.chart-container,
+.card,
+.summary-card {
+    contain: layout style;
+}
+
+/* Dark Theme Specific Adjustments */
+[data-theme="dark"] .table {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .table th {
+    background-color: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .form-control {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .dropdown-menu {
+    background-color: var(--bg-secondary);
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .btn {
+        border-width: 2px;
+    }
+    
+    .card,
+    .chart-container {
+        border-width: 2px;
+    }
+}

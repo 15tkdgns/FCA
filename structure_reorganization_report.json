@@ -1,0 +1,133 @@
+{
+  "reorganization_date": "2025-08-05T12:09:17.741723",
+  "changes_made": [
+    "디렉토리 생성: src/",
+    "파일 이동: real_time_dashboard.py → tools/scripts/",
+    "파일 이동: performance_optimizer.py → tools/scripts/",
+    "파일 이동: sorce_url.txt → docs/",
+    "파일 이동: WIDGET_IMPLEMENTATION_REPORT.md → docs/",
+    "파일 이동: SYSTEM_FLOW_DIAGRAM.md → docs/",
+    "파일 이동: work_flow.xml → tools/utilities/",
+    "파일 이동: STATIC_DASHBOARD_SUMMARY.md → docs/",
+    "파일 이동: structure_reorganizer.py → tools/scripts/",
+    "파일 이동: webapp.log → tools/utilities/",
+    "파일 이동: project_cleaner.py → tools/scripts/",
+    "파일 이동: automated_health_check.py → tools/scripts/",
+    "파일 이동: customer_experience_enhancements.py → tools/scripts/",
+    "파일 이동: advanced_fraud_detection_engine.py → tools/scripts/",
+    "파일 이동: PROJECT_TREE.md → docs/",
+    "파일 이동: comprehensive_benchmark.py → tools/scripts/",
+    "파일 이동: pyproject.toml → config/",
+    "파일 이동: run_optimization_suite.sh → tools/utilities/",
+    "파일 이동: model_visualization.py → tools/scripts/",
+    "파일 이동: performance_analyzer.py → tools/scripts/",
+    "파일 이동: simple_model_visualization.py → tools/scripts/",
+    "파일 이동: security_audit_report.json → config/",
+    "파일 이동: real_time_monitoring.py → tools/scripts/",
+    "파일 이동: generate_dashboard_data.py → tools/scripts/",
+    "파일 이동: README_MODULAR.md → docs/",
+    "파일 이동: cleanup_report.json → config/",
+    "파일 이동: HTML_INTEGRATION_REPORT.md → docs/",
+    "파일 이동: start_web_app.sh → tools/utilities/",
+    "파일 이동: WEB_APP_GUIDE.md → docs/",
+    "파일 이동: test_widget_debug.html → tests/",
+    "파일 이동: PROJECT_STRUCTURE.md → docs/",
+    "파일 이동: production_deployment.py → tools/scripts/",
+    "파일 이동: optimization_analysis.py → tools/notebooks/",
+    "파일 이동: performance_profiler.py → tools/scripts/",
+    "파일 이동: health_check_results.json → config/",
+    "파일 이동: app_modular.py → tools/scripts/",
+    "파일 이동: optimization_analysis_results.json → config/",
+    "파일 이동: FINAL_IMPLEMENTATION_REPORT.md → docs/",
+    "파일 이동: Makefile → tools/utilities/",
+    "파일 이동: CODE_DOCUMENTATION.md → docs/",
+    "파일 이동: simple_api.py → tools/scripts/",
+    "파일 이동: FRONTEND_BACKEND_ANALYSIS.md → docs/",
+    "파일 이동: requirements.txt → config/",
+    "파일 이동: PROJECT_OPTIMIZATION_GUIDE.md → docs/",
+    "파일 이동: security_audit.py → tools/scripts/",
+    "파일 이동: API_ENDPOINT_MAPPING.md → docs/",
+    "파일 이동: health_check_config.json → config/",
+    "파일 이동: WEB_NAVIGATION_ANALYSIS.md → docs/",
+    "디렉토리 통합: scripts → tools/",
+    "디렉토리 통합: notebooks → tools/"
+  ],
+  "final_structure": {
+    "data": {
+      "file_count": 50,
+      "size_mb": 1810.95
+    },
+    "src": {
+      "file_count": 2,
+      "size_mb": 0.0
+    },
+    "backend": {
+      "file_count": 1,
+      "size_mb": 0.01
+    },
+    "static_dashboard": {
+      "file_count": 116,
+      "size_mb": 2.47
+    },
+    "tests": {
+      "file_count": 14,
+      "size_mb": 0.12
+    },
+    "venv": {
+      "file_count": 581,
+      "size_mb": 13.77
+    },
+    "fraud_detection": {
+      "file_count": 5,
+      "size_mb": 0.02
+    },
+    "examples": {
+      "file_count": 1,
+      "size_mb": 0.01
+    },
+    "web_app": {
+      "file_count": 110,
+      "size_mb": 0.76
+    },
+    "frontend_legacy": {
+      "file_count": 55,
+      "size_mb": 0.73
+    },
+    "docs": {
+      "file_count": 45,
+      "size_mb": 3.74
+    },
+    "dashboard_data": {
+      "file_count": 4,
+      "size_mb": 0.01
+    },
+    "config": {
+      "file_count": 8,
+      "size_mb": 0.07
+    },
+    "models": {
+      "file_count": 2,
+      "size_mb": 1.22
+    },
+    "core": {
+      "file_count": 3,
+      "size_mb": 0.02
+    },
+    "archive": {
+      "file_count": 207,
+      "size_mb": 9.81
+    },
+    "tools": {
+      "file_count": 60,
+      "size_mb": 0.55
+    },
+    "logs": {
+      "file_count": 22,
+      "size_mb": 0.18
+    },
+    "fca": {
+      "file_count": 42,
+      "size_mb": 0.32
+    }
+  }
+}

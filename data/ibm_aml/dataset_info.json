@@ -1,0 +1,21 @@
+{
+  "dataset_id": "ealtman2019/ibm-transactions-for-anti-money-laundering-aml",
+  "file_path_used": "HI-Small_Trans.csv",
+  "sample_size": 1000,
+  "total_columns": 11,
+  "columns": [
+    "Timestamp",
+    "From Bank",
+    "Account",
+    "To Bank",
+    "Account.1",
+    "Amount Received",
+    "Receiving Currency",
+    "Amount Paid",
+    "Payment Currency",
+    "Payment Format",
+    "Is Laundering"
+  ],
+  "loading_method": "kagglehub",
+  "status": "success"
+}

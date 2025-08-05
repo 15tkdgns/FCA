@@ -1,0 +1,66 @@
+# FCA Real Detection and Analysis Requirements
+# ============================================
+
+# Core ML Libraries
+scikit-learn>=1.3.0
+xgboost>=1.7.0
+pandas>=1.5.0
+numpy>=1.24.0
+
+# Advanced Optimization
+optuna>=3.2.0
+hyperopt>=0.2.7
+
+# Natural Language Processing
+nltk>=3.8.0
+textblob>=0.17.1
+
+# Deep Learning (Optional - for advanced models)
+torch>=2.0.0
+transformers>=4.21.0
+
+# Model Persistence
+joblib>=1.3.0
+pickle5>=0.0.12
+
+# Visualization and Monitoring
+plotly>=5.15.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Performance and Utilities
+tqdm>=4.65.0
+psutil>=5.9.0
+python-dotenv>=1.0.0
+
+# API and Web Framework Support
+flask>=2.3.0
+requests>=2.31.0
+
+# Data Processing
+scipy>=1.11.0
+statsmodels>=0.14.0
+
+# Time Series Analysis
+datetime
+pytz>=2023.3
+
+# Configuration Management
+pyyaml>=6.0
+configparser
+
+# Logging and Monitoring
+structlog>=23.1.0
+
+# Testing (Development)
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Optional: GPU Acceleration
+# cupy-cuda11x>=12.0.0  # Uncomment if using CUDA 11.x
+# cuml>=23.06.00        # Uncomment for GPU-accelerated ML
+
+# Optional: Distributed Computing
+# dask[complete]>=2023.6.0  # Uncomment for large-scale processing
+
+# Note: Install with: pip install -r requirements_detection.txt

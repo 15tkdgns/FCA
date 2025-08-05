@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCA Analysis Dashboard - Static Web</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.25.2.min.js"></script>
+    <!-- Chart.js for additional charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Mobile Toggle Button -->
+    <button class="mobile-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+        <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-brand">
+                <i class="fas fa-chart-line me-2"></i>FCA Dashboard
+            </a>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="#dashboard" class="nav-link active" data-page="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Overview
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#fraud" class="nav-link" data-page="fraud">
+                    <i class="fas fa-shield-alt"></i>
+                    Fraud Detection
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#sentiment" class="nav-link" data-page="sentiment">
+                    <i class="fas fa-comments"></i>
+                    Sentiment Analysis
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#attrition" class="nav-link" data-page="attrition">
+                    <i class="fas fa-users"></i>
+                    Customer Attrition
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#datasets" class="nav-link" data-page="datasets">
+                    <i class="fas fa-database"></i>
+                    Datasets
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#comparison" class="nav-link" data-page="comparison">
+                    <i class="fas fa-balance-scale"></i>
+                    Model Comparison
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#xai" class="nav-link" data-page="xai">
+                    <i class="fas fa-brain"></i>
+                    XAI Explainability
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#validation" class="nav-link" data-page="validation">
+                    <i class="fas fa-shield-check"></i>
+                    Model Validation
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">
+                <i class="fas fa-tachometer-alt" id="page-icon"></i>
+                <span id="page-title-text">Overview</span>
+            </h1>
+            <p class="page-subtitle" id="page-subtitle">View overall system status and key metrics for FCA analysis</p>
+        </div>
+        
+        <!-- Loading Indicator -->
+        <div id="loading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading data...</p>
+        </div>
+        
+        <!-- Page Content Container -->
+        <div id="page-content" style="display: none;">
+            <!-- Dashboard Page (기본 페이지) -->
+            <div class="page-content" id="dashboard-page" style="display: block;">
+                <!-- Summary Cards -->
+                <div class="row mb-5" id="summary-cards">
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card bg-primary text-white h-100 summary-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title mb-2 opacity-90">🤖 Total Models</h6>
+                                        <h2 class="mb-0 fw-bold" id="total-models">3</h2>
+                                        <small class="opacity-75">ML Models Trained</small>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-robot fa-3x opacity-75"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card bg-success text-white h-100 summary-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title mb-2 opacity-90">📊 Datasets</h6>
+                                        <h2 class="mb-0 fw-bold" id="total-datasets">3</h2>
+                                        <small class="opacity-75">Processed Successfully</small>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-database fa-3x opacity-75"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card bg-info text-white h-100 summary-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title mb-2 opacity-90">🏷️ Domains</h6>
+                                        <h2 class="mb-0 fw-bold" id="total-domains">3</h2>
+                                        <small class="opacity-75">Analysis Categories</small>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-layer-group fa-3x opacity-75"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card bg-warning text-white h-100 summary-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title mb-2 opacity-90">📈 Performance</h6>
+                                        <h2 class="mb-0 fw-bold" id="avg-performance">96.2%</h2>
+                                        <small class="opacity-75">Overall Model Score</small>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-chart-bar fa-3x opacity-75"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Charts Row -->
+                <div class="row mb-4">
+                    <div class="col-lg-8 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    📊 Performance Overview by Domain
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="model-comparison-chart" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    🔍 System Status
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row text-center">
+                                    <div class="col-12 mb-3">
+                                        <span class="badge bg-success fs-6" id="system-status">OPERATIONAL</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-6 text-center">
+                                        <h5 id="fraud-accuracy" class="text-primary">99.9%</h5>
+                                        <small class="text-muted">Fraud Detection</small>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <h5 id="sentiment-accuracy" class="text-success">88.7%</h5>
+                                        <small class="text-muted">Sentiment Analysis</small>
+                                    </div>
+                                </div>
+                                
+                                <hr>
+                                
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h5 id="attrition-accuracy" class="text-warning">100%</h5>
+                                        <small class="text-muted">Attrition Prediction</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Domain Distribution Charts -->
+                <div class="row mb-4">
+                    <div class="col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6 class="card-title mb-0">🛡️ Fraud Detection</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="fraud-distribution-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6 class="card-title mb-0">💬 Sentiment Analysis</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="sentiment-distribution-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6 class="card-title mb-0">👥 Customer Attrition</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="attrition-distribution-chart" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature Importance Charts -->
+                <div class="row mb-4">
+                    <div class="col-lg-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6 class="card-title mb-0">🔍 Fraud Detection Feature Importance</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="fraud-features-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6 class="card-title mb-0">👥 Attrition Prediction Feature Importance</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="attrition-features-chart" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other pages will be added here -->
+            <div class="page-content" id="fraud-page" style="display: none;">
+                <h2>Fraud Detection Analysis</h2>
+                <p>Detailed fraud detection analysis will be loaded here...</p>
+            </div>
+
+            <!-- Sentiment Analysis Page -->
+            <div class="page-content" id="sentiment-page" style="display: none;">
+                <!-- Page Header -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">💬 Sentiment Analysis Overview</h4>
+                                <p class="card-text">Financial news text sentiment classification results and analysis</p>
+                                
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <h3 class="text-primary" id="sentiment-total-sentences">4,846</h3>
+                                            <small class="text-muted">Total Sentences</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <h3 class="text-success" id="sentiment-accuracy-display">88.7%</h3>
+                                            <small class="text-muted">Model Accuracy</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <h3 class="text-info" id="sentiment-avg-length">142.3</h3>
+                                            <small class="text-muted">Avg Sentence Length</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <h3 class="text-warning" id="sentiment-word-count">21.8</h3>
+                                            <small class="text-muted">Avg Word Count</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="row mb-4">
+                    <!-- Sentiment Distribution -->
+                    <div class="col-lg-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">📊 Sentiment Distribution</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="sentiment-page-distribution-chart" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sentiment Performance -->
+                    <div class="col-lg-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">🎯 Model Performance</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="sentiment-performance-chart" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Analysis -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">📈 Sentiment Analysis Details</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h6 class="text-success">Positive Sentiment</h6>
+                                        <div class="progress mb-3">
+                                            <div class="progress-bar bg-success" id="positive-progress" style="width: 38.2%"></div>
+                                        </div>
+                                        <small class="text-muted"><span id="positive-count">1,852</span> sentences (38.2%)</small>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                        <h6 class="text-danger">Negative Sentiment</h6>
+                                        <div class="progress mb-3">
+                                            <div class="progress-bar bg-danger" id="negative-progress" style="width: 34.5%"></div>
+                                        </div>
+                                        <small class="text-muted"><span id="negative-count">1,674</span> sentences (34.5%)</small>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                        <h6 class="text-secondary">Neutral Sentiment</h6>
+                                        <div class="progress mb-3">
+                                            <div class="progress-bar bg-secondary" id="neutral-progress" style="width: 27.3%"></div>
+                                        </div>
+                                        <small class="text-muted"><span id="neutral-count">1,320</span> sentences (27.3%)</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Attrition Page -->
+            <div class="page-content" id="attrition-page" style="display: none;">
+                <!-- Page Header -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">👥 Customer Attrition Analysis</h4>
+                                <p class="card-text">Bank customer churn pattern analysis and prediction results</p>
+                                
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <h3 class="text-primary" id="attrition-total-customers">10,127</h3>
+                                            <small class="text-muted">Total Customers</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <h3 class="text-danger" id="attrition-churned-customers">8,500</h3>
+                                            <small class="text-muted">Churned Customers</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <h3 class="text-warning" id="attrition-churn-rate">83.9%</h3>
+                                            <small class="text-muted">Churn Rate</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <h3 class="text-success" id="attrition-accuracy-display">100%</h3>
+                                            <small class="text-muted">Model Accuracy</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="row mb-4">
+                    <!-- Attrition Distribution -->
+                    <div class="col-lg-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">📊 Customer Retention vs Churn</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="attrition-page-distribution-chart" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Customer Segments -->
+                    <div class="col-lg-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">👥 Customer Segments</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="attrition-segments-chart" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature Importance -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">🔍 Key Factors in Customer Churn</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="attrition-page-features-chart" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Analysis -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">📈 Churn Analysis by Segment</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h6 class="text-info">Young Customers</h6>
+                                        <div class="progress mb-3">
+                                            <div class="progress-bar bg-info" style="width: 25%"></div>
+                                        </div>
+                                        <small class="text-muted">2,534 customers (25.0%)</small>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <h6 class="text-success">Adult Customers</h6>
+                                        <div class="progress mb-3">
+                                            <div class="progress-bar bg-success" style="width: 48.3%"></div>
+                                        </div>
+                                        <small class="text-muted">4,891 customers (48.3%)</small>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <h6 class="text-warning">Senior Customers</h6>
+                                        <div class="progress mb-3">
+                                            <div class="progress-bar bg-warning" style="width: 23.2%"></div>
+                                        </div>
+                                        <small class="text-muted">2,345 customers (23.2%)</small>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <h6 class="text-danger">Elderly Customers</h6>
+                                        <div class="progress mb-3">
+                                            <div class="progress-bar bg-danger" style="width: 3.5%"></div>
+                                        </div>
+                                        <small class="text-muted">357 customers (3.5%)</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content" id="datasets-page" style="display: none;">
+                <h2>Dataset Management</h2>
+                <p>Dataset management interface will be loaded here...</p>
+            </div>
+
+            <div class="page-content" id="comparison-page" style="display: none;">
+                <h2>Model Performance Comparison</h2>
+                <p>Model comparison analysis will be loaded here...</p>
+            </div>
+
+            <div class="page-content" id="xai-page" style="display: none;">
+                <h2>XAI Explainability</h2>
+                <p>XAI explainability analysis will be loaded here...</p>
+            </div>
+
+            <div class="page-content" id="validation-page" style="display: none;">
+                <h2>Model Validation & Bias Detection</h2>
+                <p>Model validation and bias detection will be loaded here...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <!-- Utilities (먼저 로드) -->
+    <script src="assets/js/utils.js"></script>
+    
+    <!-- Static Web API Client -->
+    <script src="assets/js/static-api-client.js"></script>
+    
+    <!-- API Overrides (가장 먼저 로드) -->
+    <script src="assets/js/override-apis.js"></script>
+    
+    <!-- Core functionality from main web app -->
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/error-display.js"></script>
+    
+    <!-- Navigation Controller -->
+    <script src="assets/js/navigation.js"></script>
+    
+    <!-- Static Dashboard Controller -->
+    <script src="assets/js/static-dashboard.js"></script>
+    
+    <!-- Error Fixes -->
+    <script src="assets/js/error-fixes.js"></script>
+    
+    <!-- Compatibility Layer -->
+    <script src="assets/js/compatibility-layer.js"></script>
+    
+    <!-- Final Fixes -->
+    <script src="assets/js/final-fixes.js"></script>
+    
+    <!-- Legacy components (for backward compatibility) -->
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/charts.js"></script>
+    <script src="assets/js/pages.js"></script>
+    <script src="assets/js/ml-validation.js"></script>
+    <script src="assets/js/xai-explainer.js"></script>
+    <script src="assets/js/data-leakage-prevention.js"></script>
+    <script src="assets/js/academic-charts.js"></script>
+    
+    <!-- Main web app functionality -->
+    <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/fraud.js"></script>
+    <script src="assets/js/sentiment-safe.js"></script>
+    <script src="assets/js/attrition-safe.js"></script>
+    <script src="assets/js/visualizations.js"></script>
+    
+    <!-- Modern modular application (ES6 modules) -->
+    <script type="module" src="assets/js/fca-app.js"></script>
+</body>
+</html>

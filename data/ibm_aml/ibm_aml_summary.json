@@ -1,0 +1,11 @@
+{
+  "dataset_name": "IBM AML (Anti-Money Laundering)",
+  "total_transactions": 1323234,
+  "fraud_transactions": 1719,
+  "fraud_rate": "0.130%",
+  "processing_date": "2025-07-30T15:24:12.722107",
+  "file_size_mb": "637.2",
+  "features": 24,
+  "avg_amount": "$115988.18",
+  "median_amount": "$156.71"
+}

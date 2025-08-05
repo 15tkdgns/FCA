@@ -1,0 +1,132 @@
+{
+  "timestamp": "2025-08-05T10:48:20.672137",
+  "overall_status": "critical",
+  "checks": {
+    "system_resources": {
+      "status": "healthy",
+      "metrics": {
+        "cpu_percent": 1.0,
+        "memory_percent": 8.4,
+        "disk_percent": 26.2,
+        "load_average": 0.16064453125,
+        "memory_available_gb": 43.128902435302734,
+        "disk_free_gb": 175.68984985351562
+      },
+      "issues": []
+    },
+    "dashboard": {
+      "status": "critical",
+      "error": "연결 실패: HTTPConnectionPool(host='localhost', port=8080): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fbfd66bf6b0>: Failed to establish a new connection: [Errno 111] Connection refused'))"
+    },
+    "data_integrity": {
+      "status": "warning",
+      "file_stats": {
+        "fraud_data": {
+          "exists": true,
+          "size_mb": 0.0,
+          "modified": "2025-08-01T10:17:02.351408",
+          "age_hours": 96.5
+        },
+        "dashboard_data": {
+          "exists": true,
+          "size_mb": 0.0,
+          "modified": "2025-08-02T05:03:13.843651",
+          "age_hours": 77.8
+        },
+        "static_data": {
+          "exists": true,
+          "size_mb": 0.0,
+          "modified": "2025-08-02T05:10:27.033645",
+          "age_hours": 77.6
+        }
+      },
+      "issues": [
+        "fraud_data: 24시간 이상 업데이트되지 않음",
+        "fraud_data: 파일 크기가 너무 작음 (0.00067901611328125MB)",
+        "dashboard_data: 24시간 이상 업데이트되지 않음",
+        "dashboard_data: 파일 크기가 너무 작음 (0.0019702911376953125MB)",
+        "static_data: 24시간 이상 업데이트되지 않음",
+        "static_data: 파일 크기가 너무 작음 (0.0019702911376953125MB)"
+      ]
+    },
+    "log_files": {
+      "status": "healthy",
+      "log_stats": {
+        "localhost-1754309991370.log": {
+          "size_mb": 0.03,
+          "modified": "2025-08-04T21:19:52.736995"
+        },
+        "DataLoader.log": {
+          "size_mb": 0.0,
+          "modified": "2025-07-30T11:00:41.524863"
+        },
+        "localhost-1754147217937.log": {
+          "size_mb": 0.02,
+          "modified": "2025-08-03T00:06:59.150490"
+        },
+        "systemmonitor.log": {
+          "size_mb": 0.0,
+          "modified": "2025-08-01T09:44:19.701427"
+        },
+        "health_monitor.log": {
+          "size_mb": 0.0,
+          "modified": "2025-08-05T10:48:21.667459"
+        },
+        "localhost-1754151442471.log": {
+          "size_mb": 0.02,
+          "modified": "2025-08-03T01:17:23.750436"
+        },
+        "moduleloader_structured.log": {
+          "size_mb": 0.0,
+          "modified": "2025-07-29T22:52:02.258924"
+        },
+        "systemmonitor_structured.log": {
+          "size_mb": 0.0,
+          "modified": "2025-08-01T09:44:19.701427"
+        },
+        "localhost-1754354479105.log": {
+          "size_mb": 0.0,
+          "modified": "2025-08-05T09:41:20.237460"
+        },
+        "localhost-1754288284090.log": {
+          "size_mb": 0.01,
+          "modified": "2025-08-04T15:18:08.206757"
+        }
+      },
+      "issues": []
+    },
+    "dependencies": {
+      "status": "critical",
+      "issues": [
+        "pip check 실패: ",
+        "중요 패키지 import 실패: scikit-learn"
+      ],
+      "missing_packages": [
+        "scikit-learn"
+      ]
+    }
+  },
+  "alerts": [
+    {
+      "level": "critical",
+      "message": "FCA 시스템 상태: CRITICAL",
+      "timestamp": "2025-08-05T10:48:22.554491"
+    }
+  ],
+  "metrics": {
+    "cpu_percent": 1.0,
+    "memory_percent": 8.4,
+    "disk_percent": 26.2,
+    "load_average": 0.16064453125,
+    "memory_available_gb": 43.128902435302734,
+    "disk_free_gb": 175.68984985351562
+  },
+  "recommendations": [
+    "데이터 파일 정합성 점검이 필요합니다",
+    "정기적인 백업 수행",
+    "보안 업데이트 확인",
+    "모니터링 대시보드 구축",
+    "자동화된 알림 시스템 설정"
+  ],
+  "execution_time_seconds": 1.88
+}

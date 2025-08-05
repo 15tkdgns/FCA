@@ -1,0 +1,42 @@
+{
+  "last_updated": "2025-08-02T05:02:49.693882",
+  "system_status": "operational",
+  "total_datasets": 8,
+  "total_records": 4260920,
+  "models_trained": 3,
+  "overall_metrics": {
+    "fraud_detection_auc": 0.9234,
+    "sentiment_accuracy": 0.887,
+    "attrition_auc": 0.892
+  },
+  "business_insights": {
+    "total_transactions_analyzed": 50000,
+    "fraud_cases_detected": 184,
+    "fraud_detection_rate": 0.368,
+    "high_risk_customers": 987,
+    "sentiment_positive_ratio": 0.26982408660351825,
+    "average_customer_value": 0.65
+  },
+  "model_health": {
+    "fraud_model": {
+      "status": "healthy",
+      "last_retrained": "2025-07-31",
+      "accuracy": 0.9994
+    },
+    "sentiment_model": {
+      "status": "healthy",
+      "last_retrained": "2025-08-01",
+      "accuracy": 0.887
+    },
+    "attrition_model": {
+      "status": "healthy",
+      "last_retrained": "2025-08-01",
+      "auc": 0.892
+    }
+  },
+  "data_quality": {
+    "missing_data_percentage": 0.02,
+    "data_freshness_hours": 6,
+    "data_validation_passed": true
+  }
+}

@@ -1,0 +1,441 @@
+{
+  "structure": {
+    "python_files": 740,
+    "javascript_files": 174,
+    "config_files": 36,
+    "data_files": 25,
+    "documentation": 74,
+    "total_size_mb": 2722.97,
+    "directories": {
+      "root": 51,
+      "data": 4,
+      "data/incribo_fraud": 3,
+      "data/ibm_aml": 11,
+      "data/customer_attrition": 2,
+      "data/hf_creditcard_fraud": 2,
+      "data/credit_card_fraud_2023": 2,
+      "data/wamc_fraud": 3,
+      "data/financial_phrasebank": 3,
+      "data/financial_phrasebank/FinancialPhraseBank": 6,
+      "data/dhanush_fraud": 2,
+      "docker": 0,
+      "backend": 1,
+      "static_dashboard": 31,
+      "static_dashboard/data": 8,
+      "static_dashboard/assets": 0,
+      "static_dashboard/assets/css": 2,
+      "static_dashboard/assets/css/modules": 3,
+      "static_dashboard/assets/js": 6,
+      "static_dashboard/assets/js/dashboard": 4,
+      "static_dashboard/assets/js/utils": 4,
+      "static_dashboard/assets/js/core": 7,
+      "static_dashboard/assets/js/charts": 4,
+      "static_dashboard/assets/js/modules": 20,
+      "static_dashboard/assets/images": 0,
+      "static_dashboard/assets/images/charts": 15,
+      "tests": 6,
+      "venv": 1,
+      "venv/include": 0,
+      "venv/include/python3.12": 0,
+      "venv/lib": 0,
+      "venv/lib/python3.12": 0,
+      "venv/lib/python3.12/site-packages": 0,
+      "venv/lib/python3.12/site-packages/pip-24.0.dist-info": 9,
+      "venv/lib/python3.12/site-packages/pip": 4,
+      "venv/lib/python3.12/site-packages/pip/_vendor": 4,
+      "venv/lib/python3.12/site-packages/pip/_vendor/truststore": 6,
+      "venv/lib/python3.12/site-packages/pip/_vendor/distro": 3,
+      "venv/lib/python3.12/site-packages/pip/_vendor/pyparsing": 10,
+      "venv/lib/python3.12/site-packages/pip/_vendor/pyparsing/diagram": 1,
+      "venv/lib/python3.12/site-packages/pip/_vendor/msgpack": 4,
+      "venv/lib/python3.12/site-packages/pip/_vendor/urllib3": 11,
+      "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/packages": 2,
+      "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/packages/backports": 3,
+      "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/contrib": 7,
+      "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/contrib/_securetransport": 3,
+      "venv/lib/python3.12/site-packages/pip/_vendor/urllib3/util": 13,
+      "venv/lib/python3.12/site-packages/pip/_vendor/chardet": 44,
+      "venv/lib/python3.12/site-packages/pip/_vendor/chardet/cli": 2,
+      "venv/lib/python3.12/site-packages/pip/_vendor/chardet/metadata": 2,
+      "venv/lib/python3.12/site-packages/pip/_vendor/platformdirs": 8,
+      "venv/lib/python3.12/site-packages/pip/_vendor/resolvelib": 5,
+      "venv/lib/python3.12/site-packages/pip/_vendor/resolvelib/compat": 2,
+      "venv/lib/python3.12/site-packages/pip/_vendor/certifi": 4,
+      "venv/lib/python3.12/site-packages/pip/_vendor/packaging": 11,
+      "venv/lib/python3.12/site-packages/pip/_vendor/colorama": 6,
+      "venv/lib/python3.12/site-packages/pip/_vendor/colorama/tests": 7,
+      "venv/lib/python3.12/site-packages/pip/_vendor/tomli": 4,
+      "venv/lib/python3.12/site-packages/pip/_vendor/requests": 18,
+      "venv/lib/python3.12/site-packages/pip/_vendor/idna": 8,
+      "venv/lib/python3.12/site-packages/pip/_vendor/distlib": 13,
+      "venv/lib/python3.12/site-packages/pip/_vendor/pygments": 16,
+      "venv/lib/python3.12/site-packages/pip/_vendor/pygments/lexers": 3,
+      "venv/lib/python3.12/site-packages/pip/_vendor/pygments/styles": 1,
+      "venv/lib/python3.12/site-packages/pip/_vendor/pygments/filters": 1,
+      "venv/lib/python3.12/site-packages/pip/_vendor/pygments/formatters": 14,
+      "venv/lib/python3.12/site-packages/pip/_vendor/webencodings": 5,
+      "venv/lib/python3.12/site-packages/pip/_vendor/tenacity": 11,
+      "venv/lib/python3.12/site-packages/pip/_vendor/pkg_resources": 1,
+      "venv/lib/python3.12/site-packages/pip/_vendor/rich": 77,
+      "venv/lib/python3.12/site-packages/pip/_vendor/cachecontrol": 9,
+      "venv/lib/python3.12/site-packages/pip/_vendor/cachecontrol/caches": 3,
+      "venv/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks": 3,
+      "venv/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process": 2,
+      "venv/lib/python3.12/site-packages/pip/_internal": 9,
+      "venv/lib/python3.12/site-packages/pip/_internal/locations": 4,
+      "venv/lib/python3.12/site-packages/pip/_internal/cli": 12,
+      "venv/lib/python3.12/site-packages/pip/_internal/vcs": 6,
+      "venv/lib/python3.12/site-packages/pip/_internal/index": 4,
+      "venv/lib/python3.12/site-packages/pip/_internal/resolution": 2,
+      "venv/lib/python3.12/site-packages/pip/_internal/resolution/legacy": 2,
+      "venv/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib": 9,
+      "venv/lib/python3.12/site-packages/pip/_internal/operations": 4,
+      "venv/lib/python3.12/site-packages/pip/_internal/operations/install": 3,
+      "venv/lib/python3.12/site-packages/pip/_internal/operations/build": 8,
+      "venv/lib/python3.12/site-packages/pip/_internal/utils": 27,
+      "venv/lib/python3.12/site-packages/pip/_internal/req": 6,
+      "venv/lib/python3.12/site-packages/pip/_internal/models": 12,
+      "venv/lib/python3.12/site-packages/pip/_internal/metadata": 4,
+      "venv/lib/python3.12/site-packages/pip/_internal/metadata/importlib": 4,
+      "venv/lib/python3.12/site-packages/pip/_internal/commands": 18,
+      "venv/lib/python3.12/site-packages/pip/_internal/distributions": 5,
+      "venv/lib/python3.12/site-packages/pip/_internal/network": 8,
+      "venv/bin": 10,
+      "fraud_detection": 1,
+      "fraud_detection/__pycache__": 1,
+      "fraud_detection/models": 3,
+      "fraud_detection/models/__pycache__": 3,
+      "scripts": 14,
+      "examples": 1,
+      "web_app": 2,
+      "web_app/routes": 2,
+      "web_app/routes/__pycache__": 2,
+      "web_app/routes/handlers": 3,
+      "web_app/routes/handlers/__pycache__": 3,
+      "web_app/__pycache__": 2,
+      "web_app/templates": 12,
+      "web_app/templates/includes": 4,
+      "web_app/utils": 3,
+      "web_app/utils/__pycache__": 3,
+      "web_app/middleware": 2,
+      "web_app/middleware/__pycache__": 2,
+      "web_app/static": 0,
+      "web_app/static/css": 2,
+      "web_app/static/css/modules": 11,
+      "web_app/static/js": 13,
+      "web_app/static/js/modules": 10,
+      "web_app/api": 1,
+      "web_app/api/__pycache__": 1,
+      "web_app/api/endpoints": 6,
+      "web_app/api/endpoints/__pycache__": 5,
+      "web_app/modules": 5,
+      "web_app/modules/__pycache__": 4,
+      "web_app/modules/core": 6,
+      "web_app/modules/visualizations": 8,
+      "web_app/modules/visualizations/__pycache__": 8,
+      "web_app/modules/charts": 3,
+      "web_app/modules/charts/__pycache__": 3,
+      ".git": 7,
+      ".git/branches": 0,
+      ".git/hooks": 14,
+      ".git/objects": 0,
+      ".git/objects/20": 1,
+      ".git/objects/6a": 1,
+      ".git/objects/12": 1,
+      ".git/objects/pack": 3,
+      ".git/objects/00": 2,
+      ".git/objects/a4": 1,
+      ".git/objects/4e": 1,
+      ".git/objects/57": 1,
+      ".git/objects/91": 1,
+      ".git/objects/dc": 1,
+      ".git/objects/aa": 1,
+      ".git/objects/bf": 1,
+      ".git/objects/32": 1,
+      ".git/objects/info": 2,
+      ".git/objects/b3": 1,
+      ".git/objects/e9": 1,
+      ".git/info": 2,
+      ".git/refs": 0,
+      ".git/refs/tags": 0,
+      ".git/refs/remotes": 0,
+      ".git/refs/remotes/origin": 1,
+      ".git/refs/heads": 1,
+      ".git/logs": 1,
+      ".git/logs/refs": 0,
+      ".git/logs/refs/remotes": 0,
+      ".git/logs/refs/remotes/origin": 1,
+      ".git/logs/refs/heads": 1,
+      "frontend_legacy": 22,
+      "frontend_legacy/ml-utils": 3,
+      "frontend_legacy/js": 1,
+      "frontend_legacy/modules": 2,
+      "frontend_legacy/modules/statistics": 4,
+      "frontend_legacy/modules/dashboard": 1,
+      "frontend_legacy/modules/training": 1,
+      "frontend_legacy/modules/monitoring": 1,
+      "frontend_legacy/modules/utils": 3,
+      "frontend_legacy/modules/core": 2,
+      "frontend_legacy/modules/charts": 1,
+      "frontend_legacy/modules/xai": 1,
+      "frontend_legacy/modules/api": 1,
+      "docs": 22,
+      "docs/deployment": 2,
+      "docs/guides": 3,
+      "docs/reports": 4,
+      "dashboard_data": 6,
+      "config": 5,
+      ".claude": 1,
+      "models": 2,
+      "notebooks": 7,
+      "core": 3,
+      "core/__pycache__": 3,
+      "archive": 0,
+      "archive/frontend_backup_20250802_030348": 0,
+      "archive/frontend_backup_20250802_030348/static_web": 13,
+      "archive/frontend_backup_20250802_030348/static_web/data": 6,
+      "archive/frontend_backup_20250802_030348/static_web/assets": 0,
+      "archive/frontend_backup_20250802_030348/static_web/assets/css": 4,
+      "archive/frontend_backup_20250802_030348/static_web/assets/css/modules": 11,
+      "archive/frontend_backup_20250802_030348/static_web/assets/js": 31,
+      "archive/frontend_backup_20250802_030348/static_web/assets/js/modules": 15,
+      "archive/frontend_backup_20250802_030348/static_web/assets/images": 0,
+      "archive/frontend_backup_20250802_030348/static_web/pages": 3,
+      "archive/frontend_backup_20250802_030348/apps": 0,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app": 7,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/routes": 4,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/routes/__pycache__": 4,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/routes/handlers": 3,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/routes/handlers/__pycache__": 3,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/__pycache__": 2,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/templates": 17,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/templates/includes": 4,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/config": 1,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/config/__pycache__": 1,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/utils": 6,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/utils/__pycache__": 5,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/middleware": 2,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/models": 1,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/static": 0,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/static/css": 3,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/static/css/modules": 11,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/static/js": 15,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/static/js/modules": 11,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/static/images": 0,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/api": 1,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/api/endpoints": 10,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/api/endpoints/__pycache__": 6,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/modules": 5,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/modules/__pycache__": 4,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/modules/core": 7,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/modules/core/__pycache__": 7,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/modules/visualizations": 8,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/modules/visualizations/__pycache__": 8,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/modules/charts": 3,
+      "archive/frontend_backup_20250802_030348/apps/main_web_app/logs": 5,
+      "archive/frontend_backup_20250802_030348/apps/modular_web_app": 2,
+      "archive/frontend_backup_20250802_030348/apps/modular_web_app/data": 2,
+      "archive/frontend_backup_20250802_030348/apps/modular_web_app/routes": 2,
+      "archive/frontend_backup_20250802_030348/apps/modular_web_app/templates": 2,
+      "archive/frontend_backup_20250802_030348/apps/modular_web_app/config": 2,
+      "archive/frontend_backup_20250802_030348/apps/modular_web_app/charts": 2,
+      "archive/frontend_backup_20250802_030348/apps/modular_web_app/api": 2,
+      "archive/frontend_backup_20250802_030342": 0,
+      "archive/deprecated": 14,
+      "archive/logs": 2,
+      "tools": 0,
+      "tools/utilities": 14,
+      "tools/notebooks": 5,
+      "logs": 21,
+      "fca": 1,
+      "fca/data": 3,
+      "fca/data/__pycache__": 3,
+      "fca/__pycache__": 1,
+      "fca/engines": 8,
+      "fca/engines/__pycache__": 6,
+      "fca/engines/sentiment": 3,
+      "fca/utils": 5,
+      "fca/utils/__pycache__": 4,
+      "fca/testing": 2,
+      "fca/visualization": 6,
+      "fca/core": 4,
+      "fca/core/__pycache__": 3,
+      "fca/api": 2,
+      "fca/api/__pycache__": 2
+    },
+    "large_files": [
+      {
+        "path": "data/ibm_aml/ibm_aml_processed.csv",
+        "size_mb": 161.71
+      },
+      {
+        "path": "data/ibm_aml/transactions.csv",
+        "size_mb": 58.22
+      },
+      {
+        "path": "data/hf_creditcard_fraud/hf_creditcard_fraud.csv",
+        "size_mb": 258.79
+      },
+      {
+        "path": "data/hf_creditcard_fraud/hf_creditcard_processed.csv",
+        "size_mb": 250.85
+      },
+      {
+        "path": "data/credit_card_fraud_2023/creditcard_2023.csv",
+        "size_mb": 309.76
+      },
+      {
+        "path": "data/credit_card_fraud_2023/creditcard_2023_processed.csv",
+        "size_mb": 299.0
+      },
+      {
+        "path": "data/wamc_fraud/creditcard.csv",
+        "size_mb": 143.84
+      },
+      {
+        "path": "data/wamc_fraud/wamc_fraud_processed.csv",
+        "size_mb": 143.29
+      },
+      {
+        "path": "data/dhanush_fraud/card_transdata.csv",
+        "size_mb": 72.74
+      },
+      {
+        "path": "data/dhanush_fraud/dhanush_fraud_processed.csv",
+        "size_mb": 72.09
+      },
+      {
+        "path": ".git/objects/pack/pack-2f06f7e3da3d8f727914981200689b944e723b15.pack",
+        "size_mb": 858.87
+      }
+    ]
+  },
+  "performance": {
+    "large_data_files": [
+      {
+        "file": "data/ibm_aml/ibm_aml_processed.csv",
+        "size_mb": 161.71
+      },
+      {
+        "file": "data/hf_creditcard_fraud/hf_creditcard_fraud.csv",
+        "size_mb": 258.79
+      },
+      {
+        "file": "data/hf_creditcard_fraud/hf_creditcard_processed.csv",
+        "size_mb": 250.85
+      },
+      {
+        "file": "data/credit_card_fraud_2023/creditcard_2023.csv",
+        "size_mb": 309.76
+      },
+      {
+        "file": "data/credit_card_fraud_2023/creditcard_2023_processed.csv",
+        "size_mb": 299.0
+      },
+      {
+        "file": "data/wamc_fraud/creditcard.csv",
+        "size_mb": 143.84
+      },
+      {
+        "file": "data/wamc_fraud/wamc_fraud_processed.csv",
+        "size_mb": 143.29
+      }
+    ],
+    "duplicate_dependencies": [],
+    "inefficient_patterns": [
+      {
+        "file": "customer_experience_enhancements.py",
+        "issue": "Multiple append operations in loops"
+      },
+      {
+        "file": "optimization_analysis.py",
+        "issue": "Multiple append operations in loops"
+      },
+      {
+        "file": "performance_profiler.py",
+        "issue": "Multiple append operations in loops"
+      }
+    ],
+    "memory_intensive_operations": [
+      {
+        "file": "optimization_analysis.py",
+        "issue": "Large DataFrame operations detected"
+      }
+    ],
+    "recommendations": [
+      "대용량 데이터 파일은 압축하거나 청크 단위로 처리하세요",
+      "리스트 컴프리헨션이나 벡터화 연산을 사용하세요",
+      "청크 단위 처리나 Dask를 고려해보세요"
+    ]
+  },
+  "quality": {
+    "duplicated_code": [],
+    "security_issues": [
+      {
+        "file": "optimization_analysis.py",
+        "issue": "Dangerous eval() usage"
+      },
+      {
+        "file": "optimization_analysis.py",
+        "issue": "Dangerous exec() usage"
+      }
+    ],
+    "code_complexity": [],
+    "documentation_coverage": 5.0,
+    "test_coverage": 3.0,
+    "recommendations": [
+      "문서화 커버리지가 낮습니다. docstring 추가를 권장합니다",
+      "테스트 커버리지가 낮습니다. 단위 테스트 추가를 권장합니다",
+      "보안 이슈가 발견되었습니다. 즉시 수정하세요"
+    ]
+  },
+  "dependencies": {
+    "python_packages": [
+      "Flask==3.0.0",
+      "Flask-CORS==4.0.0",
+      "pandas==2.1.4",
+      "numpy==1.24.3",
+      "scikit-learn==1.3.2",
+      "plotly==5.17.0",
+      "matplotlib==3.8.2",
+      "seaborn==0.13.0",
+      "psutil==5.9.6",
+      "cryptography==41.0.8",
+      "python-dotenv==1.0.0",
+      "python-json-logger==2.0.7",
+      "colorama==0.4.6",
+      "requests==2.31.0",
+      "openpyxl==3.1.2",
+      "xlsxwriter==3.1.9",
+      "pyyaml==6.0.1",
+      "configparser==6.0.0",
+      "pytz==2023.3",
+      "uuid==1.30"
+    ],
+    "javascript_packages": [],
+    "outdated_packages": [],
+    "security_vulnerabilities": [],
+    "recommendations": []
+  },
+  "recommendations": {
+    "immediate_actions": [
+      "프로젝트 크기가 1GB를 초과합니다. 불필요한 파일 정리 필요",
+      "보안 이슈가 발견되었습니다. 즉시 수정 필요"
+    ],
+    "performance_improvements": [
+      "대용량 데이터 파일 압축 또는 청크 처리 구현",
+      "비효율적 코드 패턴 리팩토링"
+    ],
+    "code_quality_improvements": [
+      "문서화 커버리지 향상 (현재: 5.0%)",
+      "테스트 커버리지 향상 (현재: 3.0%)"
+    ],
+    "security_enhancements": [],
+    "monitoring_setup": [
+      "로그 레벨 및 로테이션 정책 설정",
+      "성능 메트릭 수집 시스템 구축",
+      "에러 추적 및 알림 시스템 구축",
+      "대시보드 헬스체크 엔드포인트 추가"
+    ]
+  }
+}

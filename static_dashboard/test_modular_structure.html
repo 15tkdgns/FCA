@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCA Dashboard - Modular Structure Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Modular CSS Test -->
+    <link href="assets/css/modules/variables.css" rel="stylesheet">
+    <link href="assets/css/modules/layout.css" rel="stylesheet">
+    <link href="assets/css/modules/components.css" rel="stylesheet">
+    
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .test-section {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: var(--space-4);
+            margin-bottom: var(--space-4);
+            box-shadow: var(--shadow-sm);
+        }
+        .test-result {
+            padding: var(--space-2);
+            margin: var(--space-2) 0;
+            border-radius: var(--border-radius-sm);
+        }
+        .test-success {
+            background-color: rgba(28, 200, 138, 0.1);
+            border: 1px solid var(--color-success);
+            color: var(--color-success-dark);
+        }
+        .test-error {
+            background-color: rgba(231, 74, 59, 0.1);
+            border: 1px solid var(--color-danger);
+            color: var(--color-danger-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="text-center mb-4">
+            <i class="fas fa-check-circle text-success"></i>
+            FCA Dashboard - Modular Structure Test
+        </h1>
+        
+        <div class="test-section">
+            <h3><i class="fas fa-palette me-2"></i>CSS Variables Test</h3>
+            <div id="css-test" class="test-result">Testing CSS variables...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3><i class="fas fa-code me-2"></i>JavaScript Modules Test</h3>
+            <div id="js-test" class="test-result">Testing JavaScript modules...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3><i class="fas fa-chart-bar me-2"></i>Chart Modules Test</h3>
+            <div id="chart-test" class="test-result">Testing chart modules...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3><i class="fas fa-cogs me-2"></i>Dashboard Modules Test</h3>
+            <div id="dashboard-test" class="test-result">Testing dashboard modules...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3><i class="fas fa-brain me-2"></i>XAI Modules Test</h3>
+            <div id="xai-test" class="test-result">Testing XAI modules...</div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <button id="run-tests" class="btn btn-primary">
+                <i class="fas fa-play me-2"></i>Run All Tests
+            </button>
+        </div>
+    </div>
+
+    <!-- Utility Scripts -->
+    <script src="assets/js/utils/common-utils.js"></script>
+    
+    <!-- Chart Modules -->
+    <script src="assets/js/charts/basic-charts.js"></script>
+    <script src="assets/js/charts/xai-charts.js"></script>
+    <script src="assets/js/charts/performance-charts.js"></script>
+    <script src="assets/js/charts/chart-loader.js"></script>
+    
+    <!-- Dashboard Modules -->
+    <script src="assets/js/dashboard/dashboard-content-loaders.js"></script>
+    <script src="assets/js/dashboard/dashboard-xai-handlers.js"></script>
+    <script src="assets/js/dashboard/dashboard-main.js"></script>
+
+    <script>
+        // Test Suite
+        class ModularStructureTest {
+            constructor() {
+                this.results = {
+                    css: false,
+                    js: false,
+                    charts: false,
+                    dashboard: false,
+                    xai: false
+                };
+            }
+
+            testCSS() {
+                try {
+                    // Test if CSS variables are working
+                    const testElement = document.createElement('div');
+                    testElement.style.color = 'var(--color-primary)';
+                    document.body.appendChild(testElement);
+                    
+                    const computedStyle = window.getComputedStyle(testElement);
+                    const hasColor = computedStyle.color !== '';
+                    
+                    document.body.removeChild(testElement);
+                    
+                    this.results.css = hasColor;
+                    this.updateResult('css-test', hasColor, 'CSS variables are working correctly');
+                } catch (error) {
+                    this.updateResult('css-test', false, `CSS test failed: ${error.message}`);
+                }
+            }
+
+            testJS() {
+                try {
+                    // Test if basic utilities are available
+                    const hasCommonUtils = typeof CommonUtils !== 'undefined';
+                    
+                    this.results.js = hasCommonUtils;
+                    this.updateResult('js-test', hasCommonUtils, 'JavaScript utilities loaded successfully');
+                } catch (error) {
+                    this.updateResult('js-test', false, `JS test failed: ${error.message}`);
+                }
+            }
+
+            testCharts() {
+                try {
+                    // Test if chart modules are available
+                    const hasBasicCharts = typeof BasicCharts !== 'undefined';
+                    const hasXAICharts = typeof XAICharts !== 'undefined';
+                    const hasPerformanceCharts = typeof PerformanceCharts !== 'undefined';
+                    const hasFCACharts = typeof FCACharts !== 'undefined';
+                    
+                    const allChartsAvailable = hasBasicCharts && hasXAICharts && hasPerformanceCharts && hasFCACharts;
+                    
+                    this.results.charts = allChartsAvailable;
+                    this.updateResult('chart-test', allChartsAvailable, 
+                        `Chart modules: Basic(${hasBasicCharts}), XAI(${hasXAICharts}), Performance(${hasPerformanceCharts}), Loader(${hasFCACharts})`);
+                } catch (error) {
+                    this.updateResult('chart-test', false, `Chart test failed: ${error.message}`);
+                }
+            }
+
+            testDashboard() {
+                try {
+                    // Test if dashboard modules are available
+                    const hasContentLoaders = typeof DashboardContentLoaders !== 'undefined';
+                    const hasFCADashboard = typeof FCADashboard !== 'undefined';
+                    
+                    const allDashboardAvailable = hasContentLoaders && hasFCADashboard;
+                    
+                    this.results.dashboard = allDashboardAvailable;
+                    this.updateResult('dashboard-test', allDashboardAvailable, 
+                        `Dashboard modules: ContentLoaders(${hasContentLoaders}), Main(${hasFCADashboard})`);
+                } catch (error) {
+                    this.updateResult('dashboard-test', false, `Dashboard test failed: ${error.message}`);
+                }
+            }
+
+            testXAI() {
+                try {
+                    // Test if XAI modules are available
+                    const hasXAIHandlers = typeof DashboardXAIHandlers !== 'undefined';
+                    
+                    this.results.xai = hasXAIHandlers;
+                    this.updateResult('xai-test', hasXAIHandlers, 'XAI handlers module loaded successfully');
+                } catch (error) {
+                    this.updateResult('xai-test', false, `XAI test failed: ${error.message}`);
+                }
+            }
+
+            updateResult(elementId, success, message) {
+                const element = document.getElementById(elementId);
+                element.className = `test-result ${success ? 'test-success' : 'test-error'}`;
+                element.innerHTML = `
+                    <i class="fas ${success ? 'fa-check-circle' : 'fa-times-circle'} me-2"></i>
+                    ${message}
+                `;
+            }
+
+            runAllTests() {
+                console.log('🧪 Running modular structure tests...');
+                
+                this.testCSS();
+                this.testJS();
+                this.testCharts();
+                this.testDashboard();
+                this.testXAI();
+                
+                const passedTests = Object.values(this.results).filter(Boolean).length;
+                const totalTests = Object.keys(this.results).length;
+                
+                console.log(`✅ Tests completed: ${passedTests}/${totalTests} passed`);
+                
+                if (passedTests === totalTests) {
+                    console.log('🎉 All modular structure tests passed!');
+                } else {
+                    console.warn('⚠️ Some tests failed. Check the results above.');
+                }
+            }
+        }
+
+        // Initialize and run tests when button is clicked
+        document.addEventListener('DOMContentLoaded', () => {
+            const tester = new ModularStructureTest();
+            
+            document.getElementById('run-tests').addEventListener('click', () => {
+                tester.runAllTests();
+            });
+            
+            // Auto-run tests on load
+            setTimeout(() => tester.runAllTests(), 500);
+        });
+    </script>
+</body>
+</html>

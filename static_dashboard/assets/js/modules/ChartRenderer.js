@@ -175,6 +175,12 @@ class ChartRenderer {
         const container = document.getElementById(containerId);
         if (!container) return;
         
+        // Skip validation if container is not visible (on another page)
+        if (container.offsetParent === null && container.style.display !== 'none') {
+            // Container exists but is on hidden page - skip validation
+            return;
+        }
+        
         const plotElement = container.querySelector('.plotly-graph-div');
         if (!plotElement) {
             console.warn(`⚠️ Chart ${containerId} DOM element not found after render`);

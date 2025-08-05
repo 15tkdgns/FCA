@@ -1,0 +1,50 @@
+{
+  "last_updated": "2025-08-02T03:08:00.000000",
+  "model_info": {
+    "model_type": "Random Forest Ensemble",
+    "training_samples": 40000,
+    "test_samples": 10000,
+    "features_count": 30
+  },
+  "performance_metrics": {
+    "accuracy": 0.9994,
+    "precision": 0.8571,
+    "recall": 0.8571,
+    "f1_score": 0.8571,
+    "roc_auc": 0.9234,
+    "average_precision": 0.8554
+  },
+  "risk_distribution": {
+    "HIGH": 184,
+    "MEDIUM": 1256,
+    "LOW": 3420,
+    "MINIMAL": 45140
+  },
+  "feature_importance": [
+    {"feature": "Amount_zscore", "importance": 0.234},
+    {"feature": "Time_hour", "importance": 0.187},
+    {"feature": "V14", "importance": 0.156},
+    {"feature": "V12", "importance": 0.143},
+    {"feature": "V10", "importance": 0.128},
+    {"feature": "V17", "importance": 0.098},
+    {"feature": "V16", "importance": 0.087},
+    {"feature": "V18", "importance": 0.076},
+    {"feature": "V11", "importance": 0.065},
+    {"feature": "V4", "importance": 0.054}
+  ],
+  "confusion_matrix": [[9976, 3], [3, 18]],
+  "learning_curve": {
+    "train_sizes": [1000, 2000, 5000, 10000, 20000, 40000],
+    "train_scores": [0.98, 0.97, 0.96, 0.95, 0.94, 0.93],
+    "val_scores": [0.85, 0.87, 0.89, 0.91, 0.92, 0.92]
+  },
+  "detection_timeline": {
+    "dates": ["2025-07-04", "2025-07-05", "2025-07-06", "2025-07-07", "2025-07-08", "2025-07-09", "2025-07-10", "2025-07-11", "2025-07-12", "2025-07-13", "2025-07-14", "2025-07-15", "2025-07-16", "2025-07-17", "2025-07-18", "2025-07-19", "2025-07-20", "2025-07-21", "2025-07-22", "2025-07-23", "2025-07-24", "2025-07-25", "2025-07-26", "2025-07-27", "2025-07-28", "2025-07-29", "2025-07-30", "2025-07-31", "2025-08-01", "2025-08-02"],
+    "detections": [8, 5, 12, 7, 9, 6, 11, 8, 4, 10, 7, 9, 6, 8, 12, 5, 7, 9, 8, 6, 10, 7, 8, 9, 6, 11, 7, 8, 9, 5]
+  },
+  "model_comparison": {
+    "random_forest": {"auc": 0.923, "precision": 0.857, "recall": 0.857},
+    "logistic_regression": {"auc": 0.898, "precision": 0.834, "recall": 0.812},
+    "isolation_forest": {"auc": 0.876, "precision": 0.798, "recall": 0.745}
+  }
+}

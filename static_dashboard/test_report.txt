@@ -1,0 +1,84 @@
+
+📊 FCA Static Dashboard Test Report
+==================================================
+📅 Test Time: 2025-08-02 05:26:47
+🌐 Base URL: http://localhost:8080
+
+📈 Summary:
+  Total Tests: 54
+  ✅ Passed: 54
+  ❌ Failed: 0
+  ⚠️  Warnings: 0
+  📊 Success Rate: 100.0%
+
+🎯 Overall Status: 🟢 HEALTHY
+
+==================================================
+
+🔹 File:
+  ✅ File - index.html: Exists
+  ✅ File - serve.py: Exists
+  ✅ File - assets/css/dashboard.css: Exists
+  ✅ File - assets/js/dashboard.js: Exists
+  ✅ File - assets/js/charts.js: Exists
+  ✅ File - data/summary.json: Exists
+  ✅ File - data/fraud_data.json: Exists
+  ✅ File - data/sentiment_data.json: Exists
+  ✅ File - data/attrition_data.json: Exists
+  ✅ File - data/charts.json: Exists
+  ✅ File - data/datasets.json: Exists
+
+🔹 HTML:
+  ✅ HTML - DOCTYPE: Valid DOCTYPE
+  ✅ HTML - Charset: UTF-8 charset set
+  ✅ HTML - Viewport: Viewport meta tag found
+  ✅ HTML - Title: Title tag found
+  ✅ HTML - Navigation: Found
+  ✅ HTML - Dashboard Content: Found
+  ✅ HTML - Summary Cards: Found
+  ✅ HTML - Chart Containers: Found
+  ✅ HTML - Bootstrap CSS: Found
+  ✅ HTML - Plotly JS: Found
+  ✅ HTML - Custom JS: Found
+
+🔹 Data:
+  ✅ Data - Summary JSON: Valid JSON
+  ✅ Data - Summary Structure: All required keys present
+  ✅ Data - Summary Size: 880 bytes
+  ✅ Data - Fraud Data JSON: Valid JSON
+  ✅ Data - Fraud Data Structure: All required keys present
+  ✅ Data - Fraud Data Size: 1890 bytes
+  ✅ Data - Sentiment Data JSON: Valid JSON
+  ✅ Data - Sentiment Data Structure: All required keys present
+  ✅ Data - Sentiment Data Size: 2091 bytes
+  ✅ Data - Attrition Data JSON: Valid JSON
+  ✅ Data - Attrition Data Structure: All required keys present
+  ✅ Data - Attrition Data Size: 3039 bytes
+  ✅ Data - Charts Data JSON: Valid JSON
+  ✅ Data - Charts Data Structure: All required keys present
+  ✅ Data - Charts Data Size: 1661 bytes
+  ✅ Data - Datasets Info JSON: Valid JSON
+  ✅ Data - Datasets Info Structure: All required keys present
+  ✅ Data - Datasets Info Size: 2841 bytes
+
+🔹 CSS:
+  ✅ CSS - Size: 11283 bytes
+  ✅ CSS - Variables: CSS variables found
+  ✅ CSS - Responsive: Media queries found
+  ✅ CSS - Dark Theme: Dark theme support found
+
+🔹 JS:
+  ✅ JS - Dashboard JS Size: 23203 bytes
+  ✅ JS - Dashboard JS FCADashboard: Found
+  ✅ JS - Dashboard JS class: Found
+  ✅ JS - Charts JS Size: 18797 bytes
+  ✅ JS - Charts JS FCACharts: Found
+  ✅ JS - Charts JS Plotly: Found
+
+🔹 CDN:
+  ✅ CDN - Bootstrap CSS: Available
+  ✅ CDN - Font Awesome: Available
+  ✅ CDN - Plotly JS: Available
+  ✅ CDN - Bootstrap JS: Available
+
+==================================================

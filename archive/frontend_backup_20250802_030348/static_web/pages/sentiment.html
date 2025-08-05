@@ -1,0 +1,106 @@
+<!-- Sentiment Analysis Page -->
+<div class="page-content" id="sentiment-page" style="display: none;">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">💬 Sentiment Analysis Overview</h4>
+                    <p class="card-text">Financial news text sentiment classification results and analysis</p>
+                    
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h3 class="text-primary" id="sentiment-total-sentences">4,846</h3>
+                                <small class="text-muted">Total Sentences</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h3 class="text-success" id="sentiment-accuracy-display">88.7%</h3>
+                                <small class="text-muted">Model Accuracy</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h3 class="text-info" id="sentiment-avg-length">142.3</h3>
+                                <small class="text-muted">Avg Sentence Length</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h3 class="text-warning" id="sentiment-word-count">21.8</h3>
+                                <small class="text-muted">Avg Word Count</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <!-- Sentiment Distribution -->
+        <div class="col-lg-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">📊 Sentiment Distribution</h5>
+                </div>
+                <div class="card-body">
+                    <div id="sentiment-page-distribution-chart" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sentiment Performance -->
+        <div class="col-lg-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">🎯 Model Performance</h5>
+                </div>
+                <div class="card-body">
+                    <div id="sentiment-performance-chart" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Analysis -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">📈 Sentiment Analysis Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6 class="text-success">Positive Sentiment</h6>
+                            <div class="progress mb-3">
+                                <div class="progress-bar bg-success" id="positive-progress" style="width: 38.2%"></div>
+                            </div>
+                            <small class="text-muted"><span id="positive-count">1,852</span> sentences (38.2%)</small>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <h6 class="text-danger">Negative Sentiment</h6>
+                            <div class="progress mb-3">
+                                <div class="progress-bar bg-danger" id="negative-progress" style="width: 34.5%"></div>
+                            </div>
+                            <small class="text-muted"><span id="negative-count">1,674</span> sentences (34.5%)</small>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <h6 class="text-secondary">Neutral Sentiment</h6>
+                            <div class="progress mb-3">
+                                <div class="progress-bar bg-secondary" id="neutral-progress" style="width: 27.3%"></div>
+                            </div>
+                            <small class="text-muted"><span id="neutral-count">1,320</span> sentences (27.3%)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

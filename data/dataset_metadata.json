@@ -1,0 +1,98 @@
+{
+  "metadata": {
+    "last_updated": "2025-01-31",
+    "total_datasets": 8,
+    "total_records": 4260920,
+    "total_size_mb": 933.8
+  },
+  "datasets": {
+    "credit_card_fraud_2023": {
+      "name": "Credit Card Fraud 2023",
+      "type": "Fraud Detection",
+      "records": 568629,
+      "features": 30,
+      "size_mb": 299.0,
+      "target_column": "Class",
+      "fraud_rate_percent": 0.20,
+      "status": "ready",
+      "description": "Balanced fraud detection dataset with PCA features for enhanced privacy protection"
+    },
+    "wamc_fraud": {
+      "name": "WAMC Fraud Dataset",
+      "type": "Fraud Detection", 
+      "records": 283726,
+      "features": 31,
+      "size_mb": 143.3,
+      "target_column": "Class",
+      "fraud_rate_percent": 0.20,
+      "status": "ready",
+      "description": "Comprehensive fraud detection with multiple feature types"
+    },
+    "financial_phrasebank": {
+      "name": "Financial PhraseBank",
+      "type": "Sentiment Analysis",
+      "records": 14780,
+      "features": 3,
+      "size_mb": 2.0,
+      "target_column": "sentiment",
+      "fraud_rate_percent": null,
+      "status": "ready",
+      "description": "Financial news sentiment classification dataset"
+    },
+    "dhanush_fraud": {
+      "name": "Dhanush Fraud Dataset",
+      "type": "Fraud Detection",
+      "records": 1000000,
+      "features": 8,
+      "size_mb": 72.1,
+      "target_column": "fraud",
+      "fraud_rate_percent": 7.90,
+      "status": "ready",
+      "description": "Large-scale behavioral pattern fraud detection"
+    },
+    "customer_attrition": {
+      "name": "Customer Attrition",
+      "type": "Churn Prediction",
+      "records": 10127,
+      "features": 23,
+      "size_mb": 1.4,
+      "target_column": "Attrition_Flag",
+      "fraud_rate_percent": 9.95,
+      "status": "ready",
+      "description": "Bank customer churn prediction dataset"
+    },
+    "ibm_aml": {
+      "name": "IBM Anti-Money Laundering",
+      "type": "AML Detection",
+      "records": 1323234,
+      "features": 24,
+      "size_mb": 161.7,
+      "target_column": "IS_FRAUD",
+      "fraud_rate_percent": 0.13,
+      "status": "ready",
+      "description": "IBM AMLSim synthetic anti-money laundering dataset"
+    },
+    "hf_creditcard_fraud": {
+      "name": "HuggingFace Credit Card Fraud",
+      "type": "Fraud Detection",
+      "records": 1048575,
+      "features": 23,
+      "size_mb": 250.9,
+      "target_column": "is_fraud",
+      "fraud_rate_percent": 0.00,
+      "status": "ready",
+      "description": "Large-scale credit card fraud detection dataset"
+    },
+    "incribo_fraud": {
+      "name": "Incribo Fraud Dataset",
+      "type": "Fraud Detection",
+      "records": 11849,
+      "features": 20,
+      "size_mb": 3.4,
+      "target_column": "Fraud Flag or Label",
+      "fraud_rate_percent": 48.40,
+      "status": "ready",
+      "description": "High fraud rate dataset for imbalanced learning"
+    }
+  }
+}

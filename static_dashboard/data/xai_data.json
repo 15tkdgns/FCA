@@ -1,0 +1,148 @@
+{
+  "last_updated": "2025-08-02T12:30:00.000000",
+  "lime_explanations": {
+    "fraud_detection": {
+      "sample_id": "transaction_4521",
+      "features": [
+        { "name": "V14", "value": -8.34, "impact": 0.42, "direction": "increases_fraud" },
+        { "name": "V12", "value": -2.17, "impact": 0.38, "direction": "increases_fraud" },
+        { "name": "Amount", "value": 1247.50, "impact": -0.31, "direction": "decreases_fraud" },
+        { "name": "V10", "value": -1.89, "impact": 0.28, "direction": "increases_fraud" },
+        { "name": "V17", "value": -3.56, "impact": 0.25, "direction": "increases_fraud" },
+        { "name": "V4", "value": 2.14, "impact": -0.19, "direction": "decreases_fraud" },
+        { "name": "V11", "value": 1.67, "impact": -0.15, "direction": "decreases_fraud" },
+        { "name": "Time_hour", "value": 14, "impact": -0.12, "direction": "decreases_fraud" }
+      ],
+      "prediction": {
+        "probability": 0.834,
+        "class": "fraud",
+        "confidence": "high"
+      }
+    },
+    "sentiment_analysis": {
+      "sample_text": "This financial product exceeded my expectations with great returns",
+      "features": [
+        { "name": "exceeded", "impact": 0.45, "direction": "positive" },
+        { "name": "great", "impact": 0.38, "direction": "positive" },
+        { "name": "expectations", "impact": 0.22, "direction": "positive" },
+        { "name": "returns", "impact": 0.18, "direction": "positive" },
+        { "name": "financial", "impact": 0.05, "direction": "neutral" },
+        { "name": "product", "impact": -0.02, "direction": "neutral" }
+      ],
+      "prediction": {
+        "sentiment": "positive",
+        "confidence": 0.87,
+        "probability_distribution": {
+          "positive": 0.87,
+          "neutral": 0.11,
+          "negative": 0.02
+        }
+      }
+    }
+  },
+  "model_decision_process": {
+    "fraud_detection": {
+      "decision_tree_path": [
+        { "node": 1, "feature": "V14", "threshold": -2.5, "direction": "left", "samples": 1000, "gini": 0.45 },
+        { "node": 3, "feature": "Amount", "threshold": 500, "direction": "right", "samples": 234, "gini": 0.32 },
+        { "node": 7, "feature": "V12", "threshold": -1.8, "direction": "left", "samples": 89, "gini": 0.18 },
+        { "node": 15, "feature": "V10", "threshold": -0.9, "direction": "left", "samples": 23, "gini": 0.08 }
+      ],
+      "final_prediction": {
+        "class": "fraud",
+        "probability": 0.89,
+        "leaf_node": 15,
+        "path_confidence": 0.92
+      }
+    }
+  },
+  "prediction_confidence": {
+    "fraud_detection": {
+      "confidence_distribution": {
+        "bins": ["0-10%", "10-20%", "20-30%", "30-40%", "40-50%", "50-60%", "60-70%", "70-80%", "80-90%", "90-100%"],
+        "counts": [45, 123, 234, 456, 678, 543, 432, 321, 234, 156],
+        "colors": ["#d4edda", "#c3e6cb", "#b3dec1", "#a2d5b7", "#92cdad", "#81c4a3", "#71bc99", "#60b38f", "#50ab85", "#3fa27b"]
+      },
+      "accuracy_by_confidence": {
+        "confidence_ranges": ["0-20%", "20-40%", "40-60%", "60-80%", "80-100%"],
+        "accuracy": [0.52, 0.67, 0.78, 0.89, 0.95],
+        "sample_counts": [168, 690, 1221, 753, 390]
+      }
+    },
+    "sentiment_analysis": {
+      "confidence_distribution": {
+        "bins": ["0-10%", "10-20%", "20-30%", "30-40%", "40-50%", "50-60%", "60-70%", "70-80%", "80-90%", "90-100%"],
+        "counts": [23, 45, 67, 89, 123, 145, 167, 189, 203, 178],
+        "colors": ["#fff3cd", "#ffeaa7", "#fde2a7", "#fdd9a7", "#fdd1a7", "#fdc8a7", "#fdc0a7", "#fdb7a7", "#fdafa7", "#fda6a7"]
+      }
+    }
+  },
+  "feature_interaction": {
+    "fraud_detection": {
+      "interaction_matrix": {
+        "features": ["V14", "V12", "V10", "V17", "V4", "Amount", "V11", "V18"],
+        "values": [
+          [1.00, 0.73, 0.45, 0.67, -0.23, 0.34, 0.28, 0.41],
+          [0.73, 1.00, 0.56, 0.48, -0.19, 0.42, 0.31, 0.38],
+          [0.45, 0.56, 1.00, 0.39, -0.15, 0.29, 0.33, 0.27],
+          [0.67, 0.48, 0.39, 1.00, -0.21, 0.36, 0.25, 0.44],
+          [-0.23, -0.19, -0.15, -0.21, 1.00, -0.18, -0.16, -0.22],
+          [0.34, 0.42, 0.29, 0.36, -0.18, 1.00, 0.28, 0.33],
+          [0.28, 0.31, 0.33, 0.25, -0.16, 0.28, 1.00, 0.26],
+          [0.41, 0.38, 0.27, 0.44, -0.22, 0.33, 0.26, 1.00]
+        ]
+      },
+      "top_interactions": [
+        { "feature1": "V14", "feature2": "V12", "interaction_strength": 0.73, "impact_on_prediction": 0.45 },
+        { "feature1": "V14", "feature2": "V17", "interaction_strength": 0.67, "impact_on_prediction": 0.38 },
+        { "feature1": "V12", "feature2": "V10", "interaction_strength": 0.56, "impact_on_prediction": 0.31 },
+        { "feature1": "V17", "feature2": "V18", "interaction_strength": 0.44, "impact_on_prediction": 0.27 }
+      ]
+    }
+  },
+  "training_process": {
+    "fraud_detection": {
+      "epochs": [
+        { "epoch": 1, "train_loss": 0.693, "val_loss": 0.681, "train_acc": 0.532, "val_acc": 0.545, "learning_rate": 0.001 },
+        { "epoch": 5, "train_loss": 0.421, "val_loss": 0.435, "train_acc": 0.781, "val_acc": 0.768, "learning_rate": 0.001 },
+        { "epoch": 10, "train_loss": 0.287, "val_loss": 0.312, "train_acc": 0.856, "val_acc": 0.834, "learning_rate": 0.0008 },
+        { "epoch": 15, "train_loss": 0.198, "val_loss": 0.245, "train_acc": 0.912, "val_acc": 0.889, "learning_rate": 0.0006 },
+        { "epoch": 20, "train_loss": 0.156, "val_loss": 0.203, "train_acc": 0.934, "val_acc": 0.907, "learning_rate": 0.0004 },
+        { "epoch": 25, "train_loss": 0.134, "val_loss": 0.189, "train_acc": 0.945, "val_acc": 0.918, "learning_rate": 0.0002 },
+        { "epoch": 30, "train_loss": 0.121, "val_loss": 0.182, "train_acc": 0.952, "val_acc": 0.923, "learning_rate": 0.0001 }
+      ],
+      "hyperparameters": {
+        "batch_size": 128,
+        "learning_rate_schedule": "exponential_decay",
+        "optimizer": "Adam",
+        "regularization": "L2 (0.01)",
+        "dropout": 0.3,
+        "early_stopping_patience": 10
+      },
+      "data_leakage_checks": [
+        { "check": "temporal_leakage", "status": "passed", "score": 0.98 },
+        { "check": "target_leakage", "status": "passed", "score": 0.95 },
+        { "check": "feature_leakage", "status": "warning", "score": 0.87, "details": "V18 correlation with target: 0.13" }
+      ]
+    }
+  },
+  "model_comparison": {
+    "performance_metrics": {
+      "models": ["Random Forest", "XGBoost", "Neural Network", "Logistic Regression"],
+      "accuracy": [0.923, 0.934, 0.918, 0.876],
+      "precision": [0.891, 0.912, 0.895, 0.834],
+      "recall": [0.887, 0.901, 0.883, 0.798],
+      "f1_score": [0.889, 0.906, 0.889, 0.816],
+      "auc_roc": [0.956, 0.967, 0.951, 0.912],
+      "training_time": [145, 89, 523, 12],
+      "inference_time_ms": [2.3, 1.8, 4.7, 0.5]
+    },
+    "feature_importance_comparison": {
+      "features": ["V14", "V12", "V10", "V17", "V4", "Amount", "V11", "V18"],
+      "random_forest": [0.234, 0.187, 0.156, 0.143, 0.128, 0.098, 0.087, 0.076],
+      "xgboost": [0.267, 0.201, 0.173, 0.134, 0.115, 0.089, 0.073, 0.068],
+      "neural_network": [0.198, 0.176, 0.165, 0.154, 0.142, 0.103, 0.095, 0.087],
+      "logistic_regression": [0.289, 0.234, 0.167, 0.123, 0.098, 0.076, 0.067, 0.055]
+    }
+  }
+}
